@@ -1,4 +1,5 @@
-﻿using CASS.OpenCL.Types.Primitives;
+﻿using CASS.OpenCL.Types.Enums;
+using CASS.OpenCL.Types.Primitives;
 
 namespace CASS.OpenCL.Types
 {

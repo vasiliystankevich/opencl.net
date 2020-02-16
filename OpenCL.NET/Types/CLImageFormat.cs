@@ -1,4 +1,6 @@
-﻿namespace CASS.OpenCL.Types
+﻿using CASS.OpenCL.Types.Enums;
+
+namespace CASS.OpenCL.Types
 {
     public struct CLImageFormat
     {
