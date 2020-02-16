@@ -22,6 +22,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using CASS.OpenCL.Driver;
 using CASS.OpenCL.Types;
 using CASS.OpenCL.Types.Enums;
 using CASS.OpenCL.Types.Primitives;

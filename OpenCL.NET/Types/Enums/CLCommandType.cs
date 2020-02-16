@@ -1,9 +1,9 @@
 ﻿namespace CASS.OpenCL.Types.Enums
 {
     // cl_command_type
-    public enum CLCommandType : uint
+    public enum ClCommandType : uint
     {
-        NDRangeKernel = 0x11F0,
+        NdRangeKernel = 0x11F0,
         Task = 0x11F1,
         NativeKernel = 0x11F2,
         ReadBuffer = 0x11F3,
@@ -18,8 +18,8 @@
         MapImage = 0x11FC,
         UnmapMemObject = 0x11FD,
         Marker = 0x11FE,
-        AcquireGLObjects = 0x11FF,
-        ReleaseGLObjects = 0x1200,
+        AcquireGlObjects = 0x11FF,
+        ReleaseGlObjects = 0x1200,
         /* 1.1 */
         ReadBufferRect = 0x1201,
         WriteBufferRect = 0x1202,
@@ -31,10 +31,10 @@
         FillBuffer = 0x1207,
         FillImage = 0x1208,
         /* 2.0 */
-        SVMFree = 0x1209,
-        SVMMemcpy = 0x120A,
-        SVMMemFill = 0x120B,
-        SVMMap = 0x120C,
-        SVMUnmap = 0x120D,
+        SvmFree = 0x1209,
+        SvmMemcpy = 0x120A,
+        SvmMemFill = 0x120B,
+        SvmMap = 0x120C,
+        SvmUnmap = 0x120D,
     }
 }

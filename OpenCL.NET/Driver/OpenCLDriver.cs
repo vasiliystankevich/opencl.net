@@ -26,7 +26,7 @@ using CASS.OpenCL.Types;
 using CASS.OpenCL.Types.Enums;
 using CASS.OpenCL.Types.Primitives;
 
-namespace CASS.OpenCL
+namespace CASS.OpenCL.Driver
 {
     /// <summary>
     /// This class provides the driver interface to OpenCL functions.

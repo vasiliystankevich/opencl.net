@@ -40,7 +40,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\OpenCL.NET.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -62,6 +63,16 @@
     <Compile Include="OpenCL.cs" />
     <Compile Include="OpenCLException.cs" />
     <Compile Include="Types\CLBufferRegion.cs" />
+    <Compile Include="Types\Enums\CLKernelArgTypeQualifier.cs" />
+    <Compile Include="Types\Enums\CLKernelArgAccessQualifier.cs" />
+    <Compile Include="Types\Enums\CLKernelArgAddressQualifier.cs" />
+    <Compile Include="Types\Enums\CLKernelArgInfo.cs" />
+    <Compile Include="Types\Enums\CLKernelInfo.cs" />
+    <Compile Include="Types\Enums\CLBuildStatus.cs" />
+    <Compile Include="Types\Enums\CLProgramBinaryType.cs" />
+    <Compile Include="Types\Enums\CLProgramBuildInfo.cs" />
+    <Compile Include="Types\Enums\_.cs" />
+    <Compile Include="Types\Enums\CLKernelWorkGroupInfo.cs" />
     <Compile Include="Types\Enums\CLBool.cs" />
     <Compile Include="Types\Enums\CLBufferCreateType.cs" />
     <Compile Include="Types\Enums\CLCommandType.cs" />
@@ -72,7 +83,10 @@
     <Compile Include="Types\Enums\CLDeviceMemCacheType.cs" />
     <Compile Include="Types\Enums\CLDeviceType.cs" />
     <Compile Include="Types\Enums\CLError.cs" />
+    <Compile Include="Types\Enums\CLEventInfo.cs" />
     <Compile Include="Types\Enums\CLExecutionStatus.cs" />
+    <Compile Include="Types\Enums\CLKernelExecInfo.cs" />
+    <Compile Include="Types\Enums\CLKernelSubGroupInfo.cs" />
     <Compile Include="Types\Enums\CLPlatformInfo.cs" />
     <Compile Include="Types\Enums\CLProfilingInfo.cs" />
     <Compile Include="Types\Primitives\CLCommandQueue.cs" />
