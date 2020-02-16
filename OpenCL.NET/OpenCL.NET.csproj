@@ -61,12 +61,27 @@
   <ItemGroup>
     <Compile Include="OpenCL.cs" />
     <Compile Include="OpenCLException.cs" />
+    <Compile Include="Types\CLBufferRegion.cs" />
+    <Compile Include="Types\Enums\CLBool.cs" />
+    <Compile Include="Types\Enums\CLError.cs" />
+    <Compile Include="Types\Enums\CLPlatformInfo.cs" />
+    <Compile Include="Types\Primitives\CLCommandQueue.cs" />
+    <Compile Include="Types\Primitives\CLContext.cs" />
+    <Compile Include="Types\Primitives\CLDeviceID.cs" />
+    <Compile Include="Types\Primitives\CLEvent.cs" />
+    <Compile Include="Types\CLImageDesc.cs" />
+    <Compile Include="Types\CLImageFormat.cs" />
+    <Compile Include="Types\Primitives\CLKernel.cs" />
+    <Compile Include="Types\Primitives\CLMem.cs" />
+    <Compile Include="Types\Primitives\CLPlatformID.cs" />
     <Compile Include="OpenGL\OpenCLGLDriver.cs" />
     <Compile Include="Driver\OpenCLDriver.cs" />
     <Compile Include="Driver\Types.cs" />
     <Compile Include="OpenGL\Types.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types.cs" />
+    <Compile Include="Types\Primitives\CLProgram.cs" />
+    <Compile Include="Types\Primitives\CLSampler.cs" />
+    <Compile Include="Types\Primitives\SizeT.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

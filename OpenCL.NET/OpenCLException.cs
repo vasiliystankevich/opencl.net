@@ -21,6 +21,7 @@
  */
 
 using System;
+using CASS.OpenCL.Types.Enums;
 
 namespace CASS.OpenCL
 {

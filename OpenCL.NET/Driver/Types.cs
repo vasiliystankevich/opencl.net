@@ -21,182 +21,44 @@
  */
 
 using System;
-
-using CASS.Types;
+using CASS.OpenCL.Types;
+using CASS.OpenCL.Types.Primitives;
 
 namespace CASS.OpenCL
 {
     #region Driver Types
-    public struct CLPlatformID
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLDeviceID
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLContext
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLCommandQueue
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLMem
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLProgram
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLKernel
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLEvent
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLSampler
-    {
-        public IntPtr Value;
-    }
 
-    public struct CLImageFormat
-    {
-        public CLChannelOrder image_channel_order;
-        public CLChannelType image_channel_data_type;
-    }
 
-    /* 1.2 */
-    public struct CLImageDesc
-    {
-        CLMemObjectType image_type;
-        SizeT image_width;
-        SizeT image_height;
-        SizeT image_depth;
-        SizeT image_array_size;
-        SizeT image_row_pitch;
-        SizeT image_slice_pitch;
-        uint num_mip_levels;
-        uint num_samples;
 
-        // Instead of union, buffer is represented by mem_object.
-        CLMem mem_object;
-    }
 
-    /* 1.1 */
-    public struct CLBufferRegion
-    {
-        public SizeT origin;
-        public SizeT size;
-    }
+
+
+
+
+
+
+
+
+
+
+
     #endregion
 
     #region Enums
     // Error Codes
-    public enum CLError
-    {
-        Success = 0,
-        DeviceNotFound = -1,
-        DeviceNotAvailable = -2,
-        DeviceCompilerNotAvailable = -3,
-        MemObjectAllocationFailure = -4,
-        OutOfResources = -5,
-        OutOfHostMemory = -6,
-        ProfilingInfoNotAvailable = -7,
-        MemCopyOverlap = -8,
-        ImageFormatMismatch = -9,
-        ImageFormatNotSupported = -10,
-        BuildProgramFailure = -11,
-        MapFailure = -12,
-        /* 1.1 */
-        MisalignedSubBufferOffset = -13,
-        ExecStatusErrorForEventsInWaitList = -14,
-        /* 1.2 */
-        CompileProgramFailure = -15,
-        LinkerNotAvailable = -16,
-        LinkProgramFailure = -17,
-        DevicePartitionFailed = -18,
-        KernelArgInfoNotAvailable = -19,
 
-        InvalidValue = -30,
-        InvalidDeviceType = -31,
-        InvalidPlatform = -32,
-        InvalidDevice = -33,
-        InvalidContext = -34,
-        InvalidQueueProperties = -35,
-        InvalidCommandQueue = -36,
-        InvalidHostPtr = -37,
-        InvalidMemObject = -38,
-        InvalidImageFormatDescriptor = -39,
-        InvalidImageSize = -40,
-        InvalidSampler = -41,
-        InvalidBinary = -42,
-        InvalidBuildOptions = -43,
-        InvalidProgram = -44,
-        InvalidProgramExecutable = -45,
-        InvalidKernelName = -46,
-        InvalidKernelDefinition = -47,
-        InvalidKernel = -48,
-        InvalidArgIndex = -49,
-        InvalidArgValue = -50,
-        InvalidArgSize = -51,
-        InvalidKernelArgs = -52,
-        InvalidWorkDimension = -53,
-        InvalidWorkGroupSize = -54,
-        InvalidWorkItemSize = -55,
-        InvalidGlobalOffset = -56,
-        InvalidEventWaitList = -57,
-        InvalidEvent = -58,
-        InvalidOperation = -59,
-        InvalidGLObject = -60,
-        InvalidBufferSize = -61,
-        InvalidMipLevel = -62,
-        InvalidGlobalWorkSize = -63,
-        /* 1.1 */
-        InvalidProperty = -64,
-        /* 1.2 */
-        InvalidImageDescriptor = -65,
-        InvalidCompilerOptions = -66,
-        InvalidLinkerOptions = -67,
-        InvalidDevicePartitionCount = -68,
-        /* 2.0 */
-        InvalidPipeSize = -69,
-        InvalidDeviceQueue = -70,
-        /* 2.2 */
-        InvalidSpecID = -71,
-        MaxSizeRestrictionExceeded = -72,
-    }
 
-    // cl_bool
-    public enum CLBool : uint
-    {
-        False = 0,
-        True = 1
-    }
 
-    // cl_platform_info
-    public enum CLPlatformInfo : uint
-    {
-        Profile = 0x0900,
-        Version = 0x0901,
-        Name = 0x0902,
-        Vendor = 0x0903,
-        Extensions = 0x0904,
-        /* 2.1 */
-        HostTimerResolution = 0x0905,
-    }
+
+
 
     // cl_device_type - bitfield
     [Flags]

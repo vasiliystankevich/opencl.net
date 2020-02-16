@@ -22,8 +22,9 @@
 
 using System;
 using System.Runtime.InteropServices;
-
-using CASS.Types;
+using CASS.OpenCL.Types;
+using CASS.OpenCL.Types.Enums;
+using CASS.OpenCL.Types.Primitives;
 
 namespace CASS.OpenCL.OpenGL
 {
