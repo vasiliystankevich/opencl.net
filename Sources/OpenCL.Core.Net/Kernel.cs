@@ -183,7 +183,7 @@ namespace OpenCL.Core.Net
 
         public Mem CreateBuffer(MemFlags flags, SizeT sizeInBytes)
         {
-            Mem buffer = OpenCLDriver.clCreateBuffer(ctx, flags, sizeInBytes, IntPtr.Zero, ref clError);
+            Mem buffer = MemoryObjectApi.clCreateBuffer(ctx, flags, sizeInBytes, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
             return buffer;
@@ -192,7 +192,7 @@ namespace OpenCL.Core.Net
         public Mem CreateImage2D(MemFlags flags, ImageFormat format, 
             SizeT width, SizeT height, SizeT rowPitchInBytes)
         {
-            Mem image = OpenCLDriver.clCreateImage2D(ctx, flags, ref format, 
+            Mem image = MemoryObjectApi.clCreateImage2D(ctx, flags, ref format, 
                 width, height, rowPitchInBytes, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
@@ -203,7 +203,7 @@ namespace OpenCL.Core.Net
             SizeT width, SizeT height, SizeT depth,
             SizeT rowPitchInBytes, SizeT slicePitchInBytes)
         {
-            Mem image = OpenCLDriver.clCreateImage3D(ctx, flags, ref format,
+            Mem image = MemoryObjectApi.clCreateImage3D(ctx, flags, ref format,
                 width, height, depth, rowPitchInBytes, slicePitchInBytes, 
                 IntPtr.Zero, ref clError);
             ThrowCLException(clError);
@@ -213,20 +213,20 @@ namespace OpenCL.Core.Net
 
         public void RetainMemObject(Mem obj)
         {
-            clError = OpenCLDriver.clRetainMemObject(obj);
+            clError = MemoryObjectApi.clRetainMemObject(obj);
             ThrowCLException(clError);
         }
 
         public void ReleaseMemObject(Mem obj)
         {
-            clError = OpenCLDriver.clReleaseMemObject(obj);
+            clError = MemoryObjectApi.clReleaseMemObject(obj);
             ThrowCLException(clError);
         }
 
         public ImageFormat[] GetSupportedImageFormats(MemFlags flags, MemObjectType imageType)
         {
             uint numImageFormats = 0;
-            clError = OpenCLDriver.clGetSupportedImageFormats(ctx, flags, 
+            clError = MemoryObjectApi.clGetSupportedImageFormats(ctx, flags, 
                 imageType, 0, IntPtr.Zero, ref numImageFormats);
             ThrowCLException(clError);
 
@@ -236,7 +236,7 @@ namespace OpenCL.Core.Net
             }
 
             ImageFormat[] formats = new ImageFormat[numImageFormats];
-            clError = OpenCLDriver.clGetSupportedImageFormats(ctx, flags,
+            clError = MemoryObjectApi.clGetSupportedImageFormats(ctx, flags,
                 imageType, numImageFormats, formats, ref numImageFormats);
             ThrowCLException(clError);
 
@@ -1031,7 +1031,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = OpenCLDriver.clGetMemObjectInfo(memobj, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = MemoryObjectApi.clGetMemObjectInfo(memobj, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -1047,8 +1047,9 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = OpenCLDriver.clGetMemObjectInfo(memobj, info,
+                error = MemoryObjectApi.clGetMemObjectInfo(memobj, info,
                     param_value_size_ret, ptr, ref param_value_size_ret);
+                ThrowCLException(error);
 
                 //TODO: Add missing cases.
 
@@ -1102,7 +1103,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = OpenCLDriver.clGetImageInfo(memobj, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = MemoryObjectApi.clGetImageInfo(memobj, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -1118,8 +1119,9 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = OpenCLDriver.clGetImageInfo(memobj, info,
+                error = MemoryObjectApi.clGetImageInfo(memobj, info,
                     param_value_size_ret, ptr, ref param_value_size_ret);
+                ThrowCLException(error);
 
                 //TODO: Add missing cases.
 
@@ -1157,10 +1159,10 @@ namespace OpenCL.Core.Net
             return result;
         }
 
-        public static void SetMemObjectDestructorCallback(Mem memobj, 
-            OpenCLDriver.DestructionFunction function, IntPtr userData)
+        public static void SetMemObjectDestructorCallback(Mem memobj,
+            Action<Mem, IntPtr> function, IntPtr userData)
         {
-            Error error = OpenCLDriver.clSetMemObjectDestructorCallback(memobj, function, userData);
+            Error error = MemoryObjectApi.clSetMemObjectDestructorCallback(memobj, function, userData);
             ThrowCLException(error);
         }
         #endregion
