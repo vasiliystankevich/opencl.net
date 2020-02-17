@@ -2,9 +2,9 @@
 {
     /* 2.0 */
     // cl_kernel_exec_info
-    public enum CLKernelExecInfo : uint
+    public enum KernelExecInfo : uint
     {
-        SVMPtrs = 0x11B6,
-        SVMFineGrainSystem = 0x11B7,
+        SvmPtrs = 0x11B6,
+        SvmFineGrainSystem = 0x11B7,
     }
 }

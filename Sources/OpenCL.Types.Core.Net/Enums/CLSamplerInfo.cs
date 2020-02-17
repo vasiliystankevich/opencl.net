@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_sampler_info
-    public enum CLSamplerInfo : uint
+    public enum SamplerInfo : uint
     {
         ReferenceCount = 0x1150,
         Context = 0x1151,
@@ -9,8 +9,8 @@
         AddressingMode = 0x1153,
         FilterMode = 0x1154,
         /* 2.0 */
-        MIPFilterMode = 0x1155,
-        LODMin = 0x1156,
-        LODMax = 0x1157,
+        MipFilterMode = 0x1155,
+        LodMin = 0x1156,
+        LodMax = 0x1157,
     }
 }

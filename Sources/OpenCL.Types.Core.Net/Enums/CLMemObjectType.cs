@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_mem_object_type
-    public enum CLMemObjectType : uint
+    public enum MemObjectType : uint
     {
         Buffer = 0x10F0,
         Image2D = 0x10F1,
@@ -12,6 +12,6 @@
         Image1DArray = 0x10F5,
         Image1DBuffer = 0x10F6,
         /* 2.0 */
-        Pipe = 0x10F7,
+        Pipe = 0x10F7
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_kernel_work_group_info
-    public enum CLKernelWorkGroupInfo : uint
+    public enum KernelWorkGroupInfo : uint
     {
         WorkGroupSize = 0x11B0,
         CompileWithWorkGroupSize = 0x11B1,
@@ -10,6 +10,6 @@
         PreferredWorkGroupSizeMultiple = 0x11B3,
         PrivateMemSize = 0x11B4,
         /* 1.2 */
-        GlobalWorkSize = 0x11B5,
+        GlobalWorkSize = 0x11B5
     }
 }

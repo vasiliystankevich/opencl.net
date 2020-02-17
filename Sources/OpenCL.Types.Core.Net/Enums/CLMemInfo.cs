@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_mem_info
-    public enum CLMemInfo : uint
+    public enum MemInfo : uint
     {
         Type = 0x1100,
         Flags = 0x1101,
@@ -14,6 +14,6 @@
         AssociatedMemObject = 0x1107,
         Offset = 0x1108,
         /* 2.0 */
-        UsesSVMPointer = 0x1109,
+        UsesSvmPointer = 0x1109
     }
 }

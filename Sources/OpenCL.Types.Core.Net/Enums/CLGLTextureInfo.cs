@@ -1,6 +1,6 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
-    public enum CLGLTextureInfo
+    public enum GLTextureInfo
     {
         TextureTarget = 0x2004,
         MipMapLevel = 0x2005,

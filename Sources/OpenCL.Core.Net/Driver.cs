@@ -51,7 +51,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetPlatformInfo(
             PlatformId platform,
-            CLPlatformInfo param_name,
+            PlatformInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -209,7 +209,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreateBuffer(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             SizeT size,
             IntPtr host_ptr,
             ref Error errcode_ret);
@@ -218,14 +218,14 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreateSubBuffer(
             Mem buffer,
-            CLMemFlags flags,
+            MemFlags flags,
             BufferCreateType buffer_create_type,
             IntPtr buffer_create_info,
             ref Error errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreateSubBuffer(
             Mem buffer,
-            CLMemFlags flags,
+            MemFlags flags,
             BufferCreateType buffer_create_type,
             [MarshalAs(UnmanagedType.LPStruct)]
             BufferRegion buffer_create_info,
@@ -235,7 +235,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreateImage2D(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             ref ImageFormat image_format,
             SizeT image_width,
             SizeT image_height,
@@ -247,7 +247,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreateImage3D(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             ref ImageFormat image_format,
             SizeT image_width,
             SizeT image_height,
@@ -261,7 +261,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreateImage(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             [MarshalAs(UnmanagedType.LPStruct)]
             ImageFormat image_format,
             [MarshalAs(UnmanagedType.LPStruct)]
@@ -271,7 +271,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreateImage(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             [MarshalAs(UnmanagedType.LPStruct)]
             ImageFormat image_format,
             [MarshalAs(UnmanagedType.LPStruct)]
@@ -283,7 +283,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreatePipe(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             uint pipe_packet_size,
             uint pipe_max_packets,
             [In] IntPtr[] properties,
@@ -291,7 +291,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Mem clCreatePipe(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             uint pipe_packet_size,
             uint pipe_max_packets,
             [In] IntPtr[] properties,
@@ -306,16 +306,16 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetSupportedImageFormats(
             Context context,
-            CLMemFlags flags,
-            CLMemObjectType image_type,
+            MemFlags flags,
+            MemObjectType image_type,
             uint num_entries,
             IntPtr image_formats,
             ref uint num_image_formats);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetSupportedImageFormats(
             Context context,
-            CLMemFlags flags,
-            CLMemObjectType image_type,
+            MemFlags flags,
+            MemObjectType image_type,
             uint num_entries,
             [Out] ImageFormat[] image_formats,
             ref uint num_image_formats);
@@ -323,7 +323,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetMemObjectInfo(
             Mem memobj,
-            CLMemInfo param_name,
+            MemInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -331,7 +331,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetImageInfo(
             Mem image,
-            CLImageInfo param_name,
+            ImageInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -340,7 +340,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetPipeInfo(
             Mem pipe,
-            CLPipeInfo param_name,
+            PipeInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -361,7 +361,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clSVMAlloc(
             Context context,
-            CLSVMMemFlags flags,
+            SvmMemFlags flags,
             SizeT size,
             uint alignment);
 
@@ -378,7 +378,7 @@ namespace OpenCL.Core.Net
             Context context,
             Bool normalized_coords,
             AddressingMode addressing_mode,
-            CLFilterMode filter_mode,
+            FilterMode filter_mode,
             ref Error errcode_ret);
 
         /* 2.0 */
@@ -402,7 +402,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetSamplerInfo(
             Sampler sampler,
-            CLSamplerInfo param_name,
+            SamplerInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -547,7 +547,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetProgramInfo(
             Program program,
-            CLProgramInfo param_name,
+            ProgramInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -556,7 +556,7 @@ namespace OpenCL.Core.Net
         public static extern Error clGetProgramBuildInfo(
             Program program,
             DeviceId device,
-            CLProgramBuildInfo param_name,
+            ProgramBuildInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -684,26 +684,26 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clSetKernelExecInfo(
             Types.Core.Net.Primitives.Kernel kernel,
-            CLKernelExecInfo param_name,
+            KernelExecInfo param_name,
             SizeT param_value_size,
             IntPtr param_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clSetKernelExecInfo(
             Types.Core.Net.Primitives.Kernel kernel,
-            CLKernelExecInfo param_name,
+            KernelExecInfo param_name,
             SizeT param_value_size,
             [In] IntPtr[] param_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clSetKernelExecInfo(
             Types.Core.Net.Primitives.Kernel kernel,
-            CLKernelExecInfo param_name,
+            KernelExecInfo param_name,
             SizeT param_value_size,
             ref Bool param_value);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetKernelInfo(
             Types.Core.Net.Primitives.Kernel kernel,
-            CLKernelInfo param_name,
+            KernelInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -713,7 +713,7 @@ namespace OpenCL.Core.Net
         public static extern Error clGetKernelArgInfo(
             Types.Core.Net.Primitives.Kernel kernel,
             uint arg_indx,
-            CLKernelArgInfo param_name,
+            KernelArgInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -722,7 +722,7 @@ namespace OpenCL.Core.Net
         public static extern Error clGetKernelWorkGroupInfo(
             Types.Core.Net.Primitives.Kernel kernel,
             DeviceId device,
-            CLKernelWorkGroupInfo param_name,
+            KernelWorkGroupInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -732,7 +732,7 @@ namespace OpenCL.Core.Net
         public static extern Error clGetKernelSubGroupInfo(
             Types.Core.Net.Primitives.Kernel kernel,
             DeviceId device,
-            CLKernelSubGroupInfo param_name,
+            KernelSubGroupInfo param_name,
             SizeT input_value_size,
             IntPtr input_value,
             SizeT param_value_size,
@@ -749,7 +749,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetEventInfo(
             Event e,
-            CLEventInfo param_name,
+            EventInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -776,7 +776,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clSetUserEventStatus(
             Event e,
-            CLExecutionStatus execution_status);
+            ExecutionStatus execution_status);
 
         public delegate void EventCallback(
             Event e,
@@ -786,7 +786,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clSetEventCallback(
             Event e,
-            CLExecutionStatus command_exec_callback_type,
+            ExecutionStatus command_exec_callback_type,
             EventCallback pfn_notify,
             IntPtr user_data);
         #endregion
@@ -795,7 +795,7 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern Error clGetEventProfilingInfo(
             Event e,
-            CLProfilingInfo param_name,
+            ProfilingInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -1152,7 +1152,7 @@ namespace OpenCL.Core.Net
             CommandQueue command_queue,
             Mem buffer,
             Bool blocking_map,
-            CLMapFlags map_flags,
+            MapFlags map_flags,
             SizeT offset,
             SizeT cb,
             uint num_events_in_wait_list,
@@ -1164,7 +1164,7 @@ namespace OpenCL.Core.Net
             CommandQueue command_queue,
             Mem buffer,
             Bool blocking_map,
-            CLMapFlags map_flags,
+            MapFlags map_flags,
             SizeT offset,
             SizeT cb,
             uint num_events_in_wait_list,
@@ -1177,7 +1177,7 @@ namespace OpenCL.Core.Net
             CommandQueue command_queue,
             Mem image,
             Bool blocking_map,
-            CLMapFlags map_flags,
+            MapFlags map_flags,
             SizeT[] origin,
             SizeT[] region,
             ref SizeT image_row_pitch,
@@ -1191,7 +1191,7 @@ namespace OpenCL.Core.Net
             CommandQueue command_queue,
             Mem image,
             Bool blocking_map,
-            CLMapFlags map_flags,
+            MapFlags map_flags,
             SizeT[] origin,
             SizeT[] region,
             ref SizeT image_row_pitch,
@@ -1224,7 +1224,7 @@ namespace OpenCL.Core.Net
             CommandQueue command_queue,
             uint num_mem_objects,
             [In] Mem[] mem_objects,
-            CLMemMigrationFlags flags,
+            MemMigrationFlags flags,
             uint num_events_in_wait_list,
             [In] Event[] event_wait_list,
             ref Event e);
@@ -1233,7 +1233,7 @@ namespace OpenCL.Core.Net
             CommandQueue command_queue,
             uint num_mem_objects,
             [In] Mem[] mem_objects,
-            CLMemMigrationFlags flags,
+            MemMigrationFlags flags,
             uint num_events_in_wait_list,
             [In] Event[] event_wait_list,
             IntPtr e);
@@ -1380,7 +1380,7 @@ namespace OpenCL.Core.Net
         public static extern Error clEnqueueSVMMap(
             CommandQueue command_queue,
             Bool blocking_map,
-            CLMapFlags flags,
+            MapFlags flags,
             IntPtr svm_ptr,
             SizeT size,
             uint num_events_in_wait_list,
@@ -1403,7 +1403,7 @@ namespace OpenCL.Core.Net
             uint num_svm_pointers,
             [In] IntPtr[] svm_pointers,
             [In] SizeT[] sizes,
-            CLMemMigrationFlags flags,
+            MemMigrationFlags flags,
             uint num_events_in_wait_list,
             [In] Event[] event_wait_list,
             ref Event e);

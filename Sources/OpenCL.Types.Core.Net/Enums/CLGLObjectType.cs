@@ -1,6 +1,6 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
-    public enum CLGLObjectType
+    public enum GLObjectType
     {
         Buffer = 0x2000,
         Texture2D = 0x2001,

@@ -36,20 +36,20 @@ namespace OpenCL.Core.Net
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLBuffer(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             uint bufobj,
             ref Error errcode_ret);
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLBuffer(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             uint bufobj,
             IntPtr errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             int target,
             int miplevel,
             uint texture,
@@ -57,7 +57,7 @@ namespace OpenCL.Core.Net
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             int target,
             int miplevel,
             uint texture,
@@ -67,7 +67,7 @@ namespace OpenCL.Core.Net
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture2D(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             int target,
             int miplevel,
             uint texture,
@@ -76,7 +76,7 @@ namespace OpenCL.Core.Net
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture2D(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             int target,
             int miplevel,
             uint texture,
@@ -86,7 +86,7 @@ namespace OpenCL.Core.Net
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture3D(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             int target,
             int miplevel,
             uint texture,
@@ -95,7 +95,7 @@ namespace OpenCL.Core.Net
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture3D(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             int target,
             int miplevel,
             uint texture,
@@ -104,13 +104,13 @@ namespace OpenCL.Core.Net
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLRenderbuffer(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             uint renderbuffer,
             ref Error errcode_ret);
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLRenderbuffer(
             Context context,
-            CLMemFlags flags,
+            MemFlags flags,
             uint renderbuffer,
             IntPtr errcode_ret);
 

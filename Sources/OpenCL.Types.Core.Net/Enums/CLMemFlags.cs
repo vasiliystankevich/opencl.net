@@ -4,7 +4,7 @@ namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_mem_flags - bitfield
     [Flags]
-    public enum CLMemFlags : ulong
+    public enum MemFlags : ulong
     {
         ReadWrite = 1 << 0,
         WriteOnly = 1 << 1,
@@ -19,6 +19,6 @@ namespace OpenCL.Types.Core.Net.Enums
         HostNoAccess = 1 << 9,
 
         /* 2.0 */
-        KernelReadAndWrite = 1 << 12,
+        KernelReadAndWrite = 1 << 12
     }
 }

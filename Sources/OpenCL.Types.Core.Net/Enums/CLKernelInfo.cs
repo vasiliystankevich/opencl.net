@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_kernel_info
-    public enum CLKernelInfo : uint
+    public enum KernelInfo : uint
     {
         FunctionName = 0x1190,
         NumArgs = 0x1191,
@@ -12,6 +12,6 @@
         Attributes = 0x1195,
         /* 2.1 */
         MaxNumSubGroups = 0x11B9,
-        CompileNumSubGroups = 0x11BA,
+        CompileNumSubGroups = 0x11BA
     }
 }

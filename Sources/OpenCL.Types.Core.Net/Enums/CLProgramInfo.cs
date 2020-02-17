@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_program_info
-    public enum CLProgramInfo : uint
+    public enum ProgramInfo : uint
     {
         ReferenceCount = 0x1160,
         Context = 0x1161,
@@ -17,6 +17,6 @@
         IL = 0x1169,
         /* 2.2 */
         ScopeGlobalCtorsPresent = 0x116A,
-        ScopeGlobalDtorsPresent = 0x116B,
+        ScopeGlobalDtorsPresent = 0x116B
     }
 }

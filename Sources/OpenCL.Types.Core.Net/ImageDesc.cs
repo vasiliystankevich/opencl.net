@@ -6,7 +6,7 @@ namespace OpenCL.Types.Core.Net
     /* 1.2 */
     public struct ImageDesc
     {
-        CLMemObjectType ImageType;
+        MemObjectType ImageType;
         SizeT ImageWidth;
         SizeT ImageHeight;
         SizeT ImageDepth;

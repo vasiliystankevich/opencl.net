@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_image_info
-    public enum CLImageInfo : uint
+    public enum ImageInfo : uint
     {
         Format = 0x1110,
         ElementSize = 0x1111,
@@ -13,7 +13,7 @@
         /* 1.2 */
         ArraySize = 0x1117,
         Buffer = 0x1118,
-        NumMIPLevels = 0x1119,
-        NumSamples = 0x111A,
+        NumMipLevels = 0x1119,
+        NumSamples = 0x111A
     }
 }

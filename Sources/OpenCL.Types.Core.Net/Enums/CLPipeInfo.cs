@@ -2,9 +2,9 @@
 {
     /* 2.0 */
     // cl_pipe_info
-    public enum CLPipeInfo : uint
+    public enum PipeInfo : uint
     {
         PacketSize = 0x1120,
-        MaxPackets = 0x1121,
+        MaxPackets = 0x1121
     }
 }

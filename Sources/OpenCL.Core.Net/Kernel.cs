@@ -172,10 +172,10 @@ namespace OpenCL.Core.Net
         #region Memory Functions
         public Mem CreateBuffer(SizeT sizeInBytes)
         {
-            return CreateBuffer(CLMemFlags.ReadWrite, sizeInBytes);
+            return CreateBuffer(MemFlags.ReadWrite, sizeInBytes);
         }
 
-        public Mem CreateBuffer(CLMemFlags flags, SizeT sizeInBytes)
+        public Mem CreateBuffer(MemFlags flags, SizeT sizeInBytes)
         {
             Mem buffer = OpenCLDriver.clCreateBuffer(ctx, flags, sizeInBytes, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
@@ -183,7 +183,7 @@ namespace OpenCL.Core.Net
             return buffer;
         }
 
-        public Mem CreateImage2D(CLMemFlags flags, ImageFormat format, 
+        public Mem CreateImage2D(MemFlags flags, ImageFormat format, 
             SizeT width, SizeT height, SizeT rowPitchInBytes)
         {
             Mem image = OpenCLDriver.clCreateImage2D(ctx, flags, ref format, 
@@ -193,7 +193,7 @@ namespace OpenCL.Core.Net
             return image;
         }
 
-        public Mem CreateImage3D(CLMemFlags flags, ImageFormat format,
+        public Mem CreateImage3D(MemFlags flags, ImageFormat format,
             SizeT width, SizeT height, SizeT depth,
             SizeT rowPitchInBytes, SizeT slicePitchInBytes)
         {
@@ -217,7 +217,7 @@ namespace OpenCL.Core.Net
             ThrowCLException(clError);
         }
 
-        public ImageFormat[] GetSupportedImageFormats(CLMemFlags flags, CLMemObjectType imageType)
+        public ImageFormat[] GetSupportedImageFormats(MemFlags flags, MemObjectType imageType)
         {
             uint numImageFormats = 0;
             clError = OpenCLDriver.clGetSupportedImageFormats(ctx, flags, 
@@ -550,7 +550,7 @@ namespace OpenCL.Core.Net
         /// <param name="platform">Platform ID to query.</param>
         /// <param name="info">Requested information.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetPlatformInfo(PlatformId platform, CLPlatformInfo info)
+        public static object GetPlatformInfo(PlatformId platform, PlatformInfo info)
         {
             Error err = Error.Success;
 
@@ -585,19 +585,19 @@ namespace OpenCL.Core.Net
 
                 switch (info)
                 {
-                    case CLPlatformInfo.Profile:
+                    case PlatformInfo.Profile:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLPlatformInfo.Version:
+                    case PlatformInfo.Version:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLPlatformInfo.Name:
+                    case PlatformInfo.Name:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLPlatformInfo.Vendor:
+                    case PlatformInfo.Vendor:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLPlatformInfo.Extensions:
+                    case PlatformInfo.Extensions:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
                 }
@@ -1014,7 +1014,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Memory Utilities
-        public static object GetMemObjectInfo(Mem memobj, CLMemInfo info)
+        public static object GetMemObjectInfo(Mem memobj, MemInfo info)
         {
             Error error = Error.Success;
 
@@ -1047,31 +1047,31 @@ namespace OpenCL.Core.Net
 
                 switch (info)
                 {
-                    case CLMemInfo.Type:
-                        result = (CLMemObjectType)Marshal.ReadInt32(ptr);
+                    case MemInfo.Type:
+                        result = (MemObjectType)Marshal.ReadInt32(ptr);
                         break;
-                    case CLMemInfo.Flags:
-                        result = (CLMemFlags)Marshal.ReadInt64(ptr);
+                    case MemInfo.Flags:
+                        result = (MemFlags)Marshal.ReadInt64(ptr);
                         break;
-                    case CLMemInfo.Size:
+                    case MemInfo.Size:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
-                    case CLMemInfo.HostPtr:
+                    case MemInfo.HostPtr:
                         result = Marshal.ReadIntPtr(ptr);
                         break;
-                    case CLMemInfo.MapCount:
+                    case MemInfo.MapCount:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLMemInfo.ReferenceCount:
+                    case MemInfo.ReferenceCount:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLMemInfo.Context:
+                    case MemInfo.Context:
                         result = Marshal.PtrToStructure(ptr, typeof(Context));
                         break;
-                    case CLMemInfo.AssociatedMemObject:
+                    case MemInfo.AssociatedMemObject:
                         result = Marshal.PtrToStructure(ptr, typeof(Mem));
                         break;
-                    case CLMemInfo.Offset:
+                    case MemInfo.Offset:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
                 }
@@ -1085,7 +1085,7 @@ namespace OpenCL.Core.Net
             return result;
         }
 
-        public static object GetImageInfo(Mem memobj, CLImageInfo info)
+        public static object GetImageInfo(Mem memobj, ImageInfo info)
         {
             Error error = Error.Success;
 
@@ -1118,25 +1118,25 @@ namespace OpenCL.Core.Net
 
                 switch (info)
                 {
-                    case CLImageInfo.Format:
+                    case ImageInfo.Format:
                         result = Marshal.PtrToStructure(ptr, typeof(ImageFormat));
                         break;
-                    case CLImageInfo.ElementSize:
+                    case ImageInfo.ElementSize:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
-                    case CLImageInfo.RowPitch:
+                    case ImageInfo.RowPitch:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
-                    case CLImageInfo.SlicePitch:
+                    case ImageInfo.SlicePitch:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
-                    case CLImageInfo.Width:
+                    case ImageInfo.Width:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
-                    case CLImageInfo.Height:
+                    case ImageInfo.Height:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
-                    case CLImageInfo.Depth:
+                    case ImageInfo.Depth:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
                 }
@@ -1164,7 +1164,7 @@ namespace OpenCL.Core.Net
             ThrowCLException(OpenCLDriver.clUnloadCompiler());
         }
 
-        public static object GetProgramInfo(Program program, CLProgramInfo info)
+        public static object GetProgramInfo(Program program, ProgramInfo info)
         {
             Error error = Error.Success;
 
@@ -1190,7 +1190,7 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value for normal scalars and arrays.
-                if (info != CLProgramInfo.Binaries)
+                if (info != ProgramInfo.Binaries)
                 {
                     error = OpenCLDriver.clGetProgramInfo(program, info,
                         param_value_size_ret, ptr, ref param_value_size_ret);
@@ -1198,19 +1198,19 @@ namespace OpenCL.Core.Net
 
                 switch (info)
                 {
-                    case CLProgramInfo.ReferenceCount:
+                    case ProgramInfo.ReferenceCount:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLProgramInfo.Context:
+                    case ProgramInfo.Context:
                         result = Marshal.PtrToStructure(ptr, typeof(Context));
                         break;
-                    case CLProgramInfo.NumDevices:
+                    case ProgramInfo.NumDevices:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLProgramInfo.Devices:
+                    case ProgramInfo.Devices:
                         {
                             // Get number of devices.
-                            uint numDevices = (uint)GetProgramInfo(program, CLProgramInfo.NumDevices);
+                            uint numDevices = (uint)GetProgramInfo(program, ProgramInfo.NumDevices);
 
                             // Read device IDs.
                             DeviceId[] devices = new DeviceId[numDevices];
@@ -1222,13 +1222,13 @@ namespace OpenCL.Core.Net
                             result = devices;
                         }
                         break;
-                    case CLProgramInfo.Source:
+                    case ProgramInfo.Source:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLProgramInfo.BinarySizes:
+                    case ProgramInfo.BinarySizes:
                         {
                             // Get number of devices.
-                            uint numDevices = (uint)GetProgramInfo(program, CLProgramInfo.NumDevices);
+                            uint numDevices = (uint)GetProgramInfo(program, ProgramInfo.NumDevices);
 
                             // Read binary sizes.
                             SizeT[] binarySizes = new SizeT[numDevices];
@@ -1240,13 +1240,13 @@ namespace OpenCL.Core.Net
                             result = binarySizes;
                         }
                         break;
-                    case CLProgramInfo.Binaries:
+                    case ProgramInfo.Binaries:
                         {
                             // Get number of devices.
-                            uint numDevices = (uint)GetProgramInfo(program, CLProgramInfo.NumDevices);
+                            uint numDevices = (uint)GetProgramInfo(program, ProgramInfo.NumDevices);
 
                             // Get binary size for each device.
-                            SizeT[] binarySizes = (SizeT[])GetProgramInfo(program, CLProgramInfo.BinarySizes);
+                            SizeT[] binarySizes = (SizeT[])GetProgramInfo(program, ProgramInfo.BinarySizes);
 
                             // Allocate native pointers to store binary data for each device.
                             for (int i = 0; i < numDevices; i++)
@@ -1289,7 +1289,7 @@ namespace OpenCL.Core.Net
         }
 
         public static object GetProgramBuildInfo(Program program, DeviceId device,
-            CLProgramBuildInfo info)
+            ProgramBuildInfo info)
         {
             Error error = Error.Success;
 
@@ -1320,13 +1320,13 @@ namespace OpenCL.Core.Net
 
                 switch (info)
                 {
-                    case CLProgramBuildInfo.Status:
+                    case ProgramBuildInfo.Status:
                         result = (BuildStatus)Marshal.ReadInt32(ptr);
                         break;
-                    case CLProgramBuildInfo.Options:
+                    case ProgramBuildInfo.Options:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLProgramBuildInfo.Log:
+                    case ProgramBuildInfo.Log:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
                 }
@@ -1342,7 +1342,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Event Utilities
-        public static object GetEventProfilingInfo(Event e, CLProfilingInfo info)
+        public static object GetEventProfilingInfo(Event e, ProfilingInfo info)
         {
             Error error = Error.Success;
 
@@ -1373,16 +1373,16 @@ namespace OpenCL.Core.Net
 
                 switch (info)
                 {
-                    case CLProfilingInfo.Queued:
+                    case ProfilingInfo.Queued:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
-                    case CLProfilingInfo.Submit:
+                    case ProfilingInfo.Submit:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
-                    case CLProfilingInfo.Start:
+                    case ProfilingInfo.Start:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
-                    case CLProfilingInfo.End:
+                    case ProfilingInfo.End:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
                 }

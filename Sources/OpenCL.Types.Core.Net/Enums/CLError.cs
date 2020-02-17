@@ -56,7 +56,7 @@
         InvalidEventWaitList = -57,
         InvalidEvent = -58,
         InvalidOperation = -59,
-        InvalidGLObject = -60,
+        InvalidGlObject = -60,
         InvalidBufferSize = -61,
         InvalidMipLevel = -62,
         InvalidGlobalWorkSize = -63,
@@ -71,7 +71,7 @@
         InvalidPipeSize = -69,
         InvalidDeviceQueue = -70,
         /* 2.2 */
-        InvalidSpecID = -71,
+        InvalidSpecId = -71,
         MaxSizeRestrictionExceeded = -72
     }
 }
