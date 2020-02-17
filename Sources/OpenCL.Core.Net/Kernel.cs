@@ -23,6 +23,7 @@
 using System;
 using System.Runtime.InteropServices;
 using OpenCL.Core.Net.Driver;
+using OpenCL.Core.Net.Native;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
 using OpenCL.Types.Core.Net.Enums.Command;
@@ -531,7 +532,7 @@ namespace OpenCL.Core.Net
         {
             // Check how many platforms are available.
             uint num_platforms = 0;
-            Error err = OpenCLDriver.clGetPlatformIDs(0, IntPtr.Zero, ref num_platforms);
+            Error err = PlatformApi.clGetPlatformIDs(0, IntPtr.Zero, ref num_platforms);
 
             if (err != Error.Success)
             {
@@ -545,7 +546,7 @@ namespace OpenCL.Core.Net
 
             // Get the actual platforms once we know their amount.
             PlatformId[] platforms = new PlatformId[num_platforms];
-            err = OpenCLDriver.clGetPlatformIDs(num_platforms, platforms, ref num_platforms);
+            err = PlatformApi.clGetPlatformIDs(num_platforms, platforms, ref num_platforms);
 
             return platforms;
         }
@@ -566,7 +567,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            err = OpenCLDriver.clGetPlatformInfo(platform, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            err = PlatformApi.clGetPlatformInfo(platform, info, 0, IntPtr.Zero, ref param_value_size_ret);
 
             if (err != Error.Success)
             {
@@ -586,7 +587,7 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                err = OpenCLDriver.clGetPlatformInfo(platform, info,
+                err = PlatformApi.clGetPlatformInfo(platform, info,
                 param_value_size_ret, ptr, ref param_value_size_ret);
 
                 switch (info)
@@ -641,7 +642,7 @@ namespace OpenCL.Core.Net
         {
             // Check how many devices are available.
             uint num_devices = 0;
-            Error err = OpenCLDriver.clGetDeviceIDs(platform, devType, 0, IntPtr.Zero, ref num_devices);
+            Error err = DeviceApi.clGetDeviceIDs(platform, devType, 0, IntPtr.Zero, ref num_devices);
 
             if (err != Error.Success)
             {
@@ -655,7 +656,7 @@ namespace OpenCL.Core.Net
 
             // Get the actual devices once we know their amount.
             DeviceId[] devices = new DeviceId[num_devices];
-            err = OpenCLDriver.clGetDeviceIDs(platform, devType, num_devices, devices, ref num_devices);
+            err = DeviceApi.clGetDeviceIDs(platform, devType, num_devices, devices, ref num_devices);
 
             return devices;
         }
@@ -678,7 +679,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            err = OpenCLDriver.clGetDeviceInfo(device, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            err = DeviceApi.clGetDeviceInfo(device, info, 0, IntPtr.Zero, ref param_value_size_ret);
 
             if (err != Error.Success)
             {
@@ -698,7 +699,7 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                err = OpenCLDriver.clGetDeviceInfo(device, info,
+                err = DeviceApi.clGetDeviceInfo(device, info,
                 param_value_size_ret, ptr, ref param_value_size_ret);
 
                 switch (info)

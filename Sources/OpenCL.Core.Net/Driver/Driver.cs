@@ -22,6 +22,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenCL.Core.Net.Native;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
 using OpenCL.Types.Core.Net.Enums.Command;
@@ -40,93 +41,6 @@ namespace OpenCL.Core.Net.Driver
     /// </summary>
     public class OpenCLDriver
     {
-        //internal const string OpenClDllName.Value = "OpenCL";
-
-        #region Platform API
-        [DllImport(Dll.Name)]
-        public static extern Error clGetPlatformIDs(
-            uint num_entries,
-            IntPtr platforms,
-            ref uint num_platforms);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clGetPlatformIDs(
-            uint num_entries,
-            [Out] PlatformId[] platforms,
-            ref uint num_platforms);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clGetPlatformInfo(
-            PlatformId platform,
-            PlatformInfo param_name,
-            SizeT param_value_size,
-            IntPtr param_value,
-            ref SizeT param_value_size_ret);
-        #endregion
-
-        #region Device APIs
-        [DllImport(Dll.Name)]
-        public static extern Error clGetDeviceIDs(
-            PlatformId platform_id,
-            DeviceType device_type,
-            uint num_entries,
-            [Out] DeviceId[] devices,
-            ref uint num_devices);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clGetDeviceIDs(
-            PlatformId platform_id,
-            DeviceType device_type,
-            uint num_entries,
-            IntPtr devices,
-            ref uint num_devices);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clGetDeviceInfo(
-            DeviceId device,
-            DeviceInfo param_name,
-            SizeT param_value_size,
-            IntPtr param_value,
-            ref SizeT param_value_size_ret);
-
-        /* 1.2 */
-        [DllImport(Dll.Name)]
-        public static extern Error clCreateSubDevices(
-            DeviceId in_device,
-            [In] IntPtr[] properties,
-            uint num_devices,
-            [In, Out] DeviceId[] out_devices,
-            ref uint num_devices_ret);
-
-        /* 1.2 */
-        [DllImport(Dll.Name)]
-        public static extern Error clRetainDevice(DeviceId device);
-
-        /* 1.2 */
-        [DllImport(Dll.Name)]
-        public static extern Error clReleaseDevice(DeviceId device);
-
-        /* 2.1 */
-        [DllImport(Dll.Name)]
-        public static extern Error clSetDefaultDeviceCommandQueue(
-            Context context,
-            DeviceId device,
-            CommandQueue command_queue);
-
-        /* 2.1 */
-        [DllImport(Dll.Name)]
-        public static extern Error clGetDeviceAndHostTimer(
-            DeviceId device,
-            ref ulong device_timestamp,
-            ref ulong host_timestamp);
-
-        /* 2.1 */
-        [DllImport(Dll.Name)]
-        public static extern Error clGetHostTimer(
-            DeviceId device,
-            ref ulong host_timestamp);
-        #endregion
-
         #region Context APIs
         public delegate void LoggingFunction(
             IntPtr errinfo,
@@ -1414,10 +1328,6 @@ namespace OpenCL.Core.Net.Driver
             uint num_events_in_wait_list,
             [In] Event[] event_wait_list,
             ref Event e);
-        #endregion
-
-        #region Extension function access
-
         #endregion
     }
 }

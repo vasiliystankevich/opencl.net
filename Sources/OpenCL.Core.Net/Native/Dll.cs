@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Core.Net.Driver
+﻿namespace OpenCL.Core.Net.Native
 {
     public class Dll
     {

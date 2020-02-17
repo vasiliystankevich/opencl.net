@@ -5,12 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenCL.Types.Core.Net\OpenCL.Types.Core.Net.csproj" />
+    <Compile Remove="Driver\API\**" />
+    <Compile Remove="Kernel\**" />
+    <EmbeddedResource Remove="Driver\API\**" />
+    <EmbeddedResource Remove="Kernel\**" />
+    <None Remove="Driver\API\**" />
+    <None Remove="Kernel\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Driver\API\" />
-    <Folder Include="Kernel\" />
+    <ProjectReference Include="..\OpenCL.Types.Core.Net\OpenCL.Types.Core.Net.csproj" />
   </ItemGroup>
 
 </Project>
