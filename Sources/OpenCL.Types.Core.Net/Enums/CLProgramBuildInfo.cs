@@ -1,4 +1,4 @@
-﻿namespace CASS.OpenCL.Types.Enums
+﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_program_build_info
     public enum CLProgramBuildInfo : uint

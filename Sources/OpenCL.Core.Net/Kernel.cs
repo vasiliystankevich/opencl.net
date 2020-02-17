@@ -22,12 +22,13 @@
 
 using System;
 using System.Runtime.InteropServices;
+using CASS.OpenCL;
 using CASS.OpenCL.Driver;
-using CASS.OpenCL.Types;
-using CASS.OpenCL.Types.Enums;
-using CASS.OpenCL.Types.Primitives;
+using OpenCL.Types.Core.Net;
+using OpenCL.Types.Core.Net.Enums;
+using OpenCL.Types.Core.Net.Primitives;
 
-namespace CASS.OpenCL
+namespace OpenCL.Core.Net
 {
     /// <summary>
     /// This class provides object oriented access to OpenCL(TM) driver API 

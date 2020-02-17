@@ -1,4 +1,4 @@
-﻿namespace CASS.OpenCL.Types.Enums
+﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // command execution status
     public enum CLExecutionStatus

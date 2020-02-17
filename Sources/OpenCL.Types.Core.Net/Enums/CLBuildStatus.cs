@@ -1,4 +1,4 @@
-﻿namespace CASS.OpenCL.Types.Enums
+﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_build_status
     public enum CLBuildStatus

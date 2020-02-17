@@ -1,6 +1,6 @@
-﻿using CASS.OpenCL.Types.Enums;
+﻿using OpenCL.Types.Core.Net.Enums;
 
-namespace CASS.OpenCL.Types
+namespace OpenCL.Types.Core.Net
 {
     public struct CLImageFormat
     {

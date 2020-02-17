@@ -23,8 +23,8 @@
 using System;
 using System.Runtime.InteropServices;
 using CASS.OpenCL.Driver;
-using CASS.OpenCL.Types.Enums;
-using CASS.OpenCL.Types.Primitives;
+using OpenCL.Types.Core.Net.Enums;
+using OpenCL.Types.Core.Net.Primitives;
 
 namespace CASS.OpenCL.OpenGL
 {

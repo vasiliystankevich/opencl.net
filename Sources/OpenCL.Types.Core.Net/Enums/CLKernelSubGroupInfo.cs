@@ -1,4 +1,4 @@
-﻿namespace CASS.OpenCL.Types.Enums
+﻿namespace OpenCL.Types.Core.Net.Enums
 {
     /* 2.1 */
     // cl_kernel_sub_group_info

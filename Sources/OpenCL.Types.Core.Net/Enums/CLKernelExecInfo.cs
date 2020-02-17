@@ -1,4 +1,4 @@
-﻿namespace CASS.OpenCL.Types.Enums
+﻿namespace OpenCL.Types.Core.Net.Enums
 {
     /* 2.0 */
     // cl_kernel_exec_info

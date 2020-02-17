@@ -22,7 +22,7 @@
 
 using System;
 
-namespace CASS.OpenCL.Types.Primitives
+namespace OpenCL.Types.Core.Net.Primitives
 {
     /// <summary>
     /// Used to represent a platform dependent sized variable.

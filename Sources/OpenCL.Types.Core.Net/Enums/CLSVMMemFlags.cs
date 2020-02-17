@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CASS.OpenCL.Types.Enums
+namespace OpenCL.Types.Core.Net.Enums
 {
     /* 2.0 */
     // cl_svm_mem_flags - bitfield

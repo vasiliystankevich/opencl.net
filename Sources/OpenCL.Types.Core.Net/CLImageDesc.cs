@@ -1,7 +1,7 @@
-﻿using CASS.OpenCL.Types.Enums;
-using CASS.OpenCL.Types.Primitives;
+﻿using OpenCL.Types.Core.Net.Enums;
+using OpenCL.Types.Core.Net.Primitives;
 
-namespace CASS.OpenCL.Types
+namespace OpenCL.Types.Core.Net
 {
     /* 1.2 */
     public struct CLImageDesc

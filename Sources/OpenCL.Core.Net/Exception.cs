@@ -21,7 +21,7 @@
  */
 
 using System;
-using CASS.OpenCL.Types.Enums;
+using OpenCL.Types.Core.Net.Enums;
 
 namespace CASS.OpenCL
 {

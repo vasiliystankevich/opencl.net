@@ -1,6 +1,6 @@
-﻿using CASS.OpenCL.Types.Primitives;
+﻿using OpenCL.Types.Core.Net.Primitives;
 
-namespace CASS.OpenCL.Types
+namespace OpenCL.Types.Core.Net
 {
     /* 1.1 */
     public struct CLBufferRegion

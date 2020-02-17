@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CASS.OpenCL.Types.Primitives
+namespace OpenCL.Types.Core.Net.Primitives
 {
     public struct CLContext
     {
