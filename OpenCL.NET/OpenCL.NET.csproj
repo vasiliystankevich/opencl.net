@@ -84,6 +84,17 @@
     <Compile Include="Types\Enums\CLChannelOrder.cs" />
     <Compile Include="Types\Enums\CLMemMigrationFlags.cs" />
     <Compile Include="Types\Enums\CLSVMMemFlags.cs" />
+    <Compile Include="Types\Enums\CLMemFlags.cs" />
+    <Compile Include="Types\Enums\CLCommandQueueInfo.cs" />
+    <Compile Include="Types\Enums\CLDeviceSVMCapabilities.cs" />
+    <Compile Include="Types\Enums\CLDeviceAffinityDomain.cs" />
+    <Compile Include="Types\Enums\CLDevicePartitionProperty.cs" />
+    <Compile Include="Types\Enums\CLContextProperties.cs" />
+    <Compile Include="Types\Enums\CLContextInfo.cs" />
+    <Compile Include="Types\Enums\CLDeviceExecCapabilities.cs" />
+    <Compile Include="Types\Enums\CLCommandQueueProperties.cs" />
+    <Compile Include="Types\Enums\CLGLTextureInfo.cs" />
+    <Compile Include="Types\Enums\CLGLObjectType.cs" />
     <Compile Include="Types\Enums\_.cs" />
     <Compile Include="Types\Enums\CLKernelWorkGroupInfo.cs" />
     <Compile Include="Types\Enums\CLBool.cs" />
@@ -113,7 +124,6 @@
     <Compile Include="Types\Primitives\CLPlatformID.cs" />
     <Compile Include="OpenGL\OpenCLGLDriver.cs" />
     <Compile Include="Driver\OpenCLDriver.cs" />
-    <Compile Include="Driver\Types.cs" />
     <Compile Include="OpenGL\Types.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\Primitives\CLProgram.cs" />
