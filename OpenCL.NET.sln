@@ -2,8 +2,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCL.NET", "OpenCL.NET\OpenCL.NET.csproj", "{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{429FD7E3-3D86-4F96-85B1-BDB8A598EEA5}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
@@ -12,20 +10,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCL.Core.Net", "Sources\OpenCL.Core.Net\OpenCL.Core.Net.csproj", "{5C9B8B7E-0691-475C-B2FB-46A5A45AE379}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCL.Types.Core.Net", "Sources\OpenCL.Types.Core.Net\OpenCL.Types.Core.Net.csproj", "{704D1E47-6C42-41B2-A693-780D535A2543}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C9B8B7E-0691-475C-B2FB-46A5A45AE379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C9B8B7E-0691-475C-B2FB-46A5A45AE379}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C9B8B7E-0691-475C-B2FB-46A5A45AE379}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C9B8B7E-0691-475C-B2FB-46A5A45AE379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{704D1E47-6C42-41B2-A693-780D535A2543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{704D1E47-6C42-41B2-A693-780D535A2543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{704D1E47-6C42-41B2-A693-780D535A2543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{704D1E47-6C42-41B2-A693-780D535A2543}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,4 +4,8 @@
     <TargetFrameworks>net472;netcoreapp2.2</TargetFrameworks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCL.Types.Core.Net\OpenCL.Types.Core.Net.csproj" />
+  </ItemGroup>
+
 </Project>
