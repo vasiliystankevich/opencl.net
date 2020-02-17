@@ -38,7 +38,7 @@ namespace OpenCL.Core.Net
             Context context,
             CLMemFlags flags,
             uint bufobj,
-            ref CLError errcode_ret);
+            ref Error errcode_ret);
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLBuffer(
             Context context,
@@ -53,7 +53,7 @@ namespace OpenCL.Core.Net
             int target,
             int miplevel,
             uint texture,
-            ref CLError errcode_ret);
+            ref Error errcode_ret);
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture(
             Context context,
@@ -71,7 +71,7 @@ namespace OpenCL.Core.Net
             int target,
             int miplevel,
             uint texture,
-            ref CLError errcode_ret);
+            ref Error errcode_ret);
         [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture2D(
@@ -90,7 +90,7 @@ namespace OpenCL.Core.Net
             int target,
             int miplevel,
             uint texture,
-            ref CLError errcode_ret);
+            ref Error errcode_ret);
         [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLTexture3D(
@@ -106,7 +106,7 @@ namespace OpenCL.Core.Net
             Context context,
             CLMemFlags flags,
             uint renderbuffer,
-            ref CLError errcode_ret);
+            ref Error errcode_ret);
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern Mem clCreateFromGLRenderbuffer(
             Context context,
@@ -115,13 +115,13 @@ namespace OpenCL.Core.Net
             IntPtr errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clGetGLObjectInfo(
+        public static extern Error clGetGLObjectInfo(
             Mem memobj,
             ref uint gl_object_type,
             ref uint gl_object_name);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clGetGLTextureInfo(
+        public static extern Error clGetGLTextureInfo(
             Mem memobj,
             uint param_name,
             SizeT param_value_size,
@@ -129,7 +129,7 @@ namespace OpenCL.Core.Net
             ref SizeT param_value_size_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueAcquireGLObjects(
+        public static extern Error clEnqueueAcquireGLObjects(
             CommandQueue command_queue,
             uint num_objects,
             [In] Mem[] mem_objects,
@@ -138,7 +138,7 @@ namespace OpenCL.Core.Net
             ref Event e);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReleaseGLObjects(
+        public static extern Error clEnqueueReleaseGLObjects(
             CommandQueue command_queue,
             uint num_objects,
             [In] Mem[] mem_objects,

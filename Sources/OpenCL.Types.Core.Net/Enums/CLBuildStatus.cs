@@ -1,11 +1,11 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_build_status
-    public enum CLBuildStatus
+    public enum BuildStatus
     {
         Success = 0,
         None = -1,
         Error = -2,
-        InProgress = -3,
+        InProgress = -3
     }
 }

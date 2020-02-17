@@ -3,10 +3,10 @@
 namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_device_info
-    public enum CLDeviceInfo : uint
+    public enum DeviceInfo : uint
     {
         Type = 0x1000,
-        VendorID = 0x1001,
+        VendorId = 0x1001,
         MaxComputeUnits = 0x1002,
         MaxWorkItemDimensions = 0x1003,
         MaxWorkGroupSize = 0x1004,
@@ -60,7 +60,7 @@ namespace OpenCL.Types.Core.Net.Enums
         Extensions = 0x1030,
         Platform = 0x1031,
         /* 1.2 */
-        DoubleFPConfig = 0x1032,
+        DoubleFpConfig = 0x1032,
 
         /* 1.1 */
         /* 0x1032 reserved for CL_DEVICE_DOUBLE_FP_CONFIG */
@@ -98,7 +98,7 @@ namespace OpenCL.Types.Core.Net.Enums
         QueueOnDeviceMaxSize = 0x1050,
         MaxOnDeviceQueues = 0x1051,
         MaxOnDeviceEvents = 0x1052,
-        SVMCapabilities = 0x1053,
+        SvmCapabilities = 0x1053,
         GlobalVariablePreferredTotalSize = 0x1054,
         MaxPipeArgs = 0x1055,
         PipeMaxActiveReservations = 0x1056,
@@ -109,6 +109,6 @@ namespace OpenCL.Types.Core.Net.Enums
         /* 2.1 */
         ILVersion = 0x105B,
         MaxNumSubGroups = 0x105C,
-        SubGroupIndependentForwardProgress = 0x105D,
+        SubGroupIndependentForwardProgress = 0x105D
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // Error Codes
-    public enum CLError
+    public enum Error
     {
         Success = 0,
         DeviceNotFound = -1,
@@ -72,6 +72,6 @@
         InvalidDeviceQueue = -70,
         /* 2.2 */
         InvalidSpecID = -71,
-        MaxSizeRestrictionExceeded = -72,
+        MaxSizeRestrictionExceeded = -72
     }
 }

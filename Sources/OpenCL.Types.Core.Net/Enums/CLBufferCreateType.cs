@@ -2,8 +2,8 @@
 {
     /* 1.1 */
     // cl_buffer_create_type
-    public enum CLBufferCreateType : uint
+    public enum BufferCreateType : uint
     {
-        Region = 0x1220,
+        Region = 0x1220
     }
 }

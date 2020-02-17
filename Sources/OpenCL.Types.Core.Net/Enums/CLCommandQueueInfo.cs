@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_command_queue_info
-    public enum CLCommandQueueInfo : uint
+    public enum CommandQueueInfo : uint
     {
         Context = 0x1090,
         Device = 0x1091,
@@ -10,6 +10,6 @@
         /* 2.0 */
         Size = 0x1094,
         /* 2.1 */
-        DeviceDefault = 0x1095,
+        DeviceDefault = 0x1095
     }
 }

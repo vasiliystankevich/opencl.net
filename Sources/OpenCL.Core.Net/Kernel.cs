@@ -64,7 +64,7 @@ namespace OpenCL.Core.Net
         public Kernel(PlatformId platform, DeviceId[] devices)
         {
             IntPtr[] ctxProperties = new IntPtr[3];
-            ctxProperties[0] = new IntPtr((int)CLContextProperties.Platform);
+            ctxProperties[0] = new IntPtr((int)ContextProperties.Platform);
             ctxProperties[1] = platform.Value;
             ctxProperties[2] = IntPtr.Zero;
 
@@ -123,7 +123,7 @@ namespace OpenCL.Core.Net
         /// </summary>
         /// <param name="info">Requested information.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public object GetContextInfo(CLContextInfo info)
+        public object GetContextInfo(ContextInfo info)
         {
             return GetContextInfo(ctx, info);
         }
@@ -136,7 +136,7 @@ namespace OpenCL.Core.Net
         }
 
         public CommandQueue CreateCommandQueue(DeviceId device, 
-            CLCommandQueueProperties properties)
+            CommandQueueProperties properties)
         {
             CommandQueue queue = OpenCLDriver.clCreateCommandQueue(ctx, device, properties, ref clError);
             ThrowCLException(clError);
@@ -430,7 +430,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Enqueue Functions
-        public void ReadBuffer<T>(CommandQueue queue, Mem buffer, CLBool blocking, SizeT offset, SizeT cb, T[] dst)
+        public void ReadBuffer<T>(CommandQueue queue, Mem buffer, Bool blocking, SizeT offset, SizeT cb, T[] dst)
         {
             GCHandle h = GCHandle.Alloc(dst, GCHandleType.Pinned);
 
@@ -445,7 +445,7 @@ namespace OpenCL.Core.Net
             }
         }
 
-        public void WriteBuffer<T>(CommandQueue queue, Mem buffer, CLBool blocking, SizeT offset, SizeT cb, T[] src)
+        public void WriteBuffer<T>(CommandQueue queue, Mem buffer, Bool blocking, SizeT offset, SizeT cb, T[] src)
         {
             GCHandle h = GCHandle.Alloc(src, GCHandleType.Pinned);
 
@@ -472,7 +472,7 @@ namespace OpenCL.Core.Net
         /// <summary>
         /// Gets last OpenCL(TM) error that occured when calling an API function.
         /// </summary>
-        public CLError LastCLError
+        public Error LastCLError
         {
             get { return clError; }
         }
@@ -509,7 +509,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Internal Variables
-        private CLError clError;
+        private Error clError;
         private Context ctx;
 
         private bool disposed = false;
@@ -525,11 +525,11 @@ namespace OpenCL.Core.Net
         {
             // Check how many platforms are available.
             uint num_platforms = 0;
-            CLError err = OpenCLDriver.clGetPlatformIDs(0, IntPtr.Zero, ref num_platforms);
+            Error err = OpenCLDriver.clGetPlatformIDs(0, IntPtr.Zero, ref num_platforms);
 
-            if (err != CLError.Success)
+            if (err != Error.Success)
             {
-                throw new OpenCLException(err);
+                throw new Exception(err);
             }
 
             if (num_platforms < 1)
@@ -552,7 +552,7 @@ namespace OpenCL.Core.Net
         /// <returns>Value which depends on the type of information requested.</returns>
         public static object GetPlatformInfo(PlatformId platform, CLPlatformInfo info)
         {
-            CLError err = CLError.Success;
+            Error err = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -562,9 +562,9 @@ namespace OpenCL.Core.Net
             // Get initial size of buffer to allocate.
             err = OpenCLDriver.clGetPlatformInfo(platform, info, 0, IntPtr.Zero, ref param_value_size_ret);
 
-            if (err != CLError.Success)
+            if (err != Error.Success)
             {
-                throw new OpenCLException(err);
+                throw new Exception(err);
             }
 
             if (param_value_size_ret < 1)
@@ -621,7 +621,7 @@ namespace OpenCL.Core.Net
         /// <returns>An array of available devices in the platform of all types.</returns>
         public static DeviceId[] GetDevices(PlatformId platform)
         {
-            return GetDevices(platform, CLDeviceType.All);
+            return GetDevices(platform, DeviceType.All);
         }
 
         /// <summary>
@@ -631,15 +631,15 @@ namespace OpenCL.Core.Net
         /// <param name="platform">Platform to query devices.</param>
         /// <param name="devType">Type of device to query.</param>
         /// <returns>An array of available devices in the platform with following type.</returns>
-        public static DeviceId[] GetDevices(PlatformId platform, CLDeviceType devType)
+        public static DeviceId[] GetDevices(PlatformId platform, DeviceType devType)
         {
             // Check how many devices are available.
             uint num_devices = 0;
-            CLError err = OpenCLDriver.clGetDeviceIDs(platform, devType, 0, IntPtr.Zero, ref num_devices);
+            Error err = OpenCLDriver.clGetDeviceIDs(platform, devType, 0, IntPtr.Zero, ref num_devices);
 
-            if (err != CLError.Success)
+            if (err != Error.Success)
             {
-                throw new OpenCLException(err);
+                throw new Exception(err);
             }
 
             if (num_devices < 1)
@@ -660,11 +660,11 @@ namespace OpenCL.Core.Net
         /// <param name="device">Device ID to query.</param>
         /// <param name="info">Requested information.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetDeviceInfo(DeviceId device, CLDeviceInfo info)
+        public static object GetDeviceInfo(DeviceId device, DeviceInfo info)
         {
             //OpenCLDriver.clGetDeviceInfo(device, info, 
 
-            CLError err = CLError.Success;
+            Error err = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -674,9 +674,9 @@ namespace OpenCL.Core.Net
             // Get initial size of buffer to allocate.
             err = OpenCLDriver.clGetDeviceInfo(device, info, 0, IntPtr.Zero, ref param_value_size_ret);
 
-            if (err != CLError.Success)
+            if (err != Error.Success)
             {
-                throw new OpenCLException(err);
+                throw new Exception(err);
             }
 
             if (param_value_size_ret < 1)
@@ -697,23 +697,23 @@ namespace OpenCL.Core.Net
 
                 switch (info)
                 {
-                    case CLDeviceInfo.Type:
-                        result = (CLDeviceType)Marshal.ReadInt64(ptr);
+                    case DeviceInfo.Type:
+                        result = (DeviceType)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.VendorID:
+                    case DeviceInfo.VendorId:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MaxComputeUnits:
+                    case DeviceInfo.MaxComputeUnits:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MaxWorkItemDimensions:
+                    case DeviceInfo.MaxWorkItemDimensions:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MaxWorkGroupSize:
+                    case DeviceInfo.MaxWorkGroupSize:
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
-                    case CLDeviceInfo.MaxWorkItemSizes:
-                        uint dims = (uint)GetDeviceInfo(device, CLDeviceInfo.MaxWorkItemDimensions);
+                    case DeviceInfo.MaxWorkItemSizes:
+                        uint dims = (uint)GetDeviceInfo(device, DeviceInfo.MaxWorkItemDimensions);
                         SizeT[] sizes = new SizeT[dims];
                         for (int i = 0; i < dims; i++)
                         {
@@ -722,166 +722,166 @@ namespace OpenCL.Core.Net
 
                         result = sizes;
                         break;
-                    case CLDeviceInfo.PreferredVectorWidthChar:
+                    case DeviceInfo.PreferredVectorWidthChar:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.PreferredVectorWidthShort:
+                    case DeviceInfo.PreferredVectorWidthShort:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.PreferredVectorWidthInt:
+                    case DeviceInfo.PreferredVectorWidthInt:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.PreferredVectorWidthLong:
+                    case DeviceInfo.PreferredVectorWidthLong:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.PreferredVectorWidthFloat:
+                    case DeviceInfo.PreferredVectorWidthFloat:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.PreferredVectorWidthDouble:
+                    case DeviceInfo.PreferredVectorWidthDouble:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MaxClockFrequency:
+                    case DeviceInfo.MaxClockFrequency:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.AddressBits:
+                    case DeviceInfo.AddressBits:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MaxReadImageArgs:
+                    case DeviceInfo.MaxReadImageArgs:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MaxWriteImageArgs:
+                    case DeviceInfo.MaxWriteImageArgs:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MaxMemAllocSize:
+                    case DeviceInfo.MaxMemAllocSize:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.Image2DMaxWidth:
+                    case DeviceInfo.Image2DMaxWidth:
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
-                    case CLDeviceInfo.Image2DMaxHeight:
+                    case DeviceInfo.Image2DMaxHeight:
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
-                    case CLDeviceInfo.Image3DMaxWidth:
+                    case DeviceInfo.Image3DMaxWidth:
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
-                    case CLDeviceInfo.Image3DMaxHeight:
+                    case DeviceInfo.Image3DMaxHeight:
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
-                    case CLDeviceInfo.Image3DMaxDepth:
+                    case DeviceInfo.Image3DMaxDepth:
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
-                    case CLDeviceInfo.ImageSupport:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
+                    case DeviceInfo.ImageSupport:
+                        result = (Bool)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MaxParameterSize:
+                    case DeviceInfo.MaxParameterSize:
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
-                    case CLDeviceInfo.MaxSamplers:
+                    case DeviceInfo.MaxSamplers:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MemBaseAddrAlign:
+                    case DeviceInfo.MemBaseAddrAlign:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.MinDataTypeAlignSize:
+                    case DeviceInfo.MinDataTypeAlignSize:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.SingleFPConfig:
-                        result = (CLDeviceFPConfig)Marshal.ReadInt64(ptr);
+                    case DeviceInfo.SingleFPConfig:
+                        result = (DeviceFpConfig)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.GlobalMemCacheType:
-                        result = (CLDeviceMemCacheType)Marshal.ReadInt32(ptr);
+                    case DeviceInfo.GlobalMemCacheType:
+                        result = (DeviceMemCacheType)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.GlobalMemCacheLineSize:
+                    case DeviceInfo.GlobalMemCacheLineSize:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.GlobalMemCacheSize:
+                    case DeviceInfo.GlobalMemCacheSize:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.GlobalMemSize:
+                    case DeviceInfo.GlobalMemSize:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.MaxConstantBufferSize:
+                    case DeviceInfo.MaxConstantBufferSize:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.MaxConstantArgs:
+                    case DeviceInfo.MaxConstantArgs:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.LocalMemType:
-                        result = (CLDeviceLocalMemType)Marshal.ReadInt32(ptr);
+                    case DeviceInfo.LocalMemType:
+                        result = (DeviceLocalMemType)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.LocalMemSize:
+                    case DeviceInfo.LocalMemSize:
                         result = (ulong)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.ErrorCorrectionSupport:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
+                    case DeviceInfo.ErrorCorrectionSupport:
+                        result = (Bool)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.ProfilingTimerResolution:
+                    case DeviceInfo.ProfilingTimerResolution:
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
-                    case CLDeviceInfo.EndianLittle:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
+                    case DeviceInfo.EndianLittle:
+                        result = (Bool)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.Available:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
+                    case DeviceInfo.Available:
+                        result = (Bool)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.CompilerAvailable:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
+                    case DeviceInfo.CompilerAvailable:
+                        result = (Bool)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.ExecutionCapabilities:
-                        result = (CLDeviceExecCapabilities)Marshal.ReadInt64(ptr);
+                    case DeviceInfo.ExecutionCapabilities:
+                        result = (DeviceExecCapabilities)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.QueueProperties:
-                        result = (CLCommandQueueProperties)Marshal.ReadInt64(ptr);
+                    case DeviceInfo.QueueProperties:
+                        result = (CommandQueueProperties)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.Name:
+                    case DeviceInfo.Name:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLDeviceInfo.Vendor:
+                    case DeviceInfo.Vendor:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLDeviceInfo.DriverVersion:
+                    case DeviceInfo.DriverVersion:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLDeviceInfo.Profile:
+                    case DeviceInfo.Profile:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLDeviceInfo.Version:
+                    case DeviceInfo.Version:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLDeviceInfo.Extensions:
+                    case DeviceInfo.Extensions:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
-                    case CLDeviceInfo.Platform:
+                    case DeviceInfo.Platform:
                         result = Marshal.PtrToStructure(ptr, typeof(PlatformId));
                         break;
-                    case CLDeviceInfo.PreferredVectorWidthHalf:
+                    case DeviceInfo.PreferredVectorWidthHalf:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.HostUnifiedMemory:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
+                    case DeviceInfo.HostUnifiedMemory:
+                        result = (Bool)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.NativeVectorWidthChar:
+                    case DeviceInfo.NativeVectorWidthChar:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.NativeVectorWidthShort:
+                    case DeviceInfo.NativeVectorWidthShort:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.NativeVectorWidthInt:
+                    case DeviceInfo.NativeVectorWidthInt:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.NativeVectorWidthLong:
+                    case DeviceInfo.NativeVectorWidthLong:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.NativeVectorWidthFloat:
+                    case DeviceInfo.NativeVectorWidthFloat:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.NativeVectorWidthDouble:
+                    case DeviceInfo.NativeVectorWidthDouble:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.NativeVectorWidthHalf:
+                    case DeviceInfo.NativeVectorWidthHalf:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.OpenCLCVersion:
+                    case DeviceInfo.OpenCLCVersion:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
                 }
@@ -903,9 +903,9 @@ namespace OpenCL.Core.Net
         /// <param name="ctx">Context to get information for.</param>
         /// <param name="info">Requested information.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetContextInfo(Context ctx, CLContextInfo info)
+        public static object GetContextInfo(Context ctx, ContextInfo info)
         {
-            CLError error = CLError.Success;
+            Error error = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -935,14 +935,14 @@ namespace OpenCL.Core.Net
                 //TODO: Add implementation to missing cases.
                 switch (info)
                 {
-                    case CLContextInfo.ReferenceCount:
+                    case ContextInfo.ReferenceCount:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLContextInfo.Devices:
+                    case ContextInfo.Devices:
                         break;
-                    case CLContextInfo.Properties:
+                    case ContextInfo.Properties:
                         break;
-                    case CLContextInfo.NumDevices:
+                    case ContextInfo.NumDevices:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
                 }
@@ -958,9 +958,9 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Command Queue Utilities
-        public static object GetCommandQueueInfo(CommandQueue command_queue, CLCommandQueueInfo info)
+        public static object GetCommandQueueInfo(CommandQueue command_queue, CommandQueueInfo info)
         {
-            CLError error = CLError.Success;
+            Error error = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -989,17 +989,17 @@ namespace OpenCL.Core.Net
 
                 switch (info)
                 {
-                    case CLCommandQueueInfo.Context:
+                    case CommandQueueInfo.Context:
                         result = Marshal.PtrToStructure(ptr, typeof(Context));
                         break;
-                    case CLCommandQueueInfo.Device:
+                    case CommandQueueInfo.Device:
                         result = Marshal.PtrToStructure(ptr, typeof(DeviceId));
                         break;
-                    case CLCommandQueueInfo.ReferenceCount:
+                    case CommandQueueInfo.ReferenceCount:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLCommandQueueInfo.Properties:
-                        result = (CLCommandQueueProperties)Marshal.ReadInt64(ptr);
+                    case CommandQueueInfo.Properties:
+                        result = (CommandQueueProperties)Marshal.ReadInt64(ptr);
                         break;
                 }
             }
@@ -1016,7 +1016,7 @@ namespace OpenCL.Core.Net
         #region Memory Utilities
         public static object GetMemObjectInfo(Mem memobj, CLMemInfo info)
         {
-            CLError error = CLError.Success;
+            Error error = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -1087,7 +1087,7 @@ namespace OpenCL.Core.Net
 
         public static object GetImageInfo(Mem memobj, CLImageInfo info)
         {
-            CLError error = CLError.Success;
+            Error error = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -1153,7 +1153,7 @@ namespace OpenCL.Core.Net
         public static void SetMemObjectDestructorCallback(Mem memobj, 
             OpenCLDriver.DestructionFunction function, IntPtr userData)
         {
-            CLError error = OpenCLDriver.clSetMemObjectDestructorCallback(memobj, function, userData);
+            Error error = OpenCLDriver.clSetMemObjectDestructorCallback(memobj, function, userData);
             ThrowCLException(error);
         }
         #endregion
@@ -1166,7 +1166,7 @@ namespace OpenCL.Core.Net
 
         public static object GetProgramInfo(Program program, CLProgramInfo info)
         {
-            CLError error = CLError.Success;
+            Error error = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -1291,7 +1291,7 @@ namespace OpenCL.Core.Net
         public static object GetProgramBuildInfo(Program program, DeviceId device,
             CLProgramBuildInfo info)
         {
-            CLError error = CLError.Success;
+            Error error = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -1321,7 +1321,7 @@ namespace OpenCL.Core.Net
                 switch (info)
                 {
                     case CLProgramBuildInfo.Status:
-                        result = (CLBuildStatus)Marshal.ReadInt32(ptr);
+                        result = (BuildStatus)Marshal.ReadInt32(ptr);
                         break;
                     case CLProgramBuildInfo.Options:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
@@ -1344,7 +1344,7 @@ namespace OpenCL.Core.Net
         #region Event Utilities
         public static object GetEventProfilingInfo(Event e, CLProfilingInfo info)
         {
-            CLError error = CLError.Success;
+            Error error = Error.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
@@ -1398,14 +1398,14 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Helper Functions
-        private static void ThrowCLException(CLError error)
+        private static void ThrowCLException(Error error)
         {
-            if (error == CLError.Success)
+            if (error == Error.Success)
             {
                 return;
             }
 
-            throw new OpenCLException(error);
+            throw new Exception(error);
         }
         #endregion
 

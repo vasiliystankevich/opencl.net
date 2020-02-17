@@ -1,7 +1,7 @@
 ﻿namespace OpenCL.Types.Core.Net.Enums
 {
     // cl_command_type
-    public enum ClCommandType : uint
+    public enum CommandType : uint
     {
         NdRangeKernel = 0x11F0,
         Task = 0x11F1,
@@ -35,6 +35,6 @@
         SvmMemcpy = 0x120A,
         SvmMemFill = 0x120B,
         SvmMap = 0x120C,
-        SvmUnmap = 0x120D,
+        SvmUnmap = 0x120D
     }
 }
