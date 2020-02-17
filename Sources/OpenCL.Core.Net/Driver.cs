@@ -24,6 +24,13 @@ using System;
 using System.Runtime.InteropServices;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
+using OpenCL.Types.Core.Net.Enums.Command;
+using OpenCL.Types.Core.Net.Enums.Context;
+using OpenCL.Types.Core.Net.Enums.Device;
+using OpenCL.Types.Core.Net.Enums.Kernel;
+using OpenCL.Types.Core.Net.Enums.Kernel.Arg;
+using OpenCL.Types.Core.Net.Enums.Mem;
+using OpenCL.Types.Core.Net.Enums.Program;
 using OpenCL.Types.Core.Net.Primitives;
 
 namespace OpenCL.Core.Net
