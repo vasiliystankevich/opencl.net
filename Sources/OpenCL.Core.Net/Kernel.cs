@@ -76,7 +76,7 @@ namespace OpenCL.Core.Net
             ctxProperties[2] = IntPtr.Zero;
 
             // Create OpenCL context from given platform and device.
-            Context ctx = OpenCLDriver.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
+            Context ctx = ContextApi.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
             Context = ctx;
@@ -91,7 +91,7 @@ namespace OpenCL.Core.Net
         /// <param name="ctx">OpenCL(TM) context to use.</param>
         public Kernel(Context ctx)
         {
-            clError = OpenCLDriver.clRetainContext(ctx);
+            clError = ContextApi.clRetainContext(ctx);
             ThrowCLException(clError);
 
             Context = ctx;
@@ -109,7 +109,7 @@ namespace OpenCL.Core.Net
                 return;
             }
 
-            clError = OpenCLDriver.clReleaseContext(ctx);
+            clError = ContextApi.clReleaseContext(ctx);
             ThrowCLException(clError);
 
             disposed = true;
@@ -920,7 +920,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = OpenCLDriver.clGetContextInfo(ctx, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = ContextApi.clGetContextInfo(ctx, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -936,7 +936,7 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = OpenCLDriver.clGetContextInfo(ctx, info,
+                error = ContextApi.clGetContextInfo(ctx, info,
                 param_value_size_ret, ptr, ref param_value_size_ret);
 
                 //TODO: Add implementation to missing cases.

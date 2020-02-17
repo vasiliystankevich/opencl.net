@@ -42,43 +42,12 @@ namespace OpenCL.Core.Net.Driver
     public class OpenCLDriver
     {
         #region Context APIs
-        public delegate void LoggingFunction(
-            IntPtr errinfo,
-            IntPtr private_info,
-            SizeT cb,
-            IntPtr user_data);
 
-        [DllImport(Dll.Name)]
-        public static extern Context clCreateContext(
-            [In] IntPtr[] properties,
-            uint num_devices,
-            [In] DeviceId[] devices,
-            LoggingFunction pfn_notify,
-            IntPtr user_data,
-            ref Error errcode_ret);
-
-        [DllImport(Dll.Name)]
-        public static extern Context clCreateContextFromType(
-            [In] IntPtr[] properties,
-            DeviceType device_type,
-            LoggingFunction pfn_notify,
-            IntPtr user_data,
-            ref Error errcode_ret);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clRetainContext(Context context);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clReleaseContext(Context context);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clGetContextInfo(
-            Context context,
-            ContextInfo param_name,
-            SizeT param_value_size,
-            IntPtr param_value,
-            ref SizeT param_value_size_ret);
         #endregion
+
+
+
+
 
         #region Command Queue APIs
         [Obsolete("Deprecated since OpenCL 2.0")]
