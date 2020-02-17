@@ -22,6 +22,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenCL.Core.Net.Driver;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
 using OpenCL.Types.Core.Net.Enums.Command;

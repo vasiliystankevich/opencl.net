@@ -8,4 +8,9 @@
     <ProjectReference Include="..\OpenCL.Types.Core.Net\OpenCL.Types.Core.Net.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Driver\API\" />
+    <Folder Include="Kernel\" />
+  </ItemGroup>
+
 </Project>
