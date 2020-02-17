@@ -37,57 +37,11 @@ namespace OpenCL.Core.Net
     /// </summary>
     public class OpenCLDriver
     {
-        /* 2.0 */
-        #region SVM Allocation APIs
-        [DllImport(DllNative.Name)]
-        public static extern IntPtr clSVMAlloc(
-            Context context,
-            SvmMemFlags flags,
-            SizeT size,
-            uint alignment);
-
-        [DllImport(DllNative.Name)]
-        public static extern void clSVMFree(
-            Context context,
-            IntPtr svm_pointer);
-        #endregion
-
         #region Sampler APIs
-        [Obsolete("Deprecated since OpenCL 2.0")]
-        [DllImport(DllNative.Name)]
-        public static extern Sampler clCreateSampler(
-            Context context,
-            Bool normalized_coords,
-            AddressingMode addressing_mode,
-            FilterMode filter_mode,
-            ref Error errcode_ret);
 
-        /* 2.0 */
-        [DllImport(DllNative.Name)]
-        public static extern Sampler clCreateSamplerWithProperties(
-            Context context,
-            [In] IntPtr[] sampler_properties,
-            ref Error errcode_ret);
-        [DllImport(DllNative.Name)]
-        public static extern Sampler clCreateSamplerWithProperties(
-            Context context,
-            [In] IntPtr[] sampler_properties,
-            IntPtr errcode_ret);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clRetainSampler(Sampler sampler);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clReleaseSampler(Sampler sampler);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clGetSamplerInfo(
-            Sampler sampler,
-            SamplerInfo param_name,
-            SizeT param_value_size,
-            IntPtr param_value,
-            ref SizeT param_value_size_ret);
         #endregion
+
+
 
         #region Program Object APIs
         [DllImport(DllNative.Name)]
