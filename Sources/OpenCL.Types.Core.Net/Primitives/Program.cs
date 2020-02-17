@@ -2,7 +2,7 @@
 
 namespace OpenCL.Types.Core.Net.Primitives
 {
-    public struct CLProgram
+    public struct Program
     {
         public IntPtr Value;
     }

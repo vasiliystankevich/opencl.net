@@ -2,7 +2,7 @@
 
 namespace OpenCL.Types.Core.Net.Primitives
 {
-    public struct CLDeviceID
+    public struct Sampler
     {
         public IntPtr Value;
     }

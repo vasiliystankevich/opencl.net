@@ -51,8 +51,8 @@ namespace OpenCL.Core.Net
         /// </summary>
         /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
         /// <param name="device">Device to include in OpenCL(TM) context.</param>
-        public Kernel(CLPlatformID platform, CLDeviceID device) : 
-            this(platform, new CLDeviceID[] { device })
+        public Kernel(PlatformId platform, DeviceId device) : 
+            this(platform, new DeviceId[] { device })
         { }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace OpenCL.Core.Net
         /// </summary>
         /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
         /// <param name="devices">Devices to include in OpenCL(TM) context.</param>
-        public Kernel(CLPlatformID platform, CLDeviceID[] devices)
+        public Kernel(PlatformId platform, DeviceId[] devices)
         {
             IntPtr[] ctxProperties = new IntPtr[3];
             ctxProperties[0] = new IntPtr((int)CLContextProperties.Platform);
@@ -69,12 +69,12 @@ namespace OpenCL.Core.Net
             ctxProperties[2] = IntPtr.Zero;
 
             // Create OpenCL context from given platform and device.
-            CLContext ctx = OpenCLDriver.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
+            Context ctx = OpenCLDriver.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
             Context = ctx;
             Devices = devices;
-            LastEnqueueEvent = new CLEvent();
+            LastEnqueueEvent = new Event();
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace OpenCL.Core.Net
         /// Perform a retain of the context.
         /// </summary>
         /// <param name="ctx">OpenCL(TM) context to use.</param>
-        public Kernel(CLContext ctx)
+        public Kernel(Context ctx)
         {
             clError = OpenCLDriver.clRetainContext(ctx);
             ThrowCLException(clError);
@@ -130,39 +130,39 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Queue Functions
-        public CLCommandQueue CreateCommandQueue(CLDeviceID device)
+        public CommandQueue CreateCommandQueue(DeviceId device)
         {
             return CreateCommandQueue(device, 0);
         }
 
-        public CLCommandQueue CreateCommandQueue(CLDeviceID device, 
+        public CommandQueue CreateCommandQueue(DeviceId device, 
             CLCommandQueueProperties properties)
         {
-            CLCommandQueue queue = OpenCLDriver.clCreateCommandQueue(ctx, device, properties, ref clError);
+            CommandQueue queue = OpenCLDriver.clCreateCommandQueue(ctx, device, properties, ref clError);
             ThrowCLException(clError);
 
             return queue;
         }
 
-        public void RetainCommandQueue(CLCommandQueue command_queue)
+        public void RetainCommandQueue(CommandQueue command_queue)
         {
             clError = OpenCLDriver.clRetainCommandQueue(command_queue);
             ThrowCLException(clError);
         }
 
-        public void ReleaseCommandQueue(CLCommandQueue command_queue)
+        public void ReleaseCommandQueue(CommandQueue command_queue)
         {
             clError = OpenCLDriver.clReleaseCommandQueue(command_queue);
             ThrowCLException(clError);
         }
 
-        public void Flush(CLCommandQueue command_queue)
+        public void Flush(CommandQueue command_queue)
         {
             clError = OpenCLDriver.clFlush(command_queue);
             ThrowCLException(clError);
         }
 
-        public void Finish(CLCommandQueue command_queue)
+        public void Finish(CommandQueue command_queue)
         {
             clError = OpenCLDriver.clFinish(command_queue);
             ThrowCLException(clError);
@@ -170,34 +170,34 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Memory Functions
-        public CLMem CreateBuffer(SizeT sizeInBytes)
+        public Mem CreateBuffer(SizeT sizeInBytes)
         {
             return CreateBuffer(CLMemFlags.ReadWrite, sizeInBytes);
         }
 
-        public CLMem CreateBuffer(CLMemFlags flags, SizeT sizeInBytes)
+        public Mem CreateBuffer(CLMemFlags flags, SizeT sizeInBytes)
         {
-            CLMem buffer = OpenCLDriver.clCreateBuffer(ctx, flags, sizeInBytes, IntPtr.Zero, ref clError);
+            Mem buffer = OpenCLDriver.clCreateBuffer(ctx, flags, sizeInBytes, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
             return buffer;
         }
 
-        public CLMem CreateImage2D(CLMemFlags flags, ImageFormat format, 
+        public Mem CreateImage2D(CLMemFlags flags, ImageFormat format, 
             SizeT width, SizeT height, SizeT rowPitchInBytes)
         {
-            CLMem image = OpenCLDriver.clCreateImage2D(ctx, flags, ref format, 
+            Mem image = OpenCLDriver.clCreateImage2D(ctx, flags, ref format, 
                 width, height, rowPitchInBytes, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
             return image;
         }
 
-        public CLMem CreateImage3D(CLMemFlags flags, ImageFormat format,
+        public Mem CreateImage3D(CLMemFlags flags, ImageFormat format,
             SizeT width, SizeT height, SizeT depth,
             SizeT rowPitchInBytes, SizeT slicePitchInBytes)
         {
-            CLMem image = OpenCLDriver.clCreateImage3D(ctx, flags, ref format,
+            Mem image = OpenCLDriver.clCreateImage3D(ctx, flags, ref format,
                 width, height, depth, rowPitchInBytes, slicePitchInBytes, 
                 IntPtr.Zero, ref clError);
             ThrowCLException(clError);
@@ -205,13 +205,13 @@ namespace OpenCL.Core.Net
             return image;
         }
 
-        public void RetainMemObject(CLMem obj)
+        public void RetainMemObject(Mem obj)
         {
             clError = OpenCLDriver.clRetainMemObject(obj);
             ThrowCLException(clError);
         }
 
-        public void ReleaseMemObject(CLMem obj)
+        public void ReleaseMemObject(Mem obj)
         {
             clError = OpenCLDriver.clReleaseMemObject(obj);
             ThrowCLException(clError);
@@ -239,12 +239,12 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Program Functions
-        public CLProgram CreateProgramWithSource(string source)
+        public Program CreateProgramWithSource(string source)
         {
             return CreateProgramWithSource(new string[] { source });
         }
 
-        public CLProgram CreateProgramWithSource(string[] sources)
+        public Program CreateProgramWithSource(string[] sources)
         {
             SizeT[] lengths = new SizeT[sources.Length];
             for (int i = 0; i < sources.Length; i++)
@@ -252,19 +252,19 @@ namespace OpenCL.Core.Net
                 lengths[i] = sources[i].Length;
 			}
 
-            CLProgram program = OpenCLDriver.clCreateProgramWithSource(ctx, 
+            Program program = OpenCLDriver.clCreateProgramWithSource(ctx, 
                 (uint)sources.Length, sources, lengths, ref clError);
             ThrowCLException(clError);
 
             return program;
         }
 
-        public CLProgram CreateProgramWithBinary(byte[] binary)
+        public Program CreateProgramWithBinary(byte[] binary)
         {
             return CreateProgramWithBinary(new byte[][] { binary });
         }
 
-        public CLProgram CreateProgramWithBinary(byte[][] binaries)
+        public Program CreateProgramWithBinary(byte[][] binaries)
         {
             SizeT[] lengths = new SizeT[binaries.Length];
             for (int i = 0; i < binaries.Length; i++)
@@ -285,7 +285,7 @@ namespace OpenCL.Core.Net
             
                 int[] binaryStatus = new int[binaries.Length];
 
-                CLProgram program = OpenCLDriver.clCreateProgramWithBinary(ctx,
+                Program program = OpenCLDriver.clCreateProgramWithBinary(ctx,
                     (uint)Devices.Length, Devices, lengths, ptrToBinaries, binaryStatus, ref clError);
                 ThrowCLException(clError);
 
@@ -303,19 +303,19 @@ namespace OpenCL.Core.Net
             }
         }
 
-        public void RetainProgram(CLProgram program)
+        public void RetainProgram(Program program)
         {
             clError = OpenCLDriver.clRetainProgram(program);
             ThrowCLException(clError);
         }
 
-        public void ReleaseProgram(CLProgram program)
+        public void ReleaseProgram(Program program)
         {
             clError = OpenCLDriver.clReleaseProgram(program);
             ThrowCLException(clError);
         }
 
-        public void BuildProgram(CLProgram program, CLDeviceID[] devices, string options)
+        public void BuildProgram(Program program, DeviceId[] devices, string options)
         {
             clError = OpenCLDriver.clBuildProgram(program, (uint)devices.Length, 
                 devices, options, null, IntPtr.Zero);
@@ -324,100 +324,100 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Kernel Functions
-        public CLKernel CreateKernel(CLProgram program, string kernelName)
+        public Types.Core.Net.Primitives.Kernel CreateKernel(Program program, string kernelName)
         {
-            CLKernel kernel = OpenCLDriver.clCreateKernel(program, kernelName, ref clError);
+            Types.Core.Net.Primitives.Kernel kernel = OpenCLDriver.clCreateKernel(program, kernelName, ref clError);
             ThrowCLException(clError);
 
             return kernel;
         }
 
-        public void RetainKernel(CLKernel kernel)
+        public void RetainKernel(Types.Core.Net.Primitives.Kernel kernel)
         {
             clError = OpenCLDriver.clRetainKernel(kernel);
             ThrowCLException(clError);
         }
 
-        public void ReleaseKernel(CLKernel kernel)
+        public void ReleaseKernel(Types.Core.Net.Primitives.Kernel kernel)
         {
             clError = OpenCLDriver.clReleaseKernel(kernel);
             ThrowCLException(clError);
         }
 
         #region SetKernelArg
-        public void SetKernelArg(CLKernel kernel, uint index, byte value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, byte value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(byte), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, short value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, short value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(short), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, int value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, int value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(int), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, long value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, long value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(long), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, float value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, float value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(float), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, double value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, double value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(double), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, CLMem value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, Mem value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, Marshal.SizeOf(value), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, byte[] value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, byte[] value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(byte) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, short[] value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, short[] value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(short) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, int[] value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, int[] value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(int) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, long[] value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, long[] value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(long) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, float[] value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, float[] value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(float) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(CLKernel kernel, uint index, double[] value)
+        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, double[] value)
         {
             clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(double) * value.Length, value);
             ThrowCLException(clError);
@@ -430,7 +430,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Enqueue Functions
-        public void ReadBuffer<T>(CLCommandQueue queue, CLMem buffer, CLBool blocking, SizeT offset, SizeT cb, T[] dst)
+        public void ReadBuffer<T>(CommandQueue queue, Mem buffer, CLBool blocking, SizeT offset, SizeT cb, T[] dst)
         {
             GCHandle h = GCHandle.Alloc(dst, GCHandleType.Pinned);
 
@@ -445,7 +445,7 @@ namespace OpenCL.Core.Net
             }
         }
 
-        public void WriteBuffer<T>(CLCommandQueue queue, CLMem buffer, CLBool blocking, SizeT offset, SizeT cb, T[] src)
+        public void WriteBuffer<T>(CommandQueue queue, Mem buffer, CLBool blocking, SizeT offset, SizeT cb, T[] src)
         {
             GCHandle h = GCHandle.Alloc(src, GCHandleType.Pinned);
 
@@ -460,7 +460,7 @@ namespace OpenCL.Core.Net
             }
         }
 
-        public void NDRangeKernel(CLCommandQueue queue, CLKernel kernel, uint work_dim,
+        public void NDRangeKernel(CommandQueue queue, Types.Core.Net.Primitives.Kernel kernel, uint work_dim,
             SizeT[] global_work_offset, SizeT[] global_work_size, SizeT[] local_work_size)
         {
             clError = OpenCLDriver.clEnqueueNDRangeKernel(queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, 0, null, ref lastOperationEvent);
@@ -480,7 +480,7 @@ namespace OpenCL.Core.Net
         /// <summary>
         /// Gets OpenCL(TM) context used by this instance.
         /// </summary>
-        public CLContext Context
+        public Context Context
         {
             get { return ctx; }
             private set { ctx = value; }
@@ -489,12 +489,12 @@ namespace OpenCL.Core.Net
         /// <summary>
         /// Gets devices attached to the current context.
         /// </summary>
-        public CLDeviceID[] Devices { get; private set; }
+        public DeviceId[] Devices { get; private set; }
 
         /// <summary>
         /// Gets the event associated with the last enqueue operation.
         /// </summary>
-        public CLEvent LastEnqueueEvent
+        public Event LastEnqueueEvent
         {
             get
             {
@@ -510,7 +510,7 @@ namespace OpenCL.Core.Net
 
         #region Internal Variables
         private CLError clError;
-        private CLContext ctx;
+        private Context ctx;
 
         private bool disposed = false;
         #endregion
@@ -521,7 +521,7 @@ namespace OpenCL.Core.Net
         /// If no platform is found, an array with zero elements is returned.
         /// </summary>
         /// <returns>An array of available platforms in the system.</returns>
-        public static CLPlatformID[] GetPlatforms()
+        public static PlatformId[] GetPlatforms()
         {
             // Check how many platforms are available.
             uint num_platforms = 0;
@@ -534,11 +534,11 @@ namespace OpenCL.Core.Net
 
             if (num_platforms < 1)
             {
-                return new CLPlatformID[0];
+                return new PlatformId[0];
             }
 
             // Get the actual platforms once we know their amount.
-            CLPlatformID[] platforms = new CLPlatformID[num_platforms];
+            PlatformId[] platforms = new PlatformId[num_platforms];
             err = OpenCLDriver.clGetPlatformIDs(num_platforms, platforms, ref num_platforms);
 
             return platforms;
@@ -550,7 +550,7 @@ namespace OpenCL.Core.Net
         /// <param name="platform">Platform ID to query.</param>
         /// <param name="info">Requested information.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetPlatformInfo(CLPlatformID platform, CLPlatformInfo info)
+        public static object GetPlatformInfo(PlatformId platform, CLPlatformInfo info)
         {
             CLError err = CLError.Success;
 
@@ -619,7 +619,7 @@ namespace OpenCL.Core.Net
         /// </summary>
         /// <param name="platform">Platform to query devices.</param>
         /// <returns>An array of available devices in the platform of all types.</returns>
-        public static CLDeviceID[] GetDevices(CLPlatformID platform)
+        public static DeviceId[] GetDevices(PlatformId platform)
         {
             return GetDevices(platform, CLDeviceType.All);
         }
@@ -631,7 +631,7 @@ namespace OpenCL.Core.Net
         /// <param name="platform">Platform to query devices.</param>
         /// <param name="devType">Type of device to query.</param>
         /// <returns>An array of available devices in the platform with following type.</returns>
-        public static CLDeviceID[] GetDevices(CLPlatformID platform, CLDeviceType devType)
+        public static DeviceId[] GetDevices(PlatformId platform, CLDeviceType devType)
         {
             // Check how many devices are available.
             uint num_devices = 0;
@@ -644,11 +644,11 @@ namespace OpenCL.Core.Net
 
             if (num_devices < 1)
             {
-                return new CLDeviceID[0];
+                return new DeviceId[0];
             }
 
             // Get the actual devices once we know their amount.
-            CLDeviceID[] devices = new CLDeviceID[num_devices];
+            DeviceId[] devices = new DeviceId[num_devices];
             err = OpenCLDriver.clGetDeviceIDs(platform, devType, num_devices, devices, ref num_devices);
 
             return devices;
@@ -660,7 +660,7 @@ namespace OpenCL.Core.Net
         /// <param name="device">Device ID to query.</param>
         /// <param name="info">Requested information.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetDeviceInfo(CLDeviceID device, CLDeviceInfo info)
+        public static object GetDeviceInfo(DeviceId device, CLDeviceInfo info)
         {
             //OpenCLDriver.clGetDeviceInfo(device, info, 
 
@@ -852,7 +852,7 @@ namespace OpenCL.Core.Net
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
                     case CLDeviceInfo.Platform:
-                        result = Marshal.PtrToStructure(ptr, typeof(CLPlatformID));
+                        result = Marshal.PtrToStructure(ptr, typeof(PlatformId));
                         break;
                     case CLDeviceInfo.PreferredVectorWidthHalf:
                         result = (uint)Marshal.ReadInt32(ptr);
@@ -903,7 +903,7 @@ namespace OpenCL.Core.Net
         /// <param name="ctx">Context to get information for.</param>
         /// <param name="info">Requested information.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetContextInfo(CLContext ctx, CLContextInfo info)
+        public static object GetContextInfo(Context ctx, CLContextInfo info)
         {
             CLError error = CLError.Success;
 
@@ -958,7 +958,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Command Queue Utilities
-        public static object GetCommandQueueInfo(CLCommandQueue command_queue, CLCommandQueueInfo info)
+        public static object GetCommandQueueInfo(CommandQueue command_queue, CLCommandQueueInfo info)
         {
             CLError error = CLError.Success;
 
@@ -990,10 +990,10 @@ namespace OpenCL.Core.Net
                 switch (info)
                 {
                     case CLCommandQueueInfo.Context:
-                        result = Marshal.PtrToStructure(ptr, typeof(CLContext));
+                        result = Marshal.PtrToStructure(ptr, typeof(Context));
                         break;
                     case CLCommandQueueInfo.Device:
-                        result = Marshal.PtrToStructure(ptr, typeof(CLDeviceID));
+                        result = Marshal.PtrToStructure(ptr, typeof(DeviceId));
                         break;
                     case CLCommandQueueInfo.ReferenceCount:
                         result = (uint)Marshal.ReadInt32(ptr);
@@ -1014,7 +1014,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Memory Utilities
-        public static object GetMemObjectInfo(CLMem memobj, CLMemInfo info)
+        public static object GetMemObjectInfo(Mem memobj, CLMemInfo info)
         {
             CLError error = CLError.Success;
 
@@ -1066,10 +1066,10 @@ namespace OpenCL.Core.Net
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
                     case CLMemInfo.Context:
-                        result = Marshal.PtrToStructure(ptr, typeof(CLContext));
+                        result = Marshal.PtrToStructure(ptr, typeof(Context));
                         break;
                     case CLMemInfo.AssociatedMemObject:
-                        result = Marshal.PtrToStructure(ptr, typeof(CLMem));
+                        result = Marshal.PtrToStructure(ptr, typeof(Mem));
                         break;
                     case CLMemInfo.Offset:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
@@ -1085,7 +1085,7 @@ namespace OpenCL.Core.Net
             return result;
         }
 
-        public static object GetImageInfo(CLMem memobj, CLImageInfo info)
+        public static object GetImageInfo(Mem memobj, CLImageInfo info)
         {
             CLError error = CLError.Success;
 
@@ -1150,7 +1150,7 @@ namespace OpenCL.Core.Net
             return result;
         }
 
-        public static void SetMemObjectDestructorCallback(CLMem memobj, 
+        public static void SetMemObjectDestructorCallback(Mem memobj, 
             OpenCLDriver.DestructionFunction function, IntPtr userData)
         {
             CLError error = OpenCLDriver.clSetMemObjectDestructorCallback(memobj, function, userData);
@@ -1164,7 +1164,7 @@ namespace OpenCL.Core.Net
             ThrowCLException(OpenCLDriver.clUnloadCompiler());
         }
 
-        public static object GetProgramInfo(CLProgram program, CLProgramInfo info)
+        public static object GetProgramInfo(Program program, CLProgramInfo info)
         {
             CLError error = CLError.Success;
 
@@ -1202,7 +1202,7 @@ namespace OpenCL.Core.Net
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
                     case CLProgramInfo.Context:
-                        result = Marshal.PtrToStructure(ptr, typeof(CLContext));
+                        result = Marshal.PtrToStructure(ptr, typeof(Context));
                         break;
                     case CLProgramInfo.NumDevices:
                         result = (uint)Marshal.ReadInt32(ptr);
@@ -1213,10 +1213,10 @@ namespace OpenCL.Core.Net
                             uint numDevices = (uint)GetProgramInfo(program, CLProgramInfo.NumDevices);
 
                             // Read device IDs.
-                            CLDeviceID[] devices = new CLDeviceID[numDevices];
+                            DeviceId[] devices = new DeviceId[numDevices];
                             for (int i = 0; i < numDevices; i++)
                             {
-                                devices[i] = new CLDeviceID { Value = Marshal.ReadIntPtr(ptr, i * IntPtr.Size) };
+                                devices[i] = new DeviceId { Value = Marshal.ReadIntPtr(ptr, i * IntPtr.Size) };
                             }
 
                             result = devices;
@@ -1288,7 +1288,7 @@ namespace OpenCL.Core.Net
             return result;
         }
 
-        public static object GetProgramBuildInfo(CLProgram program, CLDeviceID device,
+        public static object GetProgramBuildInfo(Program program, DeviceId device,
             CLProgramBuildInfo info)
         {
             CLError error = CLError.Success;
@@ -1342,7 +1342,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Event Utilities
-        public static object GetEventProfilingInfo(CLEvent e, CLProfilingInfo info)
+        public static object GetEventProfilingInfo(Event e, CLProfilingInfo info)
         {
             CLError error = CLError.Success;
 
@@ -1410,7 +1410,7 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Internal Variables
-        private CLEvent lastOperationEvent;
+        private Event lastOperationEvent;
         #endregion
     }
 }

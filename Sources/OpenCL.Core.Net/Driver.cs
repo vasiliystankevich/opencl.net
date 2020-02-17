@@ -45,12 +45,12 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetPlatformIDs(
             uint num_entries,
-            [Out] CLPlatformID[] platforms,
+            [Out] PlatformId[] platforms,
             ref uint num_platforms);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetPlatformInfo(
-            CLPlatformID platform,
+            PlatformId platform,
             CLPlatformInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -60,15 +60,15 @@ namespace OpenCL.Core.Net
         #region Device APIs
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetDeviceIDs(
-            CLPlatformID platform_id,
+            PlatformId platform_id,
             CLDeviceType device_type,
             uint num_entries,
-            [Out] CLDeviceID[] devices,
+            [Out] DeviceId[] devices,
             ref uint num_devices);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetDeviceIDs(
-            CLPlatformID platform_id,
+            PlatformId platform_id,
             CLDeviceType device_type,
             uint num_entries,
             IntPtr devices,
@@ -76,7 +76,7 @@ namespace OpenCL.Core.Net
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetDeviceInfo(
-            CLDeviceID device,
+            DeviceId device,
             CLDeviceInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -85,38 +85,38 @@ namespace OpenCL.Core.Net
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clCreateSubDevices(
-            CLDeviceID in_device,
+            DeviceId in_device,
             [In] IntPtr[] properties,
             uint num_devices,
-            [In, Out] CLDeviceID[] out_devices,
+            [In, Out] DeviceId[] out_devices,
             ref uint num_devices_ret);
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clRetainDevice(CLDeviceID device);
+        public static extern CLError clRetainDevice(DeviceId device);
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clReleaseDevice(CLDeviceID device);
+        public static extern CLError clReleaseDevice(DeviceId device);
 
         /* 2.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetDefaultDeviceCommandQueue(
-            CLContext context,
-            CLDeviceID device,
-            CLCommandQueue command_queue);
+            Context context,
+            DeviceId device,
+            CommandQueue command_queue);
 
         /* 2.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetDeviceAndHostTimer(
-            CLDeviceID device,
+            DeviceId device,
             ref ulong device_timestamp,
             ref ulong host_timestamp);
 
         /* 2.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetHostTimer(
-            CLDeviceID device,
+            DeviceId device,
             ref ulong host_timestamp);
         #endregion
 
@@ -128,16 +128,16 @@ namespace OpenCL.Core.Net
             IntPtr user_data);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLContext clCreateContext(
+        public static extern Context clCreateContext(
             [In] IntPtr[] properties,
             uint num_devices,
-            [In] CLDeviceID[] devices,
+            [In] DeviceId[] devices,
             LoggingFunction pfn_notify,
             IntPtr user_data,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLContext clCreateContextFromType(
+        public static extern Context clCreateContextFromType(
             [In] IntPtr[] properties,
             CLDeviceType device_type,
             LoggingFunction pfn_notify,
@@ -145,14 +145,14 @@ namespace OpenCL.Core.Net
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clRetainContext(CLContext context);
+        public static extern CLError clRetainContext(Context context);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clReleaseContext(CLContext context);
+        public static extern CLError clReleaseContext(Context context);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetContextInfo(
-            CLContext context,
+            Context context,
             CLContextInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -162,35 +162,35 @@ namespace OpenCL.Core.Net
         #region Command Queue APIs
         [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLCommandQueue clCreateCommandQueue(
-            CLContext context,
-            CLDeviceID device,
+        public static extern CommandQueue clCreateCommandQueue(
+            Context context,
+            DeviceId device,
             CLCommandQueueProperties properties,
             ref CLError errcode_ret);
 
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLCommandQueue clCreateCommandQueueWithProperties(
-            CLContext context,
-            CLDeviceID device,
+        public static extern CommandQueue clCreateCommandQueueWithProperties(
+            Context context,
+            DeviceId device,
             [In] IntPtr[] properties,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLCommandQueue clCreateCommandQueueWithProperties(
-            CLContext context,
-            CLDeviceID device,
+        public static extern CommandQueue clCreateCommandQueueWithProperties(
+            Context context,
+            DeviceId device,
             [In] IntPtr[] properties,
             IntPtr errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clRetainCommandQueue(CLCommandQueue command_queue);
+        public static extern CLError clRetainCommandQueue(CommandQueue command_queue);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clReleaseCommandQueue(CLCommandQueue command_queue);
+        public static extern CLError clReleaseCommandQueue(CommandQueue command_queue);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetCommandQueueInfo(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             CLCommandQueueInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -199,7 +199,7 @@ namespace OpenCL.Core.Net
         [Obsolete("Deprecated since OpenCL 1.1")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetCommandQueueProperty(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             CLCommandQueueProperties properties,
             CLBool enable,
             ref CLCommandQueueProperties old_properties);
@@ -207,8 +207,8 @@ namespace OpenCL.Core.Net
 
         #region Memory Object APIs
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreateBuffer(
-            CLContext context,
+        public static extern Mem clCreateBuffer(
+            Context context,
             CLMemFlags flags,
             SizeT size,
             IntPtr host_ptr,
@@ -216,15 +216,15 @@ namespace OpenCL.Core.Net
 
         /* 1.1 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreateSubBuffer(
-            CLMem buffer,
+        public static extern Mem clCreateSubBuffer(
+            Mem buffer,
             CLMemFlags flags,
             CLBufferCreateType buffer_create_type,
             IntPtr buffer_create_info,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreateSubBuffer(
-            CLMem buffer,
+        public static extern Mem clCreateSubBuffer(
+            Mem buffer,
             CLMemFlags flags,
             CLBufferCreateType buffer_create_type,
             [MarshalAs(UnmanagedType.LPStruct)]
@@ -233,8 +233,8 @@ namespace OpenCL.Core.Net
 
         [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreateImage2D(
-            CLContext context,
+        public static extern Mem clCreateImage2D(
+            Context context,
             CLMemFlags flags,
             ref ImageFormat image_format,
             SizeT image_width,
@@ -245,8 +245,8 @@ namespace OpenCL.Core.Net
 
         [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreateImage3D(
-            CLContext context,
+        public static extern Mem clCreateImage3D(
+            Context context,
             CLMemFlags flags,
             ref ImageFormat image_format,
             SizeT image_width,
@@ -259,8 +259,8 @@ namespace OpenCL.Core.Net
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreateImage(
-            CLContext context,
+        public static extern Mem clCreateImage(
+            Context context,
             CLMemFlags flags,
             [MarshalAs(UnmanagedType.LPStruct)]
             ImageFormat image_format,
@@ -269,8 +269,8 @@ namespace OpenCL.Core.Net
             IntPtr host_ptr,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreateImage(
-            CLContext context,
+        public static extern Mem clCreateImage(
+            Context context,
             CLMemFlags flags,
             [MarshalAs(UnmanagedType.LPStruct)]
             ImageFormat image_format,
@@ -281,16 +281,16 @@ namespace OpenCL.Core.Net
 
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreatePipe(
-            CLContext context,
+        public static extern Mem clCreatePipe(
+            Context context,
             CLMemFlags flags,
             uint pipe_packet_size,
             uint pipe_max_packets,
             [In] IntPtr[] properties,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLMem clCreatePipe(
-            CLContext context,
+        public static extern Mem clCreatePipe(
+            Context context,
             CLMemFlags flags,
             uint pipe_packet_size,
             uint pipe_max_packets,
@@ -298,14 +298,14 @@ namespace OpenCL.Core.Net
             IntPtr errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clRetainMemObject(CLMem memobj);
+        public static extern CLError clRetainMemObject(Mem memobj);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clReleaseMemObject(CLMem memobj);
+        public static extern CLError clReleaseMemObject(Mem memobj);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetSupportedImageFormats(
-            CLContext context,
+            Context context,
             CLMemFlags flags,
             CLMemObjectType image_type,
             uint num_entries,
@@ -313,7 +313,7 @@ namespace OpenCL.Core.Net
             ref uint num_image_formats);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetSupportedImageFormats(
-            CLContext context,
+            Context context,
             CLMemFlags flags,
             CLMemObjectType image_type,
             uint num_entries,
@@ -322,7 +322,7 @@ namespace OpenCL.Core.Net
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetMemObjectInfo(
-            CLMem memobj,
+            Mem memobj,
             CLMemInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -330,7 +330,7 @@ namespace OpenCL.Core.Net
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetImageInfo(
-            CLMem image,
+            Mem image,
             CLImageInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -339,7 +339,7 @@ namespace OpenCL.Core.Net
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetPipeInfo(
-            CLMem pipe,
+            Mem pipe,
             CLPipeInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -347,11 +347,11 @@ namespace OpenCL.Core.Net
 
         /* 1.1 */
         public delegate void DestructionFunction(
-            CLMem memobj, 
+            Mem memobj, 
             IntPtr user_data);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetMemObjectDestructorCallback(
-            CLMem memobj,
+            Mem memobj,
             DestructionFunction pfn_notify,
             IntPtr user_data);
         #endregion
@@ -360,22 +360,22 @@ namespace OpenCL.Core.Net
         #region SVM Allocation APIs
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clSVMAlloc(
-            CLContext context,
+            Context context,
             CLSVMMemFlags flags,
             SizeT size,
             uint alignment);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern void clSVMFree(
-            CLContext context,
+            Context context,
             IntPtr svm_pointer);
         #endregion
 
         #region Sampler APIs
         [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLSampler clCreateSampler(
-            CLContext context,
+        public static extern Sampler clCreateSampler(
+            Context context,
             CLBool normalized_coords,
             CLAddressingMode addressing_mode,
             CLFilterMode filter_mode,
@@ -383,25 +383,25 @@ namespace OpenCL.Core.Net
 
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLSampler clCreateSamplerWithProperties(
-            CLContext context,
+        public static extern Sampler clCreateSamplerWithProperties(
+            Context context,
             [In] IntPtr[] sampler_properties,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLSampler clCreateSamplerWithProperties(
-            CLContext context,
+        public static extern Sampler clCreateSamplerWithProperties(
+            Context context,
             [In] IntPtr[] sampler_properties,
             IntPtr errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clRetainSampler(CLSampler sampler);
+        public static extern CLError clRetainSampler(Sampler sampler);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clReleaseSampler(CLSampler sampler);
+        public static extern CLError clReleaseSampler(Sampler sampler);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetSamplerInfo(
-            CLSampler sampler,
+            Sampler sampler,
             CLSamplerInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -410,32 +410,32 @@ namespace OpenCL.Core.Net
 
         #region Program Object APIs
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clCreateProgramWithSource(
-            CLContext context,
+        public static extern Program clCreateProgramWithSource(
+            Context context,
             uint count,
             IntPtr strings,
             [In] SizeT[] lengths,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clCreateProgramWithSource(
-            CLContext context,
+        public static extern Program clCreateProgramWithSource(
+            Context context,
             uint count,
             [In] string[] strings,
             [In] SizeT[] lengths,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clCreateProgramWithSource(
-            CLContext context,
+        public static extern Program clCreateProgramWithSource(
+            Context context,
             uint count,
             [In] IntPtr[] strings,
             [In] SizeT[] lengths,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clCreateProgramWithBinary(
-            CLContext context,
+        public static extern Program clCreateProgramWithBinary(
+            Context context,
             uint num_devices,
-            [In] CLDeviceID[] device_list,
+            [In] DeviceId[] device_list,
             [In] SizeT[] lengths,
             [In] IntPtr[] binaries,
             [In, Out] int[] binary_status,
@@ -443,43 +443,43 @@ namespace OpenCL.Core.Net
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clCreateProgramWithBuiltInKernels(
-            CLContext context,
+        public static extern Program clCreateProgramWithBuiltInKernels(
+            Context context,
             uint num_devices,
-            [In] CLDeviceID[] device_list,
+            [In] DeviceId[] device_list,
             string kernel_names,
             ref CLError errcode_ret);
 
         /* 2.1 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clCreateProgramWithIL(
-            CLContext context,
+        public static extern Program clCreateProgramWithIL(
+            Context context,
             IntPtr il,
             SizeT length,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clRetainProgram(CLProgram program);
+        public static extern CLError clRetainProgram(Program program);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clReleaseProgram(CLProgram program);
+        public static extern CLError clReleaseProgram(Program program);
 
-        public delegate void NotifyFunction(CLProgram program, IntPtr user_data);
+        public delegate void NotifyFunction(Program program, IntPtr user_data);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clBuildProgram(
-            CLProgram program,
+            Program program,
             uint num_devices,
-            [In] CLDeviceID[] device_list,
+            [In] DeviceId[] device_list,
             string options,
             NotifyFunction func,
             IntPtr user_data);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clBuildProgram(
-            CLProgram program,
+            Program program,
             uint num_devices,
-            [In] CLDeviceID[] device_list,
+            [In] DeviceId[] device_list,
             IntPtr options,
             NotifyFunction func,
             IntPtr user_data);
@@ -487,36 +487,36 @@ namespace OpenCL.Core.Net
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clCompileProgram(
-            CLProgram program,
+            Program program,
             uint num_devices,
-            [In] CLDeviceID[] device_list,
+            [In] DeviceId[] device_list,
             string options,
             uint num_input_headers,
-            [In] CLProgram[] input_headers,
+            [In] Program[] input_headers,
             [In] IntPtr[] header_include_names,
             NotifyFunction pfn_notify,
             IntPtr user_data);
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clLinkProgram(
-            CLContext context,
+        public static extern Program clLinkProgram(
+            Context context,
             uint num_devices,
-            [In] CLDeviceID[] device_list,
+            [In] DeviceId[] device_list,
             string options,
             uint num_input_programs,
-            [In] CLProgram[] input_programs,
+            [In] Program[] input_programs,
             NotifyFunction pfn_notify,
             IntPtr user_data,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clLinkProgram(
-            CLContext context,
+        public static extern Program clLinkProgram(
+            Context context,
             uint num_devices,
-            [In] CLDeviceID[] device_list,
+            [In] DeviceId[] device_list,
             string options,
             uint num_input_programs,
-            [In] CLProgram[] input_programs,
+            [In] Program[] input_programs,
             NotifyFunction pfn_notify,
             IntPtr user_data,
             IntPtr errcode_ret);
@@ -524,14 +524,14 @@ namespace OpenCL.Core.Net
         /* 2.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetProgramReleaseCallback(
-            CLProgram program,
+            Program program,
             NotifyFunction pfn_notify,
             IntPtr user_data);
 
         /* 2.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetProgramSpecializationConstant(
-            CLProgram program,
+            Program program,
             uint spec_id,
             SizeT spec_size,
             IntPtr spec_value);
@@ -542,11 +542,11 @@ namespace OpenCL.Core.Net
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clUnloadPlatformCompiler(CLPlatformID platform);
+        public static extern CLError clUnloadPlatformCompiler(PlatformId platform);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetProgramInfo(
-            CLProgram program,
+            Program program,
             CLProgramInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -554,8 +554,8 @@ namespace OpenCL.Core.Net
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetProgramBuildInfo(
-            CLProgram program,
-            CLDeviceID device,
+            Program program,
+            DeviceId device,
             CLProgramBuildInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -564,111 +564,111 @@ namespace OpenCL.Core.Net
 
         #region Kernel Object APIs
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLKernel clCreateKernel(
-            CLProgram program,
+        public static extern Types.Core.Net.Primitives.Kernel clCreateKernel(
+            Program program,
             string kernel_name,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clCreateKernelsInProgram(
-            CLProgram program,
+            Program program,
             uint num_kernels,
-            [Out] CLKernel[] kernels,
+            [Out] Types.Core.Net.Primitives.Kernel[] kernels,
             ref uint num_kernels_ret);
 
         /* 2.1 */
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLKernel clCloneKernel(
-            CLKernel source_kernel,
+        public static extern Types.Core.Net.Primitives.Kernel clCloneKernel(
+            Types.Core.Net.Primitives.Kernel source_kernel,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clRetainKernel(CLKernel kernel);
+        public static extern CLError clRetainKernel(Types.Core.Net.Primitives.Kernel kernel);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clReleaseKernel(CLKernel kernel);
+        public static extern CLError clReleaseKernel(Types.Core.Net.Primitives.Kernel kernel);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             IntPtr arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
-            ref CLMem arg_value);
+            ref Mem arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             ref byte arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             [In] byte[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             ref short arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             [In] short[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             ref int arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             [In] int[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             ref long arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             [In] long[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             ref float arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             [In] float[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             ref double arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             SizeT arg_size,
             [In] double[] arg_value);
@@ -676,33 +676,33 @@ namespace OpenCL.Core.Net
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArgSVMPointer(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_index,
             IntPtr arg_value);
 
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelExecInfo(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             CLKernelExecInfo param_name,
             SizeT param_value_size,
             IntPtr param_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelExecInfo(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             CLKernelExecInfo param_name,
             SizeT param_value_size,
             [In] IntPtr[] param_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelExecInfo(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             CLKernelExecInfo param_name,
             SizeT param_value_size,
             ref CLBool param_value);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelInfo(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             CLKernelInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -711,7 +711,7 @@ namespace OpenCL.Core.Net
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelArgInfo(
-            CLKernel kernel,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint arg_indx,
             CLKernelArgInfo param_name,
             SizeT param_value_size,
@@ -720,8 +720,8 @@ namespace OpenCL.Core.Net
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelWorkGroupInfo(
-            CLKernel kernel,
-            CLDeviceID device,
+            Types.Core.Net.Primitives.Kernel kernel,
+            DeviceId device,
             CLKernelWorkGroupInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -730,8 +730,8 @@ namespace OpenCL.Core.Net
         /* 2.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelSubGroupInfo(
-            CLKernel kernel,
-            CLDeviceID device,
+            Types.Core.Net.Primitives.Kernel kernel,
+            DeviceId device,
             CLKernelSubGroupInfo param_name,
             SizeT input_value_size,
             IntPtr input_value,
@@ -744,48 +744,48 @@ namespace OpenCL.Core.Net
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clWaitForEvents(
             uint num_events,
-            [In] CLEvent[] event_list);
+            [In] Event[] event_list);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetEventInfo(
-            CLEvent e,
+            Event e,
             CLEventInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLEvent clCreateUserEvent(
-            CLContext context,
+        public static extern Event clCreateUserEvent(
+            Context context,
             IntPtr errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLEvent clCreateUserEvent(
-            CLContext context,
+        public static extern Event clCreateUserEvent(
+            Context context,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clRetainEvent(CLEvent e);
+        public static extern CLError clRetainEvent(Event e);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clReleaseEvent(CLEvent e);
+        public static extern CLError clReleaseEvent(Event e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetUserEventStatus(
-            CLEvent e,
+            Event e,
             int execution_status);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetUserEventStatus(
-            CLEvent e,
+            Event e,
             CLExecutionStatus execution_status);
 
         public delegate void EventCallback(
-            CLEvent e,
+            Event e,
             int event_command_exec_status,
             IntPtr user_data);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetEventCallback(
-            CLEvent e,
+            Event e,
             CLExecutionStatus command_exec_callback_type,
             EventCallback pfn_notify,
             IntPtr user_data);
@@ -794,7 +794,7 @@ namespace OpenCL.Core.Net
         #region Profiling APIs
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetEventProfilingInfo(
-            CLEvent e,
+            Event e,
             CLProfilingInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
@@ -803,41 +803,41 @@ namespace OpenCL.Core.Net
 
         #region Flush and Finish APIs
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clFlush(CLCommandQueue command_queue);
+        public static extern CLError clFlush(CommandQueue command_queue);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clFinish(CLCommandQueue command_queue);
+        public static extern CLError clFinish(CommandQueue command_queue);
         #endregion
 
         #region Enqueued Commands APIs
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_read,
             SizeT offset,
             SizeT cb,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_read,
             SizeT offset,
             SizeT cb,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         /* 1.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadBufferRect(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_read,
             [In] SizeT[] buffer_origin,
             [In] SizeT[] host_origin,
@@ -848,12 +848,12 @@ namespace OpenCL.Core.Net
             SizeT host_slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadBufferRect(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_read,
             [In] SizeT[] buffer_origin,
             [In] SizeT[] host_origin,
@@ -864,37 +864,37 @@ namespace OpenCL.Core.Net
             SizeT host_slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_write,
             SizeT offset,
             SizeT cb,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_write,
             SizeT offset,
             SizeT cb,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         /* 1.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteBufferRect(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_read,
             [In] SizeT[] buffer_origin,
             [In] SizeT[] host_origin,
@@ -905,12 +905,12 @@ namespace OpenCL.Core.Net
             SizeT host_slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteBufferRect(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_read,
             [In] SizeT[] buffer_origin,
             [In] SizeT[] host_origin,
@@ -921,61 +921,61 @@ namespace OpenCL.Core.Net
             SizeT host_slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueFillBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             IntPtr pattern,
             SizeT pattern_size,
             SizeT offset,
             SizeT size,
             uint  num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueFillBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             IntPtr pattern,
             SizeT pattern_size,
             SizeT offset,
             SizeT size,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBuffer(
-            CLCommandQueue command_queue,
-            CLMem src_buffer,
-            CLMem dst_buffer,
+            CommandQueue command_queue,
+            Mem src_buffer,
+            Mem dst_buffer,
             SizeT src_offset,
             SizeT dst_offset,
             SizeT cb,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBuffer(
-            CLCommandQueue command_queue,
-            CLMem src_buffer,
-            CLMem dst_buffer,
+            CommandQueue command_queue,
+            Mem src_buffer,
+            Mem dst_buffer,
             SizeT src_offset,
             SizeT dst_offset,
             SizeT cb,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBufferRect(
-            CLCommandQueue command_queue,
-            CLMem src_buffer,
-            CLMem dst_buffer,
+            CommandQueue command_queue,
+            Mem src_buffer,
+            Mem dst_buffer,
             [In] SizeT[] src_origin,
             [In] SizeT[] dst_origin,
             [In] SizeT[] region,
@@ -984,13 +984,13 @@ namespace OpenCL.Core.Net
             SizeT dst_row_pitch,
             SizeT dst_slice_pitch,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBufferRect(
-            CLCommandQueue command_queue,
-            CLMem src_buffer,
-            CLMem dst_buffer,
+            CommandQueue command_queue,
+            Mem src_buffer,
+            Mem dst_buffer,
             [In] SizeT[] src_origin,
             [In] SizeT[] dst_origin,
             [In] SizeT[] region,
@@ -999,13 +999,13 @@ namespace OpenCL.Core.Net
             SizeT dst_row_pitch,
             SizeT dst_slice_pitch,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadImage(
-            CLCommandQueue command_queue,
-            CLMem image,
+            CommandQueue command_queue,
+            Mem image,
             CLBool blocking_read,
             SizeT[] origin,
             SizeT[] region,
@@ -1013,12 +1013,12 @@ namespace OpenCL.Core.Net
             SizeT slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadImage(
-            CLCommandQueue command_queue,
-            CLMem image,
+            CommandQueue command_queue,
+            Mem image,
             CLBool blocking_read,
             SizeT[] origin,
             SizeT[] region,
@@ -1026,13 +1026,13 @@ namespace OpenCL.Core.Net
             SizeT slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteImage(
-            CLCommandQueue command_queue,
-            CLMem image,
+            CommandQueue command_queue,
+            Mem image,
             CLBool blocking_write,
             SizeT[] origin,
             SizeT[] region,
@@ -1040,12 +1040,12 @@ namespace OpenCL.Core.Net
             SizeT input_slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteImage(
-            CLCommandQueue command_queue,
-            CLMem image,
+            CommandQueue command_queue,
+            Mem image,
             CLBool blocking_write,
             SizeT[] origin,
             SizeT[] region,
@@ -1053,129 +1053,129 @@ namespace OpenCL.Core.Net
             SizeT input_slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueFillImage(
-            CLCommandQueue command_queue,
-            CLMem image,
+            CommandQueue command_queue,
+            Mem image,
             IntPtr fill_color,
             [In] SizeT[] origin,
             [In] SizeT[] region,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueFillImage(
-            CLCommandQueue command_queue,
-            CLMem image,
+            CommandQueue command_queue,
+            Mem image,
             IntPtr fill_color,
             [In] SizeT[] origin,
             [In] SizeT[] region,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyImage(
-            CLCommandQueue command_queue,
-            CLMem src_image,
-            CLMem dst_image,
+            CommandQueue command_queue,
+            Mem src_image,
+            Mem dst_image,
             SizeT[] src_origin,
             SizeT[] dst_origin,
             SizeT[] region,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyImage(
-            CLCommandQueue command_queue,
-            CLMem src_image,
-            CLMem dst_image,
+            CommandQueue command_queue,
+            Mem src_image,
+            Mem dst_image,
             SizeT[] src_origin,
             SizeT[] dst_origin,
             SizeT[] region,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyImageToBuffer(
-            CLCommandQueue command_queue,
-            CLMem src_image,
-            CLMem dst_buffer,
+            CommandQueue command_queue,
+            Mem src_image,
+            Mem dst_buffer,
             SizeT[] src_origin,
             SizeT[] region,
             SizeT dst_offset,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyImageToBuffer(
-            CLCommandQueue command_queue,
-            CLMem src_image,
-            CLMem dst_buffer,
+            CommandQueue command_queue,
+            Mem src_image,
+            Mem dst_buffer,
             SizeT[] src_origin,
             SizeT[] region,
             SizeT dst_offset,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBufferToImage(
-            CLCommandQueue command_queue,
-            CLMem src_buffer,
-            CLMem dst_image,
+            CommandQueue command_queue,
+            Mem src_buffer,
+            Mem dst_image,
             SizeT src_offset,
             SizeT[] dst_origin,
             SizeT[] region,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBufferToImage(
-            CLCommandQueue command_queue,
-            CLMem src_buffer,
-            CLMem dst_image,
+            CommandQueue command_queue,
+            Mem src_buffer,
+            Mem dst_image,
             SizeT src_offset,
             SizeT[] dst_origin,
             SizeT[] region,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clEnqueueMapBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_map,
             CLMapFlags map_flags,
             SizeT offset,
             SizeT cb,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e,
+            [In] Event[] event_wait_list,
+            ref Event e,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clEnqueueMapBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
+            CommandQueue command_queue,
+            Mem buffer,
             CLBool blocking_map,
             CLMapFlags map_flags,
             SizeT offset,
             SizeT cb,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clEnqueueMapImage(
-            CLCommandQueue command_queue,
-            CLMem image,
+            CommandQueue command_queue,
+            Mem image,
             CLBool blocking_map,
             CLMapFlags map_flags,
             SizeT[] origin,
@@ -1183,13 +1183,13 @@ namespace OpenCL.Core.Net
             ref SizeT image_row_pitch,
             ref SizeT image_slice_pitch,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e,
+            [In] Event[] event_wait_list,
+            ref Event e,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clEnqueueMapImage(
-            CLCommandQueue command_queue,
-            CLMem image,
+            CommandQueue command_queue,
+            Mem image,
             CLBool blocking_map,
             CLMapFlags map_flags,
             SizeT[] origin,
@@ -1197,216 +1197,216 @@ namespace OpenCL.Core.Net
             ref SizeT image_row_pitch,
             ref SizeT image_slice_pitch,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueUnmapMemObject(
-            CLCommandQueue command_queue,
-            CLMem memobj,
+            CommandQueue command_queue,
+            Mem memobj,
             IntPtr mapped_ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueUnmapMemObject(
-            CLCommandQueue command_queue,
-            CLMem memobj,
+            CommandQueue command_queue,
+            Mem memobj,
             IntPtr mapped_ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueMigrateMemObjects(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             uint num_mem_objects,
-            [In] CLMem[] mem_objects,
+            [In] Mem[] mem_objects,
             CLMemMigrationFlags flags,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueMigrateMemObjects(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             uint num_mem_objects,
-            [In] CLMem[] mem_objects,
+            [In] Mem[] mem_objects,
             CLMemMigrationFlags flags,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueNDRangeKernel(
-            CLCommandQueue command_queue,
-            CLKernel kernel,
+            CommandQueue command_queue,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint work_dim,
             [In] SizeT[] global_work_offset,
             [In] SizeT[] global_work_size,
             [In] SizeT[] local_work_size,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueNDRangeKernel(
-            CLCommandQueue command_queue,
-            CLKernel kernel,
+            CommandQueue command_queue,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint work_dim,
             [In] SizeT[] global_work_offset,
             [In] SizeT[] global_work_size,
             [In] SizeT[] local_work_size,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueTask(
-            CLCommandQueue command_queue,
-            CLKernel kernel,
+            CommandQueue command_queue,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueTask(
-            CLCommandQueue command_queue,
-            CLKernel kernel,
+            CommandQueue command_queue,
+            Types.Core.Net.Primitives.Kernel kernel,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         public delegate void UserFunction(IntPtr[] args);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueNativeKernel(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             UserFunction user_func,
             [In] IntPtr[] args,
             SizeT cb_args,
             uint num_mem_objects,
-            [In] CLMem[] mem_list,
+            [In] Mem[] mem_list,
             [In] IntPtr[] args_mem_loc,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueNativeKernel(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             UserFunction user_func,
             [In] IntPtr[] args,
             SizeT cb_args,
             uint num_mem_objects,
-            [In] CLMem[] mem_list,
+            [In] Mem[] mem_list,
             [In] IntPtr[] args_mem_loc,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
+            [In] Event[] event_wait_list,
             IntPtr e);
 
         [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueMarker(
-            CLCommandQueue command_queue,
-            ref CLEvent e);
+            CommandQueue command_queue,
+            ref Event e);
 
         [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWaitForEvents(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             uint num_events,
-            [In] CLEvent[] event_list);
+            [In] Event[] event_list);
 
         [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueBarrier(CLCommandQueue command_queue);
+        public static extern CLError clEnqueueBarrier(CommandQueue command_queue);
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueMarkerWithWaitList(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
 
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueBarrierWithWaitList(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
 
         /* 2.0 */
-        public delegate void SVMFreeFunction(CLCommandQueue queue, uint num_svm_pointers, IntPtr[] svm_pointers, IntPtr user_data);
+        public delegate void SVMFreeFunction(CommandQueue queue, uint num_svm_pointers, IntPtr[] svm_pointers, IntPtr user_data);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueSVMFree(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             uint num_svm_pointers,
             [In] IntPtr[] svm_pointers,
             SVMFreeFunction pfn_free_func,
             IntPtr user_data,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
 
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueSVMMemcpy(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             CLBool blocking_copy,
             IntPtr dst_ptr,
             IntPtr src_ptr,
             SizeT size,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
 
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueSVMMemFill(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             IntPtr svm_ptr,
             IntPtr pattern,
             SizeT pattern_size,
             SizeT size,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
 
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueSVMMap(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             CLBool blocking_map,
             CLMapFlags flags,
             IntPtr svm_ptr,
             SizeT size,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
 
         /* 2.0 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueSVMUnmap(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             IntPtr svm_ptr,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
 
         /* 2.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueSVMMigrateMem(
-            CLCommandQueue command_queue,
+            CommandQueue command_queue,
             uint num_svm_pointers,
             [In] IntPtr[] svm_pointers,
             [In] SizeT[] sizes,
             CLMemMigrationFlags flags,
             uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
+            [In] Event[] event_wait_list,
+            ref Event e);
         #endregion
 
         #region Extension function access
@@ -1417,7 +1417,7 @@ namespace OpenCL.Core.Net
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clGetExtensionFunctionAddressForPlatform(
-            CLPlatformID platform,
+            PlatformId platform,
             string func_name);
         #endregion
     }

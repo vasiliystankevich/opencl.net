@@ -2,7 +2,7 @@
 
 namespace OpenCL.Types.Core.Net.Primitives
 {
-    public struct CLContext
+    public struct Event
     {
         public IntPtr Value;
     }

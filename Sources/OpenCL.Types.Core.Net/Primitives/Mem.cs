@@ -2,7 +2,7 @@
 
 namespace OpenCL.Types.Core.Net.Primitives
 {
-    public struct CLSampler
+    public struct Mem
     {
         public IntPtr Value;
     }

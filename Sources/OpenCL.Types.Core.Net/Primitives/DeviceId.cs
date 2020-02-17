@@ -2,7 +2,7 @@
 
 namespace OpenCL.Types.Core.Net.Primitives
 {
-    public struct CLEvent
+    public struct DeviceId
     {
         public IntPtr Value;
     }

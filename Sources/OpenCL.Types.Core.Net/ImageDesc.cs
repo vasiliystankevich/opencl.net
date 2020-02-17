@@ -17,6 +17,6 @@ namespace OpenCL.Types.Core.Net
         uint NumSamples;
 
         // Instead of union, buffer is represented by mem_object.
-        CLMem MemObject;
+        Mem MemObject;
     }
 }

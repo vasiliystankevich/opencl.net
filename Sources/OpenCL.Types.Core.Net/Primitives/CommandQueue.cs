@@ -2,7 +2,7 @@
 
 namespace OpenCL.Types.Core.Net.Primitives
 {
-    public struct CLMem
+    public struct CommandQueue
     {
         public IntPtr Value;
     }

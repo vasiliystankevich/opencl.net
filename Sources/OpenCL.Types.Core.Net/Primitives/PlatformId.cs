@@ -2,7 +2,7 @@
 
 namespace OpenCL.Types.Core.Net.Primitives
 {
-    public struct CLKernel
+    public struct PlatformId
     {
         public IntPtr Value;
     }
