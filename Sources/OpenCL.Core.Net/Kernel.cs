@@ -20,8 +20,6 @@
  * IN THE SOFTWARE.
  */
 
-using System;
-using System.Runtime.InteropServices;
 using OpenCL.Core.Net.Native;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
@@ -31,6 +29,8 @@ using OpenCL.Types.Core.Net.Enums.Device;
 using OpenCL.Types.Core.Net.Enums.Mem;
 using OpenCL.Types.Core.Net.Enums.Program;
 using OpenCL.Types.Core.Net.Primitives;
+using System;
+using System.Runtime.InteropServices;
 
 namespace OpenCL.Core.Net
 {
@@ -57,7 +57,7 @@ namespace OpenCL.Core.Net
         /// </summary>
         /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
         /// <param name="device">Device to include in OpenCL(TM) context.</param>
-        public Kernel(PlatformId platform, DeviceId device) : 
+        public Kernel(PlatformId platform, DeviceId device) :
             this(platform, new DeviceId[] { device })
         { }
 
@@ -141,7 +141,7 @@ namespace OpenCL.Core.Net
             return CreateCommandQueue(device, 0);
         }
 
-        public CommandQueue CreateCommandQueue(DeviceId device, 
+        public CommandQueue CreateCommandQueue(DeviceId device,
             CommandQueueProperties properties)
         {
             CommandQueue queue = CommandQueueApi.clCreateCommandQueue(ctx, device, properties, ref clError);
@@ -189,10 +189,10 @@ namespace OpenCL.Core.Net
             return buffer;
         }
 
-        public Mem CreateImage2D(MemFlags flags, ImageFormat format, 
+        public Mem CreateImage2D(MemFlags flags, ImageFormat format,
             SizeT width, SizeT height, SizeT rowPitchInBytes)
         {
-            Mem image = MemoryObjectApi.clCreateImage2D(ctx, flags, ref format, 
+            Mem image = MemoryObjectApi.clCreateImage2D(ctx, flags, ref format,
                 width, height, rowPitchInBytes, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
@@ -204,7 +204,7 @@ namespace OpenCL.Core.Net
             SizeT rowPitchInBytes, SizeT slicePitchInBytes)
         {
             Mem image = MemoryObjectApi.clCreateImage3D(ctx, flags, ref format,
-                width, height, depth, rowPitchInBytes, slicePitchInBytes, 
+                width, height, depth, rowPitchInBytes, slicePitchInBytes,
                 IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
@@ -226,7 +226,7 @@ namespace OpenCL.Core.Net
         public ImageFormat[] GetSupportedImageFormats(MemFlags flags, MemObjectType imageType)
         {
             uint numImageFormats = 0;
-            clError = MemoryObjectApi.clGetSupportedImageFormats(ctx, flags, 
+            clError = MemoryObjectApi.clGetSupportedImageFormats(ctx, flags,
                 imageType, 0, IntPtr.Zero, ref numImageFormats);
             ThrowCLException(clError);
 
@@ -254,11 +254,11 @@ namespace OpenCL.Core.Net
         {
             SizeT[] lengths = new SizeT[sources.Length];
             for (int i = 0; i < sources.Length; i++)
-			{
+            {
                 lengths[i] = sources[i].Length;
-			}
+            }
 
-            Program program = OpenCLDriver.clCreateProgramWithSource(ctx, 
+            Program program = ProgramObjectApi.clCreateProgramWithSource(ctx,
                 (uint)sources.Length, sources, lengths, ref clError);
             ThrowCLException(clError);
 
@@ -288,10 +288,10 @@ namespace OpenCL.Core.Net
 
                     Marshal.Copy(binaries[i], 0, ptrToBinaries[i], lengths[i]);
                 }
-            
+
                 int[] binaryStatus = new int[binaries.Length];
 
-                Program program = OpenCLDriver.clCreateProgramWithBinary(ctx,
+                Program program = ProgramObjectApi.clCreateProgramWithBinary(ctx,
                     (uint)Devices.Length, Devices, lengths, ptrToBinaries, binaryStatus, ref clError);
                 ThrowCLException(clError);
 
@@ -311,19 +311,19 @@ namespace OpenCL.Core.Net
 
         public void RetainProgram(Program program)
         {
-            clError = OpenCLDriver.clRetainProgram(program);
+            clError = ProgramObjectApi.clRetainProgram(program);
             ThrowCLException(clError);
         }
 
         public void ReleaseProgram(Program program)
         {
-            clError = OpenCLDriver.clReleaseProgram(program);
+            clError = ProgramObjectApi.clReleaseProgram(program);
             ThrowCLException(clError);
         }
 
         public void BuildProgram(Program program, DeviceId[] devices, string options)
         {
-            clError = OpenCLDriver.clBuildProgram(program, (uint)devices.Length, 
+            clError = ProgramObjectApi.clBuildProgram(program, (uint)devices.Length,
                 devices, options, null, IntPtr.Zero);
             ThrowCLException(clError);
         }
@@ -1170,7 +1170,7 @@ namespace OpenCL.Core.Net
         #region Program Utilities
         public static void UnloadCompiler()
         {
-            ThrowCLException(OpenCLDriver.clUnloadCompiler());
+            ThrowCLException(ProgramObjectApi.clUnloadCompiler());
         }
 
         public static object GetProgramInfo(Program program, ProgramInfo info)
@@ -1183,7 +1183,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = OpenCLDriver.clGetProgramInfo(program, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = ProgramObjectApi.clGetProgramInfo(program, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -1201,7 +1201,7 @@ namespace OpenCL.Core.Net
                 // Get actual value for normal scalars and arrays.
                 if (info != ProgramInfo.Binaries)
                 {
-                    error = OpenCLDriver.clGetProgramInfo(program, info,
+                    error = ProgramObjectApi.clGetProgramInfo(program, info,
                         param_value_size_ret, ptr, ref param_value_size_ret);
                 }
 
@@ -1264,7 +1264,7 @@ namespace OpenCL.Core.Net
                             }
 
                             // Get actual value for normal scalars and arrays.
-                            error = OpenCLDriver.clGetProgramInfo(program, info,
+                            error = ProgramObjectApi.clGetProgramInfo(program, info,
                                     param_value_size_ret, ptr, ref param_value_size_ret);
 
                             // Read program binaries.
@@ -1308,7 +1308,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = OpenCLDriver.clGetProgramBuildInfo(program, device, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = ProgramObjectApi.clGetProgramBuildInfo(program, device, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -1324,8 +1324,9 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = OpenCLDriver.clGetProgramBuildInfo(program, device, info,
+                error = ProgramObjectApi.clGetProgramBuildInfo(program, device, info,
                     param_value_size_ret, ptr, ref param_value_size_ret);
+                ThrowCLException(error);
 
                 switch (info)
                 {
@@ -1379,6 +1380,7 @@ namespace OpenCL.Core.Net
                 // Get actual value.
                 error = OpenCLDriver.clGetEventProfilingInfo(e, info,
                     param_value_size_ret, ptr, ref param_value_size_ret);
+                ThrowCLException(error);
 
                 switch (info)
                 {
