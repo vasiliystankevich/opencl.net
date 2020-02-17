@@ -1,5 +1,4 @@
-﻿using OpenCL.Types.Core.Net.Enums;
-using OpenCL.Types.Core.Net.Enums.Mem;
+﻿using OpenCL.Types.Core.Net.Enums.Mem;
 using OpenCL.Types.Core.Net.Primitives;
 
 namespace OpenCL.Types.Core.Net
