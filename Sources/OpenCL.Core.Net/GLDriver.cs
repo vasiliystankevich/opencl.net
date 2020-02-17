@@ -35,20 +35,20 @@ namespace OpenCL.Core.Net
     /// </summary>
     public class OpenCLGLDriver
     {
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLBuffer(
             Context context,
             MemFlags flags,
             uint bufobj,
             ref Error errcode_ret);
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLBuffer(
             Context context,
             MemFlags flags,
             uint bufobj,
             IntPtr errcode_ret);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLTexture(
             Context context,
             MemFlags flags,
@@ -56,7 +56,7 @@ namespace OpenCL.Core.Net
             int miplevel,
             uint texture,
             ref Error errcode_ret);
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLTexture(
             Context context,
             MemFlags flags,
@@ -66,7 +66,7 @@ namespace OpenCL.Core.Net
             IntPtr errcode_ret);
 
         [Obsolete("Deprecated since OpenCL 1.2")]
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLTexture2D(
             Context context,
             MemFlags flags,
@@ -75,7 +75,7 @@ namespace OpenCL.Core.Net
             uint texture,
             ref Error errcode_ret);
         [Obsolete("Deprecated since OpenCL 1.2")]
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLTexture2D(
             Context context,
             MemFlags flags,
@@ -85,7 +85,7 @@ namespace OpenCL.Core.Net
             IntPtr errcode_ret);
 
         [Obsolete("Deprecated since OpenCL 1.2")]
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLTexture3D(
             Context context,
             MemFlags flags,
@@ -94,7 +94,7 @@ namespace OpenCL.Core.Net
             uint texture,
             ref Error errcode_ret);
         [Obsolete("Deprecated since OpenCL 1.2")]
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLTexture3D(
             Context context,
             MemFlags flags,
@@ -103,26 +103,26 @@ namespace OpenCL.Core.Net
             uint texture,
             IntPtr errcode_ret);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLRenderbuffer(
             Context context,
             MemFlags flags,
             uint renderbuffer,
             ref Error errcode_ret);
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Mem clCreateFromGLRenderbuffer(
             Context context,
             MemFlags flags,
             uint renderbuffer,
             IntPtr errcode_ret);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Error clGetGLObjectInfo(
             Mem memobj,
             ref uint gl_object_type,
             ref uint gl_object_name);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Error clGetGLTextureInfo(
             Mem memobj,
             uint param_name,
@@ -130,7 +130,7 @@ namespace OpenCL.Core.Net
             IntPtr param_value,
             ref SizeT param_value_size_ret);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Error clEnqueueAcquireGLObjects(
             CommandQueue command_queue,
             uint num_objects,
@@ -139,7 +139,7 @@ namespace OpenCL.Core.Net
             [In] Event[] event_wait_list,
             ref Event e);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Error clEnqueueReleaseGLObjects(
             CommandQueue command_queue,
             uint num_objects,

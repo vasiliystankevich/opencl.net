@@ -9,22 +9,22 @@ namespace OpenCL.Core.Net.Native
 {
     public class ContextApi
     {
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Context clCreateContext([In] IntPtr[] properties, uint numDevices,
             [In] DeviceId[] devices, Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData,
             ref Error errcodeRet);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Context clCreateContextFromType([In] IntPtr[] properties, DeviceType deviceType,
             Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData, ref Error errcodeRet);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Error clRetainContext(Context context);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Error clReleaseContext(Context context);
 
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern Error clGetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize,
             IntPtr paramValue, ref SizeT paramValueSizeRet);
     }

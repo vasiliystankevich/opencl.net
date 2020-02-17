@@ -1,6 +1,6 @@
 ﻿namespace OpenCL.Core.Net.Native
 {
-    public class Dll
+    public class DllNative
     {
         public const string Name = "OpenCL";
     }

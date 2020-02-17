@@ -7,11 +7,11 @@ namespace OpenCL.Core.Net.Native
     public class ExtensionFunctionAccessApi
     {
         [Obsolete("Deprecated since OpenCL 1.2")]
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern IntPtr clGetExtensionFunctionAddress(string funcName);
 
         /* 1.2 */
-        [DllImport(Dll.Name)]
+        [DllImport(DllNative.Name)]
         public static extern IntPtr clGetExtensionFunctionAddressForPlatform(PlatformId platform, string funcName);
     }
 }
