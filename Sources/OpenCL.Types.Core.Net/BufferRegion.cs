@@ -3,9 +3,9 @@
 namespace OpenCL.Types.Core.Net
 {
     /* 1.1 */
-    public struct CLBufferRegion
+    public struct BufferRegion
     {
-        public SizeT origin;
-        public SizeT size;
+        public SizeT Origin;
+        public SizeT Size;
     }
 }

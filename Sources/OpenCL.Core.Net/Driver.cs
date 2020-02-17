@@ -228,7 +228,7 @@ namespace OpenCL.Core.Net
             CLMemFlags flags,
             CLBufferCreateType buffer_create_type,
             [MarshalAs(UnmanagedType.LPStruct)]
-            CLBufferRegion buffer_create_info,
+            BufferRegion buffer_create_info,
             ref CLError errcode_ret);
 
         [Obsolete("Deprecated since OpenCL 1.2")]
@@ -236,7 +236,7 @@ namespace OpenCL.Core.Net
         public static extern CLMem clCreateImage2D(
             CLContext context,
             CLMemFlags flags,
-            ref CLImageFormat image_format,
+            ref ImageFormat image_format,
             SizeT image_width,
             SizeT image_height,
             SizeT image_row_pitch,
@@ -248,7 +248,7 @@ namespace OpenCL.Core.Net
         public static extern CLMem clCreateImage3D(
             CLContext context,
             CLMemFlags flags,
-            ref CLImageFormat image_format,
+            ref ImageFormat image_format,
             SizeT image_width,
             SizeT image_height,
             SizeT image_depth,
@@ -263,9 +263,9 @@ namespace OpenCL.Core.Net
             CLContext context,
             CLMemFlags flags,
             [MarshalAs(UnmanagedType.LPStruct)]
-            CLImageFormat image_format,
+            ImageFormat image_format,
             [MarshalAs(UnmanagedType.LPStruct)]
-            CLImageDesc image_desc,
+            ImageDesc image_desc,
             IntPtr host_ptr,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
@@ -273,9 +273,9 @@ namespace OpenCL.Core.Net
             CLContext context,
             CLMemFlags flags,
             [MarshalAs(UnmanagedType.LPStruct)]
-            CLImageFormat image_format,
+            ImageFormat image_format,
             [MarshalAs(UnmanagedType.LPStruct)]
-            CLImageDesc image_desc,
+            ImageDesc image_desc,
             IntPtr host_ptr,
             IntPtr errcode_ret);
 
@@ -317,7 +317,7 @@ namespace OpenCL.Core.Net
             CLMemFlags flags,
             CLMemObjectType image_type,
             uint num_entries,
-            [Out] CLImageFormat[] image_formats,
+            [Out] ImageFormat[] image_formats,
             ref uint num_image_formats);
 
         [DllImport(OPENCL_DLL_NAME)]

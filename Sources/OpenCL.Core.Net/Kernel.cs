@@ -183,7 +183,7 @@ namespace OpenCL.Core.Net
             return buffer;
         }
 
-        public CLMem CreateImage2D(CLMemFlags flags, CLImageFormat format, 
+        public CLMem CreateImage2D(CLMemFlags flags, ImageFormat format, 
             SizeT width, SizeT height, SizeT rowPitchInBytes)
         {
             CLMem image = OpenCLDriver.clCreateImage2D(ctx, flags, ref format, 
@@ -193,7 +193,7 @@ namespace OpenCL.Core.Net
             return image;
         }
 
-        public CLMem CreateImage3D(CLMemFlags flags, CLImageFormat format,
+        public CLMem CreateImage3D(CLMemFlags flags, ImageFormat format,
             SizeT width, SizeT height, SizeT depth,
             SizeT rowPitchInBytes, SizeT slicePitchInBytes)
         {
@@ -217,7 +217,7 @@ namespace OpenCL.Core.Net
             ThrowCLException(clError);
         }
 
-        public CLImageFormat[] GetSupportedImageFormats(CLMemFlags flags, CLMemObjectType imageType)
+        public ImageFormat[] GetSupportedImageFormats(CLMemFlags flags, CLMemObjectType imageType)
         {
             uint numImageFormats = 0;
             clError = OpenCLDriver.clGetSupportedImageFormats(ctx, flags, 
@@ -226,10 +226,10 @@ namespace OpenCL.Core.Net
 
             if (numImageFormats < 1)
             {
-                return new CLImageFormat[0];
+                return new ImageFormat[0];
             }
 
-            CLImageFormat[] formats = new CLImageFormat[numImageFormats];
+            ImageFormat[] formats = new ImageFormat[numImageFormats];
             clError = OpenCLDriver.clGetSupportedImageFormats(ctx, flags,
                 imageType, numImageFormats, formats, ref numImageFormats);
             ThrowCLException(clError);
@@ -1119,7 +1119,7 @@ namespace OpenCL.Core.Net
                 switch (info)
                 {
                     case CLImageInfo.Format:
-                        result = Marshal.PtrToStructure(ptr, typeof(CLImageFormat));
+                        result = Marshal.PtrToStructure(ptr, typeof(ImageFormat));
                         break;
                     case CLImageInfo.ElementSize:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
