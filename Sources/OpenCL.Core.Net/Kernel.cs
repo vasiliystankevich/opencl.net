@@ -22,7 +22,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using OpenCL.Core.Net.Driver;
 using OpenCL.Core.Net.Native;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
@@ -145,7 +144,7 @@ namespace OpenCL.Core.Net
         public CommandQueue CreateCommandQueue(DeviceId device, 
             CommandQueueProperties properties)
         {
-            CommandQueue queue = OpenCLDriver.clCreateCommandQueue(ctx, device, properties, ref clError);
+            CommandQueue queue = CommandQueueApi.clCreateCommandQueue(ctx, device, properties, ref clError);
             ThrowCLException(clError);
 
             return queue;
@@ -153,13 +152,13 @@ namespace OpenCL.Core.Net
 
         public void RetainCommandQueue(CommandQueue command_queue)
         {
-            clError = OpenCLDriver.clRetainCommandQueue(command_queue);
+            clError = CommandQueueApi.clRetainCommandQueue(command_queue);
             ThrowCLException(clError);
         }
 
         public void ReleaseCommandQueue(CommandQueue command_queue)
         {
-            clError = OpenCLDriver.clReleaseCommandQueue(command_queue);
+            clError = CommandQueueApi.clReleaseCommandQueue(command_queue);
             ThrowCLException(clError);
         }
 
@@ -975,7 +974,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = OpenCLDriver.clGetCommandQueueInfo(command_queue, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = CommandQueueApi.clGetCommandQueueInfo(command_queue, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -991,8 +990,9 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = OpenCLDriver.clGetCommandQueueInfo(command_queue, info,
+                error = CommandQueueApi.clGetCommandQueueInfo(command_queue, info,
                 param_value_size_ret, ptr, ref param_value_size_ret);
+                ThrowCLException(error);
 
                 switch (info)
                 {

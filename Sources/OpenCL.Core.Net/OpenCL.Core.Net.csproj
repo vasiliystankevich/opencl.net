@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Driver\API\**" />
     <Compile Remove="Kernel\**" />
-    <EmbeddedResource Remove="Driver\API\**" />
     <EmbeddedResource Remove="Kernel\**" />
-    <None Remove="Driver\API\**" />
     <None Remove="Kernel\**" />
   </ItemGroup>
 

@@ -22,7 +22,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using OpenCL.Core.Net.Driver;
 using OpenCL.Core.Net.Native;
 using OpenCL.Types.Core.Net.Enums;
 using OpenCL.Types.Core.Net.Enums.Mem;

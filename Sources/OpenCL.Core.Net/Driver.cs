@@ -26,74 +26,26 @@ using OpenCL.Core.Net.Native;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
 using OpenCL.Types.Core.Net.Enums.Command;
-using OpenCL.Types.Core.Net.Enums.Context;
-using OpenCL.Types.Core.Net.Enums.Device;
 using OpenCL.Types.Core.Net.Enums.Kernel;
 using OpenCL.Types.Core.Net.Enums.Kernel.Arg;
 using OpenCL.Types.Core.Net.Enums.Mem;
 using OpenCL.Types.Core.Net.Enums.Program;
 using OpenCL.Types.Core.Net.Primitives;
 
-namespace OpenCL.Core.Net.Driver
+namespace OpenCL.Core.Net
 {
     /// <summary>
     /// This class provides the driver interface to OpenCL functions.
     /// </summary>
     public class OpenCLDriver
     {
-        #region Context APIs
-
-        #endregion
-
-
-
-
-
         #region Command Queue APIs
-        [Obsolete("Deprecated since OpenCL 2.0")]
-        [DllImport(Dll.Name)]
-        public static extern CommandQueue clCreateCommandQueue(
-            Context context,
-            DeviceId device,
-            CommandQueueProperties properties,
-            ref Error errcode_ret);
 
-        /* 2.0 */
-        [DllImport(Dll.Name)]
-        public static extern CommandQueue clCreateCommandQueueWithProperties(
-            Context context,
-            DeviceId device,
-            [In] IntPtr[] properties,
-            ref Error errcode_ret);
-        [DllImport(Dll.Name)]
-        public static extern CommandQueue clCreateCommandQueueWithProperties(
-            Context context,
-            DeviceId device,
-            [In] IntPtr[] properties,
-            IntPtr errcode_ret);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clRetainCommandQueue(CommandQueue command_queue);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clReleaseCommandQueue(CommandQueue command_queue);
-
-        [DllImport(Dll.Name)]
-        public static extern Error clGetCommandQueueInfo(
-            CommandQueue command_queue,
-            CommandQueueInfo param_name,
-            SizeT param_value_size,
-            IntPtr param_value,
-            ref SizeT param_value_size_ret);
-
-        [Obsolete("Deprecated since OpenCL 1.1")]
-        [DllImport(Dll.Name)]
-        public static extern Error clSetCommandQueueProperty(
-            CommandQueue command_queue,
-            CommandQueueProperties properties,
-            Bool enable,
-            ref CommandQueueProperties old_properties);
         #endregion
+
+
+
+
 
         #region Memory Object APIs
         [DllImport(Dll.Name)]
