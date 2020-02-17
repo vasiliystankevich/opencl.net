@@ -22,11 +22,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using CASS.OpenCL.Driver;
 using OpenCL.Types.Core.Net.Enums;
 using OpenCL.Types.Core.Net.Primitives;
 
-namespace CASS.OpenCL.OpenGL
+namespace OpenCL.Core.Net
 {
     /// <summary>
     /// This class provides the driver interface for OpenGL interoperability

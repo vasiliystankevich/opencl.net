@@ -23,7 +23,7 @@
 using System;
 using OpenCL.Types.Core.Net.Enums;
 
-namespace CASS.OpenCL
+namespace OpenCL.Core.Net
 {
     /// <summary>
     /// Represents an OpenCL(TM) exception that occured in one of the API functions.

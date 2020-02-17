@@ -22,8 +22,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using CASS.OpenCL;
-using CASS.OpenCL.Driver;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
 using OpenCL.Types.Core.Net.Primitives;

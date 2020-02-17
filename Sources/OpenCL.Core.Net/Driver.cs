@@ -22,12 +22,11 @@
 
 using System;
 using System.Runtime.InteropServices;
-using CASS.OpenCL.Types;
 using OpenCL.Types.Core.Net;
 using OpenCL.Types.Core.Net.Enums;
 using OpenCL.Types.Core.Net.Primitives;
 
-namespace CASS.OpenCL.Driver
+namespace OpenCL.Core.Net
 {
     /// <summary>
     /// This class provides the driver interface to OpenCL functions.
