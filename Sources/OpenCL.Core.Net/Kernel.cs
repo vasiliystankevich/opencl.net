@@ -887,7 +887,7 @@ namespace OpenCL.Core.Net
                     case DeviceInfo.NativeVectorWidthHalf:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case DeviceInfo.OpenCLCVersion:
+                    case DeviceInfo.OpenClCVersion:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
                 }

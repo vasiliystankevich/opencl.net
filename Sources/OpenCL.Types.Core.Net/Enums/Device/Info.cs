@@ -74,7 +74,7 @@ namespace OpenCL.Types.Core.Net.Enums.Device
         NativeVectorWidthFloat = 0x103A,
         NativeVectorWidthDouble = 0x103B,
         NativeVectorWidthHalf = 0x103C,
-        OpenCLCVersion = 0x103D,
+        OpenClCVersion = 0x103D,
         /* 1.2 */
         LinkerAvailable = 0x103E,
         BuiltInKernels = 0x103F,
