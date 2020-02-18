@@ -164,13 +164,13 @@ namespace OpenCL.Core.Net
 
         public void Flush(CommandQueue command_queue)
         {
-            clError = OpenCLDriver.clFlush(command_queue);
+            clError = FlushApi.clFlush(command_queue);
             ThrowCLException(clError);
         }
 
         public void Finish(CommandQueue command_queue)
         {
-            clError = OpenCLDriver.clFinish(command_queue);
+            clError = FlushApi.clFinish(command_queue);
             ThrowCLException(clError);
         }
         #endregion

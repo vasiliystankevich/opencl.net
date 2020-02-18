@@ -34,14 +34,6 @@ namespace OpenCL.Core.Net
     /// </summary>
     public class OpenCLDriver
     {
-        #region Flush and Finish APIs
-        [DllImport(DllNative.Name)]
-        public static extern Error clFlush(CommandQueue command_queue);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clFinish(CommandQueue command_queue);
-        #endregion
-
         #region Enqueued Commands APIs
         [DllImport(DllNative.Name)]
         public static extern Error clEnqueueReadBuffer(
