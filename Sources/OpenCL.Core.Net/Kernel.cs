@@ -442,7 +442,7 @@ namespace OpenCL.Core.Net
 
             try
             {
-                clError = OpenCLDriver.clEnqueueReadBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, ref lastOperationEvent);
+                clError = EnqueuedCommandsApi.clEnqueueReadBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, ref lastOperationEvent);
                 ThrowCLException(clError);
             }
             finally
@@ -457,7 +457,7 @@ namespace OpenCL.Core.Net
 
             try
             {
-                clError = OpenCLDriver.clEnqueueWriteBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, ref lastOperationEvent);
+                clError = EnqueuedCommandsApi.clEnqueueWriteBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, ref lastOperationEvent);
                 ThrowCLException(clError);
             }
             finally
@@ -469,7 +469,7 @@ namespace OpenCL.Core.Net
         public void NDRangeKernel(CommandQueue queue, Types.Core.Net.Primitives.Kernel kernel, uint work_dim,
             SizeT[] global_work_offset, SizeT[] global_work_size, SizeT[] local_work_size)
         {
-            clError = OpenCLDriver.clEnqueueNDRangeKernel(queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, 0, null, ref lastOperationEvent);
+            clError = EnqueuedCommandsApi.clEnqueueNDRangeKernel(queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, 0, null, ref lastOperationEvent);
             ThrowCLException(clError);
         }
         #endregion
