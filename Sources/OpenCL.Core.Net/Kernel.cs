@@ -1362,7 +1362,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = OpenCLDriver.clGetEventProfilingInfo(e, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = ProfilingApi.clGetEventProfilingInfo(e, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -1378,7 +1378,7 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = OpenCLDriver.clGetEventProfilingInfo(e, info,
+                error = ProfilingApi.clGetEventProfilingInfo(e, info,
                     param_value_size_ret, ptr, ref param_value_size_ret);
                 ThrowCLException(error);
 

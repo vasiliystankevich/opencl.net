@@ -34,67 +34,6 @@ namespace OpenCL.Core.Net
     /// </summary>
     public class OpenCLDriver
     {
-        #region Event Object APIs
-        [DllImport(DllNative.Name)]
-        public static extern Error clWaitForEvents(
-            uint num_events,
-            [In] Event[] event_list);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clGetEventInfo(
-            Event e,
-            EventInfo param_name,
-            SizeT param_value_size,
-            IntPtr param_value,
-            ref SizeT param_value_size_ret);
-
-        [DllImport(DllNative.Name)]
-        public static extern Event clCreateUserEvent(
-            Context context,
-            IntPtr errcode_ret);
-        [DllImport(DllNative.Name)]
-        public static extern Event clCreateUserEvent(
-            Context context,
-            ref Error errcode_ret);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clRetainEvent(Event e);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clReleaseEvent(Event e);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clSetUserEventStatus(
-            Event e,
-            int execution_status);
-        [DllImport(DllNative.Name)]
-        public static extern Error clSetUserEventStatus(
-            Event e,
-            ExecutionStatus execution_status);
-
-        public delegate void EventCallback(
-            Event e,
-            int event_command_exec_status,
-            IntPtr user_data);
-
-        [DllImport(DllNative.Name)]
-        public static extern Error clSetEventCallback(
-            Event e,
-            ExecutionStatus command_exec_callback_type,
-            EventCallback pfn_notify,
-            IntPtr user_data);
-        #endregion
-
-        #region Profiling APIs
-        [DllImport(DllNative.Name)]
-        public static extern Error clGetEventProfilingInfo(
-            Event e,
-            ProfilingInfo param_name,
-            SizeT param_value_size,
-            IntPtr param_value,
-            ref SizeT param_value_size_ret);
-        #endregion
-
         #region Flush and Finish APIs
         [DllImport(DllNative.Name)]
         public static extern Error clFlush(CommandQueue command_queue);
