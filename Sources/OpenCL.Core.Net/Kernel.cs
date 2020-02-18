@@ -332,7 +332,7 @@ namespace OpenCL.Core.Net
         #region Kernel Functions
         public Types.Core.Net.Primitives.Kernel CreateKernel(Program program, string kernelName)
         {
-            Types.Core.Net.Primitives.Kernel kernel = OpenCLDriver.clCreateKernel(program, kernelName, ref clError);
+            Types.Core.Net.Primitives.Kernel kernel = KernelObjectApi.clCreateKernel(program, kernelName, ref clError);
             ThrowCLException(clError);
 
             return kernel;
@@ -340,92 +340,92 @@ namespace OpenCL.Core.Net
 
         public void RetainKernel(Types.Core.Net.Primitives.Kernel kernel)
         {
-            clError = OpenCLDriver.clRetainKernel(kernel);
+            clError = KernelObjectApi.clRetainKernel(kernel);
             ThrowCLException(clError);
         }
 
         public void ReleaseKernel(Types.Core.Net.Primitives.Kernel kernel)
         {
-            clError = OpenCLDriver.clReleaseKernel(kernel);
+            clError = KernelObjectApi.clReleaseKernel(kernel);
             ThrowCLException(clError);
         }
 
         #region SetKernelArg
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, byte value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(byte), ref value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(byte), ref value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, short value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(short), ref value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(short), ref value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, int value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(int), ref value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(int), ref value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, long value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(long), ref value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(long), ref value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, float value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(float), ref value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(float), ref value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, double value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(double), ref value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(double), ref value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, Mem value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, Marshal.SizeOf(value), ref value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, Marshal.SizeOf(value), ref value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, byte[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(byte) * value.Length, value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(byte) * value.Length, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, short[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(short) * value.Length, value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(short) * value.Length, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, int[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(int) * value.Length, value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(int) * value.Length, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, long[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(long) * value.Length, value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(long) * value.Length, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, float[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(float) * value.Length, value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(float) * value.Length, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, double[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(double) * value.Length, value);
+            clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(double) * value.Length, value);
             ThrowCLException(clError);
         }
         #endregion
