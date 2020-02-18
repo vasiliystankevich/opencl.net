@@ -27,7 +27,7 @@ namespace Temp
                     var deviceVersion = Kernel.GetDeviceInfo(device, DeviceInfo.Version);
                     var deviceProfile = Kernel.GetDeviceInfo(device, DeviceInfo.Profile);
                     var deviceExtensions = Kernel.GetDeviceInfo(device, DeviceInfo.Extensions);
-                    var deviceOpenClCVersion = Kernel.GetDeviceInfo(device, DeviceInfo.OpenCLCVersion);
+                    var deviceOpenClCVersion = Kernel.GetDeviceInfo(device, DeviceInfo.OpenClCVersion);
                     return new
                     {
                         Type = deviceType,
@@ -37,7 +37,6 @@ namespace Temp
                         DriverVersion = deviceDriverVersion,
                         Version= deviceVersion,
                         Profile = deviceProfile,
-                        //Platform = devicePlatform,
                         Extensions = deviceExtensions,
                         OpenClCVersion = deviceOpenClCVersion
                     };
