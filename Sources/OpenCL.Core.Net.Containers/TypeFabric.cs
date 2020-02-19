@@ -1,8 +1,7 @@
-﻿using System;
-using Project.Kernel;
+﻿using Project.Kernel;
 using Unity;
 
-namespace OpenCL.Core.Net.Tests
+namespace OpenCL.Core.Net.Containers
 {
     public class TypeFabric:BaseTypeFabric
     {

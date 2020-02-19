@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Project.Kernel" Version="4.8.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCL.Core.Net.Interfaces\OpenCL.Core.Net.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>
