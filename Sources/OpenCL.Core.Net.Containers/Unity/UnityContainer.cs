@@ -4,7 +4,7 @@ using OpenCL.Core.Net.Interfaces.Unity;
 using Unity;
 using Unity.Lifetime;
 
-namespace Flatter.Serializer.Unity
+namespace OpenCL.Core.Net.Containers.Unity
 {
     public class UnityContainerExecutor:IUnityContainerExecutor
     {

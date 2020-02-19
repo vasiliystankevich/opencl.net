@@ -1,5 +1,6 @@
 ﻿using Flatter.Serializer.Interfaces.Unity;
 using Flatter.Serializer.Unity;
+using OpenCL.Core.Net.Containers.Unity;
 using OpenCL.Core.Net.Interfaces;
 using OpenCL.Core.Net.Interfaces.Unity;
 using Project.Kernel;
