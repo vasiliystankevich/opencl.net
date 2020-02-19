@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCL.Types.Core.Net.Enums.Device
+namespace OpenCL.Core.Net.Types.Enums.Device
 {
     /* 1.2 */
     // cl_device_affinity_domain

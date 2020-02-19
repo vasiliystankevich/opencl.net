@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums
+﻿namespace OpenCL.Core.Net.Types.Enums
 {
     // cl_event_info
     public enum EventInfo : uint

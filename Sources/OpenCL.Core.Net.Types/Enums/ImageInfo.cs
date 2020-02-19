@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums
+﻿namespace OpenCL.Core.Net.Types.Enums
 {
     // cl_image_info
     public enum ImageInfo : uint

@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums
+﻿namespace OpenCL.Core.Net.Types.Enums
 {
     // cl_sampler_info
     public enum SamplerInfo : uint

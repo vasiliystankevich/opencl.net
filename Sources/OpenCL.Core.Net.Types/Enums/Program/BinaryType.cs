@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Program
+﻿namespace OpenCL.Core.Net.Types.Enums.Program
 {
     /* 1.2 */
     // cl_program_binary_type

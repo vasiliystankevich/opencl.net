@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Mem
+﻿namespace OpenCL.Core.Net.Types.Enums.Mem
 {
     // cl_mem_info
     public enum MemInfo : uint

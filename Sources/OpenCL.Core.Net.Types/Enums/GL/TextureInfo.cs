@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.GL
+﻿namespace OpenCL.Core.Net.Types.Enums.GL
 {
     public enum GLTextureInfo
     {

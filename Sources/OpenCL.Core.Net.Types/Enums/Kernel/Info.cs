@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Kernel
+﻿namespace OpenCL.Core.Net.Types.Enums.Kernel
 {
     // cl_kernel_info
     public enum KernelInfo : uint

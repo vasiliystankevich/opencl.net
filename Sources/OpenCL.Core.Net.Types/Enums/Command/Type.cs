@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Command
+﻿namespace OpenCL.Core.Net.Types.Enums.Command
 {
     // cl_command_type
     public enum CommandType : uint

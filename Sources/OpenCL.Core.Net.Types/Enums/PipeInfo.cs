@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums
+﻿namespace OpenCL.Core.Net.Types.Enums
 {
     /* 2.0 */
     // cl_pipe_info

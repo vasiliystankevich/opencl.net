@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCL.Types.Core.Net.Enums.Kernel.Arg
+namespace OpenCL.Core.Net.Types.Enums.Kernel.Arg
 {
     /* 1.2 */
     /* cl_kernel_arg_type_qualifier */

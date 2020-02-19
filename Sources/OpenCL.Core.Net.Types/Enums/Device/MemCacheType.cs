@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Device
+﻿namespace OpenCL.Core.Net.Types.Enums.Device
 {
     // cl_device_mem_cache_type
     public enum DeviceMemCacheType : uint

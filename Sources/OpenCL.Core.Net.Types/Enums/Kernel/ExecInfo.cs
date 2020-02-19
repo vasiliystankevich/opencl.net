@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Kernel
+﻿namespace OpenCL.Core.Net.Types.Enums.Kernel
 {
     /* 2.0 */
     // cl_kernel_exec_info

@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Context
+﻿namespace OpenCL.Core.Net.Types.Enums.Context
 {
     // cl_context_properties
     public enum ContextProperties : uint

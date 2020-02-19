@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCL.Types.Core.Net.Enums.Mem
+namespace OpenCL.Core.Net.Types.Enums.Mem
 {
     /* 1.2 */
     // cl_mem_migration_flags - bitfield

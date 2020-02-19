@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCL.Types.Core.Net.Enums.Device
+namespace OpenCL.Core.Net.Types.Enums.Device
 {
     // cl_device_info
     public enum DeviceInfo : uint

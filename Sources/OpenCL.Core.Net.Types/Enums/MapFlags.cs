@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCL.Types.Core.Net.Enums
+namespace OpenCL.Core.Net.Types.Enums
 {
     // cl_map_flags - bitfield
     [Flags]

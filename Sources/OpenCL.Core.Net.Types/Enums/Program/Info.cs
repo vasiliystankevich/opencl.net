@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Program
+﻿namespace OpenCL.Core.Net.Types.Enums.Program
 {
     // cl_program_info
     public enum ProgramInfo : uint
