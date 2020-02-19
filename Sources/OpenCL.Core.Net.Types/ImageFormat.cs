@@ -1,6 +1,6 @@
 ﻿using OpenCL.Core.Net.Types.Enums.Channel;
 
-namespace OpenCL.Types.Core.Net
+namespace OpenCL.Core.Net.Types
 {
     public struct ImageFormat
     {

@@ -1,7 +1,8 @@
-﻿using OpenCL.Types.Core.Net.Enums.Mem;
+﻿using OpenCL.Core.Net.Types.Primitives;
+using OpenCL.Types.Core.Net.Enums.Mem;
 using OpenCL.Types.Core.Net.Primitives;
 
-namespace OpenCL.Types.Core.Net
+namespace OpenCL.Core.Net.Types
 {
     /* 1.2 */
     public struct ImageDesc
