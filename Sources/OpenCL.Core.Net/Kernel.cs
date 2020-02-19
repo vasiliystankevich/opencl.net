@@ -31,6 +31,7 @@ using OpenCL.Types.Core.Net.Enums.Program;
 using OpenCL.Types.Core.Net.Primitives;
 using System;
 using System.Runtime.InteropServices;
+using OpenCL.Core.Net.Types.Enums.Command;
 
 namespace OpenCL.Core.Net
 {

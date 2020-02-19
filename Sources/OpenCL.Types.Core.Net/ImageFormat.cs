@@ -1,4 +1,4 @@
-﻿using OpenCL.Types.Core.Net.Enums.Channel;
+﻿using OpenCL.Core.Net.Types.Enums.Channel;
 
 namespace OpenCL.Types.Core.Net
 {

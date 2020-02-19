@@ -1,4 +1,4 @@
-﻿namespace OpenCL.Types.Core.Net.Enums.Channel
+﻿namespace OpenCL.Core.Net.Types.Enums.Channel
 {
     // cl_channel_type
     public enum ChannelType : uint

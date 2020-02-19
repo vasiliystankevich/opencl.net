@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCL.Types.Core.Net.Enums.Command
+namespace OpenCL.Core.Net.Types.Enums.Command
 {
     // cl_command_queue_properties - bitfield
     [Flags]
