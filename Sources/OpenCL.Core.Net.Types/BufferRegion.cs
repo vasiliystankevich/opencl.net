@@ -1,5 +1,4 @@
 ﻿using OpenCL.Core.Net.Types.Primitives;
-using OpenCL.Types.Core.Net.Primitives;
 
 namespace OpenCL.Core.Net.Types
 {
