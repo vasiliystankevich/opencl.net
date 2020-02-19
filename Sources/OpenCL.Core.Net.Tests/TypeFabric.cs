@@ -8,7 +8,7 @@ namespace OpenCL.Core.Net.Tests
     {
         public override void RegisterTypes(IUnityContainer container)
         {
-            container.
+            //container.
         }
     }
 }

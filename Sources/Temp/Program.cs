@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using OpenCL.Core.Net;
-using OpenCL.Types.Core.Net.Enums;
-using OpenCL.Types.Core.Net.Enums.Device;
+using OpenCL.Core.Net.Types.Enums;
+using OpenCL.Core.Net.Types.Enums.Device;
 
 namespace Temp
 {

@@ -1,4 +1,4 @@
-﻿using OpenCL.Types.Core.Net.Enums;
+﻿using OpenCL.Core.Net.Types.Enums;
 
 namespace OpenCL.Core.Net
 {

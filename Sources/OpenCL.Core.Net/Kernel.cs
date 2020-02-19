@@ -21,17 +21,16 @@
  */
 
 using OpenCL.Core.Net.Native;
-using OpenCL.Types.Core.Net;
-using OpenCL.Types.Core.Net.Enums;
-using OpenCL.Types.Core.Net.Enums.Command;
-using OpenCL.Types.Core.Net.Enums.Context;
-using OpenCL.Types.Core.Net.Enums.Device;
-using OpenCL.Types.Core.Net.Enums.Mem;
-using OpenCL.Types.Core.Net.Enums.Program;
-using OpenCL.Types.Core.Net.Primitives;
 using System;
 using System.Runtime.InteropServices;
+using OpenCL.Core.Net.Types;
+using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Enums.Command;
+using OpenCL.Core.Net.Types.Enums.Context;
+using OpenCL.Core.Net.Types.Enums.Device;
+using OpenCL.Core.Net.Types.Enums.Mem;
+using OpenCL.Core.Net.Types.Enums.Program;
+using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net
 {
@@ -76,7 +75,7 @@ namespace OpenCL.Core.Net
             ctxProperties[2] = IntPtr.Zero;
 
             // Create OpenCL context from given platform and device.
-            Context ctx = ContextApi.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
+            var ctx = ContextApi.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
             Context = ctx;
@@ -331,100 +330,100 @@ namespace OpenCL.Core.Net
         #endregion
 
         #region Kernel Functions
-        public Types.Core.Net.Primitives.Kernel CreateKernel(Program program, string kernelName)
+        public OpenCL.Core.Net.Types.Primitives.Kernel CreateKernel(Program program, string kernelName)
         {
-            Types.Core.Net.Primitives.Kernel kernel = KernelObjectApi.clCreateKernel(program, kernelName, ref clError);
+            OpenCL.Core.Net.Types.Primitives.Kernel kernel = KernelObjectApi.clCreateKernel(program, kernelName, ref clError);
             ThrowCLException(clError);
 
             return kernel;
         }
 
-        public void RetainKernel(Types.Core.Net.Primitives.Kernel kernel)
+        public void RetainKernel(OpenCL.Core.Net.Types.Primitives.Kernel kernel)
         {
             clError = KernelObjectApi.clRetainKernel(kernel);
             ThrowCLException(clError);
         }
 
-        public void ReleaseKernel(Types.Core.Net.Primitives.Kernel kernel)
+        public void ReleaseKernel(OpenCL.Core.Net.Types.Primitives.Kernel kernel)
         {
             clError = KernelObjectApi.clReleaseKernel(kernel);
             ThrowCLException(clError);
         }
 
         #region SetKernelArg
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, byte value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, byte value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(byte), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, short value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, short value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(short), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, int value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, int value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(int), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, long value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, long value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(long), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, float value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, float value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(float), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, double value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, double value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(double), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, Mem value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, Mem value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, Marshal.SizeOf(value), ref value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, byte[] value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, byte[] value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(byte) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, short[] value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, short[] value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(short) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, int[] value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, int[] value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(int) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, long[] value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, long[] value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(long) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, float[] value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, float[] value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(float) * value.Length, value);
             ThrowCLException(clError);
         }
 
-        public void SetKernelArg(Types.Core.Net.Primitives.Kernel kernel, uint index, double[] value)
+        public void SetKernelArg(OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint index, double[] value)
         {
             clError = KernelObjectApi.clSetKernelArg(kernel, index, sizeof(double) * value.Length, value);
             ThrowCLException(clError);
@@ -467,7 +466,7 @@ namespace OpenCL.Core.Net
             }
         }
 
-        public void NDRangeKernel(CommandQueue queue, Types.Core.Net.Primitives.Kernel kernel, uint work_dim,
+        public void NDRangeKernel(CommandQueue queue, OpenCL.Core.Net.Types.Primitives.Kernel kernel, uint work_dim,
             SizeT[] global_work_offset, SizeT[] global_work_size, SizeT[] local_work_size)
         {
             clError = EnqueuedCommandsApi.clEnqueueNDRangeKernel(queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, 0, null, ref lastOperationEvent);

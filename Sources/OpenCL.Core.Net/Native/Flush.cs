@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
-using OpenCL.Types.Core.Net.Enums;
-using OpenCL.Types.Core.Net.Primitives;
+using OpenCL.Core.Net.Types.Enums;
+using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Native
 {

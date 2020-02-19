@@ -1,7 +1,7 @@
-﻿using OpenCL.Types.Core.Net.Enums;
-using OpenCL.Types.Core.Net.Primitives;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
+using OpenCL.Core.Net.Types.Enums;
+using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Native
 {

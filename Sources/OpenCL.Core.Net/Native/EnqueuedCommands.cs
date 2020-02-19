@@ -1,8 +1,8 @@
-﻿using OpenCL.Types.Core.Net.Enums;
-using OpenCL.Types.Core.Net.Enums.Mem;
-using OpenCL.Types.Core.Net.Primitives;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
+using OpenCL.Core.Net.Types.Enums;
+using OpenCL.Core.Net.Types.Enums.Mem;
+using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Native
 {
@@ -180,25 +180,23 @@ namespace OpenCL.Core.Net.Native
             IntPtr e);
 
         [DllImport(DllNative.Name)]
-        public static extern Error clEnqueueNDRangeKernel(CommandQueue commandQueue,
-            Types.Core.Net.Primitives.Kernel kernel, uint workDim, [In] SizeT[] globalWorkOffset,
-            [In] SizeT[] globalWorkSize, [In] SizeT[] localWorkSize, uint numEventsInWaitList,
-            [In] Event[] eventWaitList, ref Event e);
+        public static extern Error clEnqueueNDRangeKernel(CommandQueue commandQueue, Types.Primitives.Kernel kernel,
+            uint workDim, [In] SizeT[] globalWorkOffset, [In] SizeT[] globalWorkSize, [In] SizeT[] localWorkSize,
+            uint numEventsInWaitList, [In] Event[] eventWaitList, ref Event e);
 
         [DllImport(DllNative.Name)]
-        public static extern Error clEnqueueNDRangeKernel(CommandQueue commandQueue,
-            Types.Core.Net.Primitives.Kernel kernel, uint workDim, [In] SizeT[] globalWorkOffset,
-            [In] SizeT[] globalWorkSize, [In] SizeT[] localWorkSize, uint numEventsInWaitList,
-            [In] Event[] eventWaitList, IntPtr e);
+        public static extern Error clEnqueueNDRangeKernel(CommandQueue commandQueue, Types.Primitives.Kernel kernel,
+            uint workDim, [In] SizeT[] globalWorkOffset, [In] SizeT[] globalWorkSize, [In] SizeT[] localWorkSize,
+            uint numEventsInWaitList, [In] Event[] eventWaitList, IntPtr e);
 
         [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(DllNative.Name)]
-        public static extern Error clEnqueueTask(CommandQueue commandQueue, Types.Core.Net.Primitives.Kernel kernel,
+        public static extern Error clEnqueueTask(CommandQueue commandQueue, Types.Primitives.Kernel kernel,
             uint numEventsInWaitList, [In] Event[] eventWaitList, ref Event e);
 
         [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(DllNative.Name)]
-        public static extern Error clEnqueueTask(CommandQueue commandQueue, Types.Core.Net.Primitives.Kernel kernel,
+        public static extern Error clEnqueueTask(CommandQueue commandQueue, Types.Primitives.Kernel kernel,
             uint numEventsInWaitList, [In] Event[] eventWaitList, IntPtr e);
 
         public delegate void UserFunction(IntPtr[] args);

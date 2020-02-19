@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenCL.Types.Core.Net\OpenCL.Core.Net.Types.csproj" />
+    <ProjectReference Include="..\OpenCL.Core.Net.Types\OpenCL.Core.Net.Types.csproj" />
   </ItemGroup>
 
 </Project>
