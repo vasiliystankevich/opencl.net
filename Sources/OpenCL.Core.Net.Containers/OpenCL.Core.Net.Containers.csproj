@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OpenCL.Core.Net.Interfaces\OpenCL.Core.Net.Interfaces.csproj" />
+    <ProjectReference Include="..\OpenCL.Core.Net.Types\OpenCL.Core.Net.Types.csproj" />
+    <ProjectReference Include="..\OpenCL.Core.Net\OpenCL.Core.Net.csproj" />
   </ItemGroup>
 
 </Project>

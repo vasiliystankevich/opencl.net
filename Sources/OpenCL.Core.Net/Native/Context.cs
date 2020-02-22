@@ -7,7 +7,7 @@ using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Native
 {
-    public class ContextApi
+    public class ContextNative
     {
         [DllImport(DllNative.Name)]
         public static extern Context clCreateContext([In] IntPtr[] properties, uint numDevices,

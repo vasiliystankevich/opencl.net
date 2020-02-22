@@ -9,4 +9,8 @@
     <PackageReference Include="Unity" Version="5.11.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCL.Core.Net.Types\OpenCL.Core.Net.Types.csproj" />
+  </ItemGroup>
+
 </Project>

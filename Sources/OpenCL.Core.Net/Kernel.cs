@@ -48,7 +48,7 @@ namespace OpenCL.Core.Net
     /// 
     /// Throughout the lifetime of an instance, a single context can be created.
     /// </summary>
-    public class Kernel : IDisposable
+    public class KernelOld : IDisposable
     {
         #region Constructors
         /// <summary>
@@ -57,7 +57,7 @@ namespace OpenCL.Core.Net
         /// </summary>
         /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
         /// <param name="device">Device to include in OpenCL(TM) context.</param>
-        public Kernel(PlatformId platform, DeviceId device) :
+        public KernelOld(PlatformId platform, DeviceId device) :
             this(platform, new DeviceId[] { device })
         { }
 
@@ -67,7 +67,7 @@ namespace OpenCL.Core.Net
         /// </summary>
         /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
         /// <param name="devices">Devices to include in OpenCL(TM) context.</param>
-        public Kernel(PlatformId platform, DeviceId[] devices)
+        public KernelOld(PlatformId platform, DeviceId[] devices)
         {
             IntPtr[] ctxProperties = new IntPtr[3];
             ctxProperties[0] = new IntPtr((int)ContextProperties.Platform);
@@ -75,7 +75,7 @@ namespace OpenCL.Core.Net
             ctxProperties[2] = IntPtr.Zero;
 
             // Create OpenCL context from given platform and device.
-            var ctx = ContextApi.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
+            var ctx = ContextNative.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
             Context = ctx;
@@ -88,9 +88,9 @@ namespace OpenCL.Core.Net
         /// Perform a retain of the context.
         /// </summary>
         /// <param name="ctx">OpenCL(TM) context to use.</param>
-        public Kernel(Context ctx)
+        public KernelOld(Context ctx)
         {
-            clError = ContextApi.clRetainContext(ctx);
+            clError = ContextNative.clRetainContext(ctx);
             ThrowCLException(clError);
 
             Context = ctx;
@@ -108,7 +108,7 @@ namespace OpenCL.Core.Net
                 return;
             }
 
-            clError = ContextApi.clReleaseContext(ctx);
+            clError = ContextNative.clReleaseContext(ctx);
             ThrowCLException(clError);
 
             disposed = true;
@@ -117,7 +117,7 @@ namespace OpenCL.Core.Net
         /// <summary>
         /// Destructor.
         /// </summary>
-        ~Kernel()
+        ~KernelOld()
         {
             Dispose();
         }
@@ -889,67 +889,6 @@ namespace OpenCL.Core.Net
                         break;
                     case DeviceInfo.OpenClCVersion:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
-                }
-            }
-            finally
-            {
-                // Free native buffer.
-                Marshal.FreeHGlobal(ptr);
-            }
-
-            return result;
-        }
-        #endregion
-
-        #region Context Utilities
-        /// <summary>
-        /// Returns requested information about a context.
-        /// </summary>
-        /// <param name="ctx">Context to get information for.</param>
-        /// <param name="info">Requested information.</param>
-        /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetContextInfo(Context ctx, ContextInfo info)
-        {
-            Error error = Error.Success;
-
-            // Define variables to store native information.
-            SizeT param_value_size_ret = 0;
-            IntPtr ptr = IntPtr.Zero;
-            object result = null;
-
-            // Get initial size of buffer to allocate.
-            error = ContextApi.clGetContextInfo(ctx, info, 0, IntPtr.Zero, ref param_value_size_ret);
-            ThrowCLException(error);
-
-            if (param_value_size_ret < 1)
-            {
-                return result;
-            }
-
-            // Allocate native memory to store value.
-            ptr = Marshal.AllocHGlobal(param_value_size_ret);
-
-            // Protect following statements with try-finally in case something 
-            // goes wrong.
-            try
-            {
-                // Get actual value.
-                error = ContextApi.clGetContextInfo(ctx, info,
-                param_value_size_ret, ptr, ref param_value_size_ret);
-
-                //TODO: Add implementation to missing cases.
-                switch (info)
-                {
-                    case ContextInfo.ReferenceCount:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case ContextInfo.Devices:
-                        break;
-                    case ContextInfo.Properties:
-                        break;
-                    case ContextInfo.NumDevices:
-                        result = (uint)Marshal.ReadInt32(ptr);
                         break;
                 }
             }

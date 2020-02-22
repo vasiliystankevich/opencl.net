@@ -5,12 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Kernel\**" />
-    <EmbeddedResource Remove="Kernel\**" />
-    <None Remove="Kernel\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\OpenCL.Core.Net.Interfaces\OpenCL.Core.Net.Interfaces.csproj" />
     <ProjectReference Include="..\OpenCL.Core.Net.Types\OpenCL.Core.Net.Types.csproj" />
   </ItemGroup>
 
