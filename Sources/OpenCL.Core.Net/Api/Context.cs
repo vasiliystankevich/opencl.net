@@ -10,7 +10,7 @@ namespace OpenCL.Core.Net.Api
 {
     public class ContextApi: IContextApi
     {
-        protected ContextApi(IContextKernel contextKernel, IErrorValidator errorValidator)
+        private ContextApi(IContextKernel contextKernel, IErrorValidator errorValidator)
         {
             ContextKernel = contextKernel;
             ErrorValidator = errorValidator;
@@ -36,6 +36,8 @@ namespace OpenCL.Core.Net.Api
             Context = context;
         }
 
+        public Context GetContext() => Context;
+
         public object GetContextInfo(ContextInfo info)
         {
             return GetContextInfo(Context, info);
@@ -44,9 +46,8 @@ namespace OpenCL.Core.Net.Api
         public object GetContextInfo(Context context, ContextInfo info)
         {
             SizeT paramValueSizeRet = 0;
-            object result = null;
 
-            var error = ContextKernel.GetContextInfo(ctx, info, 0, IntPtr.Zero, ref paramValueSizeRet);
+            var error = ContextKernel.GetContextInfo(context, info, 0, IntPtr.Zero, ref paramValueSizeRet);
             ErrorValidator.Validate(error);
 
             if (paramValueSizeRet < 1) return null;
@@ -55,13 +56,13 @@ namespace OpenCL.Core.Net.Api
 
             try
             {
-                error = ContextKernel.GetContextInfo(ctx, info, paramValueSizeRet, ptr, ref paramValueSizeRet);
+                error = ContextKernel.GetContextInfo(context, info, paramValueSizeRet, ptr, ref paramValueSizeRet);
                 ErrorValidator.Validate(error);
 
                 switch (info)
                 {
-                    case ContextInfo.ReferenceCount: result = (uint) Marshal.ReadInt32(ptr); break;
-                    case ContextInfo.NumDevices: result = (uint) Marshal.ReadInt32(ptr); break;
+                    case ContextInfo.ReferenceCount: return (uint) Marshal.ReadInt32(ptr);
+                    case ContextInfo.NumDevices: return (uint) Marshal.ReadInt32(ptr);
                 }
             }
             finally
@@ -69,11 +70,16 @@ namespace OpenCL.Core.Net.Api
                 Marshal.FreeHGlobal(ptr);
             }
 
-            return result;
+            return null;
+        }
+
+        public void Dispose()
+        {
+            var error = ContextKernel.ReleaseContext(Context);
+            ErrorValidator.Validate(error);
         }
 
         Context Context { get; }
-
         IContextKernel ContextKernel { get; }
         IErrorValidator ErrorValidator { get; }
     }

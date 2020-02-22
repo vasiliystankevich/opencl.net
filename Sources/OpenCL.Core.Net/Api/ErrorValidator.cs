@@ -1,7 +1,7 @@
 ﻿using OpenCL.Core.Net.Interfaces.Kernel;
 using OpenCL.Core.Net.Types.Enums;
 
-namespace OpenCL.Core.Net.Kernel
+namespace OpenCL.Core.Net.Api
 {
     public class ErrorValidator : IErrorValidator
     {

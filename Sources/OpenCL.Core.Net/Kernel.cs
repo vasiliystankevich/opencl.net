@@ -48,131 +48,23 @@ namespace OpenCL.Core.Net
     /// 
     /// Throughout the lifetime of an instance, a single context can be created.
     /// </summary>
-    public class KernelOld : IDisposable
+    public class KernelOld
     {
         #region Constructors
-        /// <summary>
-        /// Creates a new instance, with an OpenCL(TM) context created using the given 
-        /// platform and device.
-        /// </summary>
-        /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
-        /// <param name="device">Device to include in OpenCL(TM) context.</param>
-        public KernelOld(PlatformId platform, DeviceId device) :
-            this(platform, new DeviceId[] { device })
+        public KernelOld(DeviceId device) :
+            this(new[] { device })
         { }
 
-        /// <summary>
-        /// Creates a new instance, with an OpenCL(TM) context created using the given 
-        /// platform and multiple devices.
-        /// </summary>
-        /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
-        /// <param name="devices">Devices to include in OpenCL(TM) context.</param>
-        public KernelOld(PlatformId platform, DeviceId[] devices)
+
+        public KernelOld(DeviceId[] devices)
         {
-            IntPtr[] ctxProperties = new IntPtr[3];
-            ctxProperties[0] = new IntPtr((int)ContextProperties.Platform);
-            ctxProperties[1] = platform.Value;
-            ctxProperties[2] = IntPtr.Zero;
-
-            // Create OpenCL context from given platform and device.
-            var ctx = ContextNative.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
-            ThrowCLException(clError);
-
-            Context = ctx;
             Devices = devices;
             LastEnqueueEvent = new Event();
-        }
-
-        /// <summary>
-        /// Creates a new instance from already existing OpenCL(TM) context.
-        /// Perform a retain of the context.
-        /// </summary>
-        /// <param name="ctx">OpenCL(TM) context to use.</param>
-        public KernelOld(Context ctx)
-        {
-            clError = ContextNative.clRetainContext(ctx);
-            ThrowCLException(clError);
-
-            Context = ctx;
-        }
-        #endregion
-
-        #region Destructor / IDisposable
-        /// <summary>
-        /// Disposes OpenCL(TM) context (release).
-        /// </summary>
-        public void Dispose()
-        {
-            if (disposed)
-            {
-                return;
-            }
-
-            clError = ContextNative.clReleaseContext(ctx);
-            ThrowCLException(clError);
-
-            disposed = true;
-        }
-
-        /// <summary>
-        /// Destructor.
-        /// </summary>
-        ~KernelOld()
-        {
-            Dispose();
-        }
-        #endregion
-
-        #region Context Functions
-        /// <summary>
-        /// Returns requested information about the context of the instance.
-        /// </summary>
-        /// <param name="info">Requested information.</param>
-        /// <returns>Value which depends on the type of information requested.</returns>
-        public object GetContextInfo(ContextInfo info)
-        {
-            return GetContextInfo(ctx, info);
         }
         #endregion
 
         #region Queue Functions
-        public CommandQueue CreateCommandQueue(DeviceId device)
-        {
-            return CreateCommandQueue(device, 0);
-        }
 
-        public CommandQueue CreateCommandQueue(DeviceId device,
-            CommandQueueProperties properties)
-        {
-            CommandQueue queue = CommandQueueApi.clCreateCommandQueue(ctx, device, properties, ref clError);
-            ThrowCLException(clError);
-
-            return queue;
-        }
-
-        public void RetainCommandQueue(CommandQueue command_queue)
-        {
-            clError = CommandQueueApi.clRetainCommandQueue(command_queue);
-            ThrowCLException(clError);
-        }
-
-        public void ReleaseCommandQueue(CommandQueue command_queue)
-        {
-            clError = CommandQueueApi.clReleaseCommandQueue(command_queue);
-            ThrowCLException(clError);
-        }
-
-        public void Flush(CommandQueue command_queue)
-        {
-            clError = FlushApi.clFlush(command_queue);
-            ThrowCLException(clError);
-        }
-
-        public void Finish(CommandQueue command_queue)
-        {
-            clError = FlushApi.clFinish(command_queue);
-            ThrowCLException(clError);
-        }
         #endregion
 
         #region Memory Functions
@@ -481,15 +373,6 @@ namespace OpenCL.Core.Net
         public Error LastCLError
         {
             get { return clError; }
-        }
-
-        /// <summary>
-        /// Gets OpenCL(TM) context used by this instance.
-        /// </summary>
-        public Context Context
-        {
-            get { return ctx; }
-            private set { ctx = value; }
         }
 
         /// <summary>
