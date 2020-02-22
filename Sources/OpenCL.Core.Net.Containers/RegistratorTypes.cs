@@ -22,13 +22,18 @@ namespace OpenCL.Core.Net.Containers
 
         void RegisterKernel()
         {
-            Executor.RegisterSingletonFactory<IContextKernel>(executor => new ContextKernel());
+            Executor.RegisterSingletonFactory<IResultNativeCallFactory>(executor => new ResultNativeCallFactory());
+            Executor.RegisterSingletonFactory<IErrorValidator>(executor => new ErrorValidator());
+
+            Executor.RegisterSingletonFactory<IContextKernel>(executor =>
+            {
+                var errorValidator = Executor.Resolve<IErrorValidator>();
+                return new ContextKernel(errorValidator);
+            });
         }
 
         void RegisterApi()
         {
-            Executor.RegisterSingletonFactory<IErrorValidator>(executor => new ErrorValidator());
-
             Executor.RegisterSingletonFactory<IContextApiFactory>(executor =>
             {
                 var kernel = Executor.Resolve<IContextKernel>();

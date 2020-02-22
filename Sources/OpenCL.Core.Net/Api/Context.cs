@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
-using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Enums.Context;
 using OpenCL.Core.Net.Types.Primitives;
 
@@ -19,20 +18,14 @@ namespace OpenCL.Core.Net.Api
         public ContextApi(IContextKernel contextKernel, IErrorValidator errorValidator, PlatformId platform,
             DeviceId[] devices) : this(contextKernel, errorValidator)
         {
-            var error = Error.Success;
             var properties = new[] {new IntPtr((int) ContextProperties.Platform), platform.Value, IntPtr.Zero};
-
-            var context = contextKernel.CreateContext(properties, (uint) devices.Length, devices, null, IntPtr.Zero,
-                ref error);
-            ErrorValidator.Validate(error);
-            Context = context;
+            Context = contextKernel.CreateContext(properties, (uint) devices.Length, devices, null, IntPtr.Zero);
         }
 
         public ContextApi(IContextKernel contextKernel, IErrorValidator errorValidator, Context context) : this(
             contextKernel, errorValidator)
         {
-            var error = ContextKernel.RetainContext(context);
-            ErrorValidator.Validate(error);
+            ErrorValidator.Validate(() => ContextKernel.RetainContext(context));
             Context = context;
         }
 
@@ -45,19 +38,19 @@ namespace OpenCL.Core.Net.Api
 
         public object GetContextInfo(Context context, ContextInfo info)
         {
-            SizeT paramValueSizeRet = 0;
+            SizeT[] paramValueSizeRet = {0};
 
-            var error = ContextKernel.GetContextInfo(context, info, 0, IntPtr.Zero, ref paramValueSizeRet);
-            ErrorValidator.Validate(error);
+            ErrorValidator.Validate(() =>
+                ContextKernel.GetContextInfo(context, info, 0, IntPtr.Zero, ref paramValueSizeRet[0]));
 
-            if (paramValueSizeRet < 1) return null;
+            if (paramValueSizeRet[0] < 1) return null;
 
-            var ptr = Marshal.AllocHGlobal(paramValueSizeRet);
+            var ptr = Marshal.AllocHGlobal(paramValueSizeRet[0]);
 
             try
             {
-                error = ContextKernel.GetContextInfo(context, info, paramValueSizeRet, ptr, ref paramValueSizeRet);
-                ErrorValidator.Validate(error);
+                ErrorValidator.Validate(() =>
+                    ContextKernel.GetContextInfo(context, info, paramValueSizeRet[0], ptr, ref paramValueSizeRet[0]));
 
                 switch (info)
                 {
@@ -75,8 +68,7 @@ namespace OpenCL.Core.Net.Api
 
         public void Dispose()
         {
-            var error = ContextKernel.ReleaseContext(Context);
-            ErrorValidator.Validate(error);
+            ErrorValidator.Validate(() => ContextKernel.ReleaseContext(Context));
         }
 
         Context Context { get; }

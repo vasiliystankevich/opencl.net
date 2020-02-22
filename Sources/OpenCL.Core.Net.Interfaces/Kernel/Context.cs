@@ -9,7 +9,7 @@ namespace OpenCL.Core.Net.Interfaces.Kernel
     public interface IContextKernel
     {
         Context CreateContext(IntPtr[] properties, uint numDevices, DeviceId[] devices,
-            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData, ref Error errcodeRet);
+            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData);
 
         Context CreateContextFromType(IntPtr[] properties, DeviceType deviceType,
             Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData, ref Error errcodeRet);
