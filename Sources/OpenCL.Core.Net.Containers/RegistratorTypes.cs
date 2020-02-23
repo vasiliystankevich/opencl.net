@@ -22,7 +22,6 @@ namespace OpenCL.Core.Net.Containers
 
         void RegisterKernel()
         {
-            Executor.RegisterSingletonFactory<IResultNativeCallFactory>(executor => new ResultNativeCallFactory());
             Executor.RegisterSingletonFactory<IErrorValidator>(executor => new ErrorValidator());
 
             Executor.RegisterSingletonFactory<IContextKernel>(executor =>
@@ -37,8 +36,7 @@ namespace OpenCL.Core.Net.Containers
             Executor.RegisterSingletonFactory<IContextApiFactory>(executor =>
             {
                 var kernel = Executor.Resolve<IContextKernel>();
-                var validator = Executor.Resolve<IErrorValidator>();
-                return new ContextApiFactory(kernel, validator);
+                return new ContextApiFactory(kernel);
             });
         }
 

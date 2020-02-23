@@ -6,17 +6,15 @@ namespace OpenCL.Core.Net.Api
 {
     public class ContextApiFactory: IContextApiFactory
     {
-        public ContextApiFactory(IContextKernel kernel, IErrorValidator errorValidator)
+        public ContextApiFactory(IContextKernel kernel)
         {
             Kernel = kernel;
-            ErrorValidator = errorValidator;
         }
 
-        public IContextApi Create(PlatformId platform, DeviceId[] devices) => new ContextApi(Kernel, ErrorValidator, platform, devices);
+        public IContextApi Create(PlatformId platform, DeviceId[] devices) => new ContextApi(Kernel, platform, devices);
 
-        public IContextApi Create(Context context) => new ContextApi(Kernel, ErrorValidator, context);
+        public IContextApi Create(Context context) => new ContextApi(Kernel, context);
 
         IContextKernel Kernel { get; }
-        IErrorValidator ErrorValidator { get; }
     }
 }
