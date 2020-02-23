@@ -13,13 +13,13 @@ namespace OpenCL.Core.Net.Api
             if (error != Error.Success) throw new Exception(error);
         }
 
-        public void Validate(ref SizeT size, NativeFuncRefSizeT functor)
+        public void Validate(ref SizeT size, NativeFunc<SizeT, Error> functor)
         {
             var error = functor(ref size);
             if (error != Error.Success) throw new Exception(error);
         }
 
-        public TValue Validate<TValue>(NativeFunc<TValue> functor)
+        public TValue Validate<TValue>(NativeFunc<Error, TValue> functor)
         {
             var error = Error.Success;
             var result = functor(ref error);

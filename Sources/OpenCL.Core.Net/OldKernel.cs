@@ -144,7 +144,7 @@ namespace OpenCL.Core.Net
         public CommandQueue CreateCommandQueue(DeviceId device,
             CommandQueueProperties properties)
         {
-            CommandQueue queue = CommandQueueApi.clCreateCommandQueue(ctx, device, properties, ref clError);
+            CommandQueue queue = CommandQueueNative.clCreateCommandQueue(ctx, device, properties, ref clError);
             ThrowCLException(clError);
 
             return queue;
@@ -152,13 +152,13 @@ namespace OpenCL.Core.Net
 
         public void RetainCommandQueue(CommandQueue command_queue)
         {
-            clError = CommandQueueApi.clRetainCommandQueue(command_queue);
+            clError = CommandQueueNative.clRetainCommandQueue(command_queue);
             ThrowCLException(clError);
         }
 
         public void ReleaseCommandQueue(CommandQueue command_queue)
         {
-            clError = CommandQueueApi.clReleaseCommandQueue(command_queue);
+            clError = CommandQueueNative.clReleaseCommandQueue(command_queue);
             ThrowCLException(clError);
         }
 
@@ -974,7 +974,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = CommandQueueApi.clGetCommandQueueInfo(command_queue, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = CommandQueueNative.clGetCommandQueueInfo(command_queue, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -990,7 +990,7 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = CommandQueueApi.clGetCommandQueueInfo(command_queue, info,
+                error = CommandQueueNative.clGetCommandQueueInfo(command_queue, info,
                 param_value_size_ret, ptr, ref param_value_size_ret);
                 ThrowCLException(error);
 

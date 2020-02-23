@@ -1,18 +1,13 @@
 ﻿using OpenCL.Core.Net.Interfaces.Api;
-using OpenCL.Core.Net.Interfaces.Kernel;
-using OpenCL.Core.Net.Native;
-using OpenCL.Core.Net.Types.Enums;
-using OpenCL.Core.Net.Types.Enums.Command;
-using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Api
 {
     public class QueueApi: IQueueApi
     {
-        //public QueueApi(IErrorValidator errorValidator)
-        //{
-        //    ErrorValidator = errorValidator;
-        //}
+        public QueueApi(IErrorValidator errorValidator)
+        {
+            ErrorValidator = errorValidator;
+        }
 
         //public CommandQueue CreateCommandQueue(Context context, DeviceId device)
         //{

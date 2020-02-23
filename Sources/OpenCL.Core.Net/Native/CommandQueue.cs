@@ -6,7 +6,7 @@ using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Native
 {
-    public class CommandQueueApi
+    public class CommandQueueNative
     {
         [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(DllNative.Name)]
