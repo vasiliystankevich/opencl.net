@@ -1,5 +1,4 @@
 ﻿using System;
-using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Enums.Context;
 using OpenCL.Core.Net.Types.Enums.Device;
 using OpenCL.Core.Net.Types.Primitives;
@@ -12,13 +11,13 @@ namespace OpenCL.Core.Net.Interfaces.Kernel
             Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData);
 
         Context CreateContextFromType(IntPtr[] properties, DeviceType deviceType,
-            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData, ref Error errcodeRet);
+            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData);
 
-        Error RetainContext(Context context);
+        void RetainContext(Context context);
 
-        Error ReleaseContext(Context context);
+        void ReleaseContext(Context context);
 
-        Error GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue,
+        void GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue,
             ref SizeT paramValueSizeRet);
     }
 }

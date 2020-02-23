@@ -11,34 +11,28 @@ namespace OpenCL.Core.Net.Kernel
 {
     public class ContextKernel: IContextKernel
     {
-        public ContextKernel(IResultNativeCallFactory resultNativeCallFactory, IErrorValidator errorValidator)
+        public ContextKernel(IErrorValidator errorValidator)
         {
-            ResultNativeCallFactory = resultNativeCallFactory;
             ErrorValidator = errorValidator;
         }
 
         public Context CreateContext(IntPtr[] properties, uint numDevices, DeviceId[] devices,
-            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData) => ErrorValidator.Validate(() =>
-        {
-            var error = Error.Success;
-            var context =
-                ContextNative.clCreateContext(properties, numDevices, devices, pfnNotify, userData, ref error);
-            return ResultNativeCallFactory.Create(context, error);
-        });
+            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData) => ErrorValidator.Validate((ref Error error) =>
+            ContextNative.clCreateContext(properties, numDevices, devices, pfnNotify, userData, ref error));
 
         public Context CreateContextFromType(IntPtr[] properties, DeviceType deviceType,
-            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData, ref Error errcodeRet) =>
-            ContextNative.clCreateContextFromType(properties, deviceType, pfnNotify, userData, ref errcodeRet);
+            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData) => ErrorValidator.Validate((ref Error error) =>
+            ContextNative.clCreateContextFromType(properties, deviceType, pfnNotify, userData, ref error));
 
-        public Error RetainContext(Context context) => ContextNative.clRetainContext(context);
+        public void RetainContext(Context context) => ErrorValidator.Validate(() => ContextNative.clRetainContext(context));
 
-        public Error ReleaseContext(Context context) => ContextNative.clReleaseContext(context);
+        public void ReleaseContext(Context context) => ErrorValidator.Validate(() => ContextNative.clReleaseContext(context));
 
-        public Error GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue,
-            ref SizeT paramValueSizeRet) => ContextNative.clGetContextInfo(context, paramName, paramValueSize,
-            paramValue, ref paramValueSizeRet);
+        public void GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue,
+            ref SizeT paramValueSizeRet) => ErrorValidator.Validate(ref paramValueSizeRet,
+            (ref SizeT size) =>
+                ContextNative.clGetContextInfo(context, paramName, paramValueSize, paramValue, ref size));
 
-        IResultNativeCallFactory ResultNativeCallFactory { get; }
         IErrorValidator ErrorValidator { get; }
     }
 }
