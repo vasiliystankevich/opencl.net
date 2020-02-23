@@ -48,23 +48,131 @@ namespace OpenCL.Core.Net
     /// 
     /// Throughout the lifetime of an instance, a single context can be created.
     /// </summary>
-    public class KernelOld
+    public class OldKernel : IDisposable
     {
         #region Constructors
-        public KernelOld(DeviceId device) :
-            this(new[] { device })
+        /// <summary>
+        /// Creates a new instance, with an OpenCL(TM) context created using the given 
+        /// platform and device.
+        /// </summary>
+        /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
+        /// <param name="device">Device to include in OpenCL(TM) context.</param>
+        public Kernel(PlatformId platform, DeviceId device) :
+            this(platform, new DeviceId[] { device })
         { }
 
-
-        public KernelOld(DeviceId[] devices)
+        /// <summary>
+        /// Creates a new instance, with an OpenCL(TM) context created using the given 
+        /// platform and multiple devices.
+        /// </summary>
+        /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
+        /// <param name="devices">Devices to include in OpenCL(TM) context.</param>
+        public Kernel(PlatformId platform, DeviceId[] devices)
         {
+            IntPtr[] ctxProperties = new IntPtr[3];
+            ctxProperties[0] = new IntPtr((int)ContextProperties.Platform);
+            ctxProperties[1] = platform.Value;
+            ctxProperties[2] = IntPtr.Zero;
+
+            // Create OpenCL context from given platform and device.
+            var ctx = ContextApi.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
+            ThrowCLException(clError);
+
+            Context = ctx;
             Devices = devices;
             LastEnqueueEvent = new Event();
+        }
+
+        /// <summary>
+        /// Creates a new instance from already existing OpenCL(TM) context.
+        /// Perform a retain of the context.
+        /// </summary>
+        /// <param name="ctx">OpenCL(TM) context to use.</param>
+        public Kernel(Context ctx)
+        {
+            clError = ContextApi.clRetainContext(ctx);
+            ThrowCLException(clError);
+
+            Context = ctx;
+        }
+        #endregion
+
+        #region Destructor / IDisposable
+        /// <summary>
+        /// Disposes OpenCL(TM) context (release).
+        /// </summary>
+        public void Dispose()
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            clError = ContextApi.clReleaseContext(ctx);
+            ThrowCLException(clError);
+
+            disposed = true;
+        }
+
+        /// <summary>
+        /// Destructor.
+        /// </summary>
+        ~Kernel()
+        {
+            Dispose();
+        }
+        #endregion
+
+        #region Context Functions
+        /// <summary>
+        /// Returns requested information about the context of the instance.
+        /// </summary>
+        /// <param name="info">Requested information.</param>
+        /// <returns>Value which depends on the type of information requested.</returns>
+        public object GetContextInfo(ContextInfo info)
+        {
+            return GetContextInfo(ctx, info);
         }
         #endregion
 
         #region Queue Functions
+        public CommandQueue CreateCommandQueue(DeviceId device)
+        {
+            return CreateCommandQueue(device, 0);
+        }
 
+        public CommandQueue CreateCommandQueue(DeviceId device,
+            CommandQueueProperties properties)
+        {
+            CommandQueue queue = CommandQueueApi.clCreateCommandQueue(ctx, device, properties, ref clError);
+            ThrowCLException(clError);
+
+            return queue;
+        }
+
+        public void RetainCommandQueue(CommandQueue command_queue)
+        {
+            clError = CommandQueueApi.clRetainCommandQueue(command_queue);
+            ThrowCLException(clError);
+        }
+
+        public void ReleaseCommandQueue(CommandQueue command_queue)
+        {
+            clError = CommandQueueApi.clReleaseCommandQueue(command_queue);
+            ThrowCLException(clError);
+        }
+
+        public void Flush(CommandQueue command_queue)
+        {
+            clError = FlushApi.clFlush(command_queue);
+            ThrowCLException(clError);
+        }
+
+        public void Finish(CommandQueue command_queue)
+        {
+            clError = FlushApi.clFinish(command_queue);
+            ThrowCLException(clError);
+        }
         #endregion
 
         #region Memory Functions
@@ -373,6 +481,15 @@ namespace OpenCL.Core.Net
         public Error LastCLError
         {
             get { return clError; }
+        }
+
+        /// <summary>
+        /// Gets OpenCL(TM) context used by this instance.
+        /// </summary>
+        public Context Context
+        {
+            get { return ctx; }
+            private set { ctx = value; }
         }
 
         /// <summary>
@@ -772,6 +889,67 @@ namespace OpenCL.Core.Net
                         break;
                     case DeviceInfo.OpenClCVersion:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+                        break;
+                }
+            }
+            finally
+            {
+                // Free native buffer.
+                Marshal.FreeHGlobal(ptr);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Context Utilities
+        /// <summary>
+        /// Returns requested information about a context.
+        /// </summary>
+        /// <param name="ctx">Context to get information for.</param>
+        /// <param name="info">Requested information.</param>
+        /// <returns>Value which depends on the type of information requested.</returns>
+        public static object GetContextInfo(Context ctx, ContextInfo info)
+        {
+            Error error = Error.Success;
+
+            // Define variables to store native information.
+            SizeT param_value_size_ret = 0;
+            IntPtr ptr = IntPtr.Zero;
+            object result = null;
+
+            // Get initial size of buffer to allocate.
+            error = ContextApi.clGetContextInfo(ctx, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            ThrowCLException(error);
+
+            if (param_value_size_ret < 1)
+            {
+                return result;
+            }
+
+            // Allocate native memory to store value.
+            ptr = Marshal.AllocHGlobal(param_value_size_ret);
+
+            // Protect following statements with try-finally in case something 
+            // goes wrong.
+            try
+            {
+                // Get actual value.
+                error = ContextApi.clGetContextInfo(ctx, info,
+                param_value_size_ret, ptr, ref param_value_size_ret);
+
+                //TODO: Add implementation to missing cases.
+                switch (info)
+                {
+                    case ContextInfo.ReferenceCount:
+                        result = (uint)Marshal.ReadInt32(ptr);
+                        break;
+                    case ContextInfo.Devices:
+                        break;
+                    case ContextInfo.Properties:
+                        break;
+                    case ContextInfo.NumDevices:
+                        result = (uint)Marshal.ReadInt32(ptr);
                         break;
                 }
             }
