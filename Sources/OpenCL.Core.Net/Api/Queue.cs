@@ -1,53 +1,36 @@
-﻿using OpenCL.Core.Net.Interfaces.Api;
+﻿using System;
+using OpenCL.Core.Net.Interfaces.Api;
+using OpenCL.Core.Net.Interfaces.Kernel;
+using OpenCL.Core.Net.Types.Enums.Command;
+using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Api
 {
     public class QueueApi: IQueueApi
     {
-        public QueueApi(IErrorValidator errorValidator)
+        public QueueApi(ICommandQueueKernel commandQueueKernel, IFlushKernel flushKernel)
         {
-            ErrorValidator = errorValidator;
+            CommandQueueKernel = commandQueueKernel;
+            FlushKernel = flushKernel;
         }
 
-        //public CommandQueue CreateCommandQueue(Context context, DeviceId device)
-        //{
-        //    return CreateCommandQueue(context, device, 0);
-        //}
+        [Obsolete("Deprecated since OpenCL 2.0")]
+        public CommandQueue CreateCommandQueue(Context context, DeviceId device) =>
+            CommandQueueKernel.CreateCommandQueue(context, device, 0);
 
-        //public CommandQueue CreateCommandQueue(Context context, DeviceId device,
-        //    CommandQueueProperties properties)
-        //{
-        //    var error= Error.Success;
-        //    var queue = CommandQueueApi.clCreateCommandQueue(context, device, properties, ref error);
-        //    ErrorValidator.Validate(error);
+        [Obsolete("Deprecated since OpenCL 2.0")]
+        public CommandQueue CreateCommandQueue(Context context, DeviceId device, CommandQueueProperties properties) =>
+            CommandQueueKernel.CreateCommandQueue(context, device, properties);
 
-        //    return queue;
-        //}
+        public void RetainCommandQueue(CommandQueue commandQueue) => CommandQueueKernel.RetainCommandQueue(commandQueue);
 
-        //public void RetainCommandQueue(CommandQueue command_queue)
-        //{
-        //    clError = CommandQueueApi.clRetainCommandQueue(command_queue);
-        //    ThrowCLException(clError);
-        //}
+        public void ReleaseCommandQueue(CommandQueue commandQueue) => CommandQueueKernel.ReleaseCommandQueue(commandQueue);
 
-        //public void ReleaseCommandQueue(CommandQueue command_queue)
-        //{
-        //    clError = CommandQueueApi.clReleaseCommandQueue(command_queue);
-        //    ThrowCLException(clError);
-        //}
+        public void Flush(CommandQueue commandQueue) => FlushKernel.Flush(commandQueue);
 
-        //public void Flush(CommandQueue command_queue)
-        //{
-        //    clError = FlushApi.clFlush(command_queue);
-        //    ThrowCLException(clError);
-        //}
+        public void Finish(CommandQueue commandQueue) => FlushKernel.Finish(commandQueue);
 
-        //public void Finish(CommandQueue command_queue)
-        //{
-        //    clError = FlushApi.clFinish(command_queue);
-        //    ThrowCLException(clError);
-        //}
-
-        IErrorValidator ErrorValidator { get; }
+        ICommandQueueKernel CommandQueueKernel { get; }
+        IFlushKernel FlushKernel { get; }
     }
 }

@@ -37,6 +37,13 @@ namespace OpenCL.Core.Net.Containers
                 var kernel = Executor.Resolve<IContextKernel>();
                 return new ContextApiFactory(kernel);
             });
+
+            Executor.RegisterSingletonFactory<IQueueApi>(executor =>
+            {
+                var commandQueue = Executor.Resolve<ICommandQueueKernel>();
+                var flush = Executor.Resolve<IFlushKernel>();
+                return new QueueApi(commandQueue, flush);
+            });
         }
 
         void RegisterKernel<T>(Func<IErrorValidator, T> functor)
