@@ -4,7 +4,7 @@ using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Native
 {
-    public class FlushApi
+    public class FlushNative
     {
         [DllImport(DllNative.Name)]
         public static extern Error clFlush(CommandQueue commandQueue);
