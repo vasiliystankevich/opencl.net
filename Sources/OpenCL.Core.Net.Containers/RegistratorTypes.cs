@@ -1,4 +1,5 @@
-﻿using OpenCL.Core.Net.Api;
+﻿using System;
+using OpenCL.Core.Net.Api;
 using OpenCL.Core.Net.Interfaces;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
@@ -16,31 +17,17 @@ namespace OpenCL.Core.Net.Containers
 
         public void RegisterAll()
         {
-            RegisterKernel();
+            RegisterKernels();
             RegisterApi();
         }
 
-        void RegisterKernel()
+        void RegisterKernels()
         {
             Executor.RegisterSingletonFactory<IErrorValidator>(executor => new ErrorValidator());
 
-            Executor.RegisterSingletonFactory<IContextKernel>(executor =>
-            {
-                var errorValidator = Executor.Resolve<IErrorValidator>();
-                return new ContextKernel(errorValidator);
-            });
-
-            Executor.RegisterSingletonFactory<ICommandQueueKernel>(executor =>
-            {
-                var errorValidator = Executor.Resolve<IErrorValidator>();
-                return new CommandQueueKernel(errorValidator);
-            });
-
-            Executor.RegisterSingletonFactory<IFlushKernel>(executor =>
-            {
-                var errorValidator = Executor.Resolve<IErrorValidator>();
-                return new FlushKernel(errorValidator);
-            });
+            RegisterKernel<IContextKernel>(validator => new ContextKernel(validator));
+            RegisterKernel<ICommandQueueKernel>(validator => new CommandQueueKernel(validator));
+            RegisterKernel<IFlushKernel>(validator => new FlushKernel(validator));
         }
 
         void RegisterApi()
@@ -49,6 +36,15 @@ namespace OpenCL.Core.Net.Containers
             {
                 var kernel = Executor.Resolve<IContextKernel>();
                 return new ContextApiFactory(kernel);
+            });
+        }
+
+        void RegisterKernel<T>(Func<IErrorValidator, T> functor)
+        {
+            Executor.RegisterSingletonFactory<T>(executor =>
+            {
+                var errorValidator = Executor.Resolve<IErrorValidator>();
+                return functor(errorValidator);
             });
         }
 
