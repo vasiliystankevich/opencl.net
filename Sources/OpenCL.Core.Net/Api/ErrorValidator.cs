@@ -15,19 +15,19 @@ namespace OpenCL.Core.Net.Api
             if (error != Error.Success) throw new Exception(error);
         }
 
-        public void Validate(ref SizeT size, NativeFuncRef<SizeT, Error> functor)
+        public void Validate(ref SizeT size, NativeFunc1Ref<SizeT, Error> functor)
         {
             var error = functor(ref size);
             if (error != Error.Success) throw new Exception(error);
         }
 
-        public void Validate(ref CommandQueueProperties properties, NativeFuncRef<CommandQueueProperties, Error> functor)
+        public void Validate(ref CommandQueueProperties properties, NativeFunc1Ref<CommandQueueProperties, Error> functor)
         {
             var error = functor(ref properties);
             if (error != Error.Success) throw new Exception(error);
         }
 
-        public TValue Validate<TValue>(NativeFuncRef<Error, TValue> functor)
+        public TValue Validate<TValue>(NativeFunc1Ref<Error, TValue> functor)
         {
             var error = Error.Success;
             var result = functor(ref error);
@@ -35,7 +35,15 @@ namespace OpenCL.Core.Net.Api
             return result;
         }
 
-        public CommandQueue Validate(NativeFunc<IntPtr, CommandQueue> functor)
+        public TValue Validate<TArg1, TValue>(ref TArg1 arg1, NativeFunc2Ref<TArg1, Error, TValue> functor)
+        {
+            var error = Error.Success;
+            var result = functor(ref arg1, ref error);
+            if (error != Error.Success) throw new Exception(error);
+            return result;
+        }
+
+        public CommandQueue Validate(NativeFunc1Arg<IntPtr, CommandQueue> functor)
         {
             var error = IntPtr.Zero;
             var result = functor(error);

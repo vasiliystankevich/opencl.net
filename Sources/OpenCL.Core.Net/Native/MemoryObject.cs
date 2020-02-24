@@ -7,7 +7,7 @@ using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Native
 {
-    public class MemoryObjectApi
+    public class MemoryObjectNative
     {
         [DllImport(DllNative.Name)]
         public static extern Mem clCreateBuffer(Context context, MemFlags flags, SizeT size, IntPtr hostPtr,

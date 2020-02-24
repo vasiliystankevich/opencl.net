@@ -183,7 +183,7 @@ namespace OpenCL.Core.Net
 
         public Mem CreateBuffer(MemFlags flags, SizeT sizeInBytes)
         {
-            Mem buffer = MemoryObjectApi.clCreateBuffer(ctx, flags, sizeInBytes, IntPtr.Zero, ref clError);
+            Mem buffer = MemoryObjectNative.clCreateBuffer(ctx, flags, sizeInBytes, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
             return buffer;
@@ -192,7 +192,7 @@ namespace OpenCL.Core.Net
         public Mem CreateImage2D(MemFlags flags, ImageFormat format,
             SizeT width, SizeT height, SizeT rowPitchInBytes)
         {
-            Mem image = MemoryObjectApi.clCreateImage2D(ctx, flags, ref format,
+            Mem image = MemoryObjectNative.clCreateImage2D(ctx, flags, ref format,
                 width, height, rowPitchInBytes, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
 
@@ -203,7 +203,7 @@ namespace OpenCL.Core.Net
             SizeT width, SizeT height, SizeT depth,
             SizeT rowPitchInBytes, SizeT slicePitchInBytes)
         {
-            Mem image = MemoryObjectApi.clCreateImage3D(ctx, flags, ref format,
+            Mem image = MemoryObjectNative.clCreateImage3D(ctx, flags, ref format,
                 width, height, depth, rowPitchInBytes, slicePitchInBytes,
                 IntPtr.Zero, ref clError);
             ThrowCLException(clError);
@@ -213,20 +213,20 @@ namespace OpenCL.Core.Net
 
         public void RetainMemObject(Mem obj)
         {
-            clError = MemoryObjectApi.clRetainMemObject(obj);
+            clError = MemoryObjectNative.clRetainMemObject(obj);
             ThrowCLException(clError);
         }
 
         public void ReleaseMemObject(Mem obj)
         {
-            clError = MemoryObjectApi.clReleaseMemObject(obj);
+            clError = MemoryObjectNative.clReleaseMemObject(obj);
             ThrowCLException(clError);
         }
 
         public ImageFormat[] GetSupportedImageFormats(MemFlags flags, MemObjectType imageType)
         {
             uint numImageFormats = 0;
-            clError = MemoryObjectApi.clGetSupportedImageFormats(ctx, flags,
+            clError = MemoryObjectNative.clGetSupportedImageFormats(ctx, flags,
                 imageType, 0, IntPtr.Zero, ref numImageFormats);
             ThrowCLException(clError);
 
@@ -236,7 +236,7 @@ namespace OpenCL.Core.Net
             }
 
             ImageFormat[] formats = new ImageFormat[numImageFormats];
-            clError = MemoryObjectApi.clGetSupportedImageFormats(ctx, flags,
+            clError = MemoryObjectNative.clGetSupportedImageFormats(ctx, flags,
                 imageType, numImageFormats, formats, ref numImageFormats);
             ThrowCLException(clError);
 
@@ -1031,7 +1031,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = MemoryObjectApi.clGetMemObjectInfo(memobj, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = MemoryObjectNative.clGetMemObjectInfo(memobj, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -1047,7 +1047,7 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = MemoryObjectApi.clGetMemObjectInfo(memobj, info,
+                error = MemoryObjectNative.clGetMemObjectInfo(memobj, info,
                     param_value_size_ret, ptr, ref param_value_size_ret);
                 ThrowCLException(error);
 
@@ -1103,7 +1103,7 @@ namespace OpenCL.Core.Net
             object result = null;
 
             // Get initial size of buffer to allocate.
-            error = MemoryObjectApi.clGetImageInfo(memobj, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            error = MemoryObjectNative.clGetImageInfo(memobj, info, 0, IntPtr.Zero, ref param_value_size_ret);
             ThrowCLException(error);
 
             if (param_value_size_ret < 1)
@@ -1119,7 +1119,7 @@ namespace OpenCL.Core.Net
             try
             {
                 // Get actual value.
-                error = MemoryObjectApi.clGetImageInfo(memobj, info,
+                error = MemoryObjectNative.clGetImageInfo(memobj, info,
                     param_value_size_ret, ptr, ref param_value_size_ret);
                 ThrowCLException(error);
 
@@ -1162,7 +1162,7 @@ namespace OpenCL.Core.Net
         public static void SetMemObjectDestructorCallback(Mem memobj,
             Action<Mem, IntPtr> function, IntPtr userData)
         {
-            Error error = MemoryObjectApi.clSetMemObjectDestructorCallback(memobj, function, userData);
+            Error error = MemoryObjectNative.clSetMemObjectDestructorCallback(memobj, function, userData);
             ThrowCLException(error);
         }
         #endregion
