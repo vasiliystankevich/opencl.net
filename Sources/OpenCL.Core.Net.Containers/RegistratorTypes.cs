@@ -29,6 +29,12 @@ namespace OpenCL.Core.Net.Containers
                 var errorValidator = Executor.Resolve<IErrorValidator>();
                 return new ContextKernel(errorValidator);
             });
+
+            Executor.RegisterSingletonFactory<ICommandQueueKernel>(executor =>
+            {
+                var errorValidator = Executor.Resolve<IErrorValidator>();
+                return new CommandQueueKernel(errorValidator);
+            });
         }
 
         void RegisterApi()

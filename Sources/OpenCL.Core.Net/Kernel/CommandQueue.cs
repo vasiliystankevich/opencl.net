@@ -15,42 +15,37 @@ namespace OpenCL.Core.Net.Kernel
             ErrorValidator = errorValidator;
         }
 
+        [Obsolete("Deprecated since OpenCL 2.0")]
         public CommandQueue CreateCommandQueue(Context context, DeviceId device, CommandQueueProperties properties) =>
             ErrorValidator.Validate((ref Error error) =>
                 CommandQueueNative.clCreateCommandQueue(context, device, properties, ref error));
 
-        public CommandQueue CreateCommandQueueWithProperties(Context context, DeviceId device, IntPtr[] properties)
-        {
-            throw new NotImplementedException();
-        }
+        public CommandQueue CreateCommandQueueWithProperties(Context context, DeviceId device, IntPtr[] properties) =>
+            ErrorValidator.Validate((ref Error error) =>
+                CommandQueueNative.clCreateCommandQueueWithProperties(context, device, properties, ref error));
 
-        public CommandQueue CreateCommandQueueWithProperties(Context context, DeviceId device, IntPtr[] properties, IntPtr errcodeRet)
-        {
-            throw new NotImplementedException();
-        }
+        public CommandQueue CreateCommandQueueWithPropertiesIntPtr(Context context, DeviceId device, IntPtr[] properties) => ErrorValidator.Validate(error =>
+            CommandQueueNative.clCreateCommandQueueWithProperties(context, device, properties, error));
 
-        public Error RetainCommandQueue(CommandQueue commandQueue)
-        {
-            throw new NotImplementedException();
-        }
+        public void RetainCommandQueue(CommandQueue commandQueue) =>
+            ErrorValidator.Validate(() => CommandQueueNative.clRetainCommandQueue(commandQueue));
 
-        public Error ReleaseCommandQueue(CommandQueue commandQueue)
-        {
-            throw new NotImplementedException();
-        }
+        public void ReleaseCommandQueue(CommandQueue commandQueue) =>
+            ErrorValidator.Validate(() => CommandQueueNative.clReleaseCommandQueue(commandQueue));
 
-        public Error GetCommandQueueInfo(CommandQueue commandQueue, CommandQueueInfo paramName, SizeT paramValueSize,
-            IntPtr paramValue, ref SizeT paramValueSizeRet)
-        {
-            throw new NotImplementedException();
-        }
+        public void GetCommandQueueInfo(CommandQueue commandQueue, CommandQueueInfo paramName, SizeT paramValueSize,
+            IntPtr paramValue, ref SizeT paramValueSizeRet) => ErrorValidator.Validate(ref paramValueSizeRet,
+            (ref SizeT retValue) =>
+                CommandQueueNative.clGetCommandQueueInfo(commandQueue, paramName, paramValueSize, paramValue,
+                    ref retValue));
 
-        public Error SetCommandQueueProperty(CommandQueue commandQueue, CommandQueueProperties properties, Bool enable,
-            ref CommandQueueProperties oldProperties)
-        {
-            throw new NotImplementedException();
-        }
+        [Obsolete("Deprecated since OpenCL 1.1")]
+        public void SetCommandQueueProperty(CommandQueue commandQueue, CommandQueueProperties properties, Bool enable,
+            ref CommandQueueProperties oldProperties) => ErrorValidator.Validate(ref oldProperties,
+                (ref CommandQueueProperties queueProperties) =>
+                    CommandQueueNative.clSetCommandQueueProperty(commandQueue, properties, enable,
+                        ref queueProperties));
+
         IErrorValidator ErrorValidator { get; }
-
     }
 }
