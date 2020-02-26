@@ -41,9 +41,17 @@ namespace OpenCL.Core.Net.Kernel
                     ref format, imageWidth, imageHeight, imageDepth, imageRowPitch, imageSlicePitch, hostPtr,
                     ref error));
 
-        public Mem CreateImage(Context context, MemFlags flags, ImageFormat imageFormat, ImageDesc imageDesc, IntPtr hostPtr)
+        public Mem CreateImage(Context context, MemFlags flags, ImageFormat imageFormat, ImageDesc imageDesc, IntPtr hostPtr,
+            ref Error errcodeRet)
         {
+            throw new NotImplementedException();
         }
+
+        //public Mem CreateImage(Context context, MemFlags flags, ImageFormat imageFormat, ImageDesc imageDesc, IntPtr hostPtr)
+        //{
+        //    //return ErrorValidator.Validate()
+        //    return new Mem();
+        //}
 
         public Mem CreateImage(Context context, MemFlags flags, ImageFormat imageFormat, ImageDesc imageDesc, IntPtr hostPtr,
             IntPtr errcodeRet)

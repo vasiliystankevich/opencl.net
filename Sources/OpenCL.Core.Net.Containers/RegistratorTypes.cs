@@ -3,8 +3,10 @@ using OpenCL.Core.Net.Api;
 using OpenCL.Core.Net.Interfaces;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
+using OpenCL.Core.Net.Interfaces.Kernel.Executors;
 using OpenCL.Core.Net.Interfaces.Unity;
 using OpenCL.Core.Net.Kernel;
+using OpenCL.Core.Net.Kernel.Executors;
 
 namespace OpenCL.Core.Net.Containers
 {
@@ -17,17 +19,25 @@ namespace OpenCL.Core.Net.Containers
 
         public void RegisterAll()
         {
+            RegisterExecutors();
             RegisterKernels();
             RegisterApi();
+        }
+
+        void RegisterExecutors()
+        {
+            Executor.RegisterSingletonFactory<IContextNativeExecutor>(executor => new ContextNativeExecutor());
+            Executor.RegisterSingletonFactory<IFlushNativeExecutor>(executor => new FlushNativeExecutor());
         }
 
         void RegisterKernels()
         {
             Executor.RegisterSingletonFactory<IErrorValidator>(executor => new ErrorValidator());
 
-            RegisterKernel<IContextKernel>(validator => new ContextKernel(validator));
-            RegisterKernel<ICommandQueueKernel>(validator => new CommandQueueKernel(validator));
-            RegisterKernel<IFlushKernel>(validator => new FlushKernel(validator));
+            RegisterKernel<IContextNativeExecutor, IContextKernel>((executor, validator) =>
+                new ContextKernel(executor, validator));
+            //RegisterKernel<ICommandQueueKernel>(validator => new CommandQueueKernel(validator));
+            RegisterKernel<IFlushNativeExecutor, IFlushKernel>((executor, validator) => new FlushKernel());
         }
 
         void RegisterApi()
@@ -46,12 +56,13 @@ namespace OpenCL.Core.Net.Containers
             });
         }
 
-        void RegisterKernel<T>(Func<IErrorValidator, T> functor)
+        void RegisterKernel<TNativeExecutor, T>(Func<TNativeExecutor, IErrorValidator, T> functor)
         {
             Executor.RegisterSingletonFactory<T>(executor =>
             {
+                var nativeExecutor = Executor.Resolve<TNativeExecutor>(); 
                 var errorValidator = Executor.Resolve<IErrorValidator>();
-                return functor(errorValidator);
+                return functor(nativeExecutor, errorValidator);
             });
         }
 
