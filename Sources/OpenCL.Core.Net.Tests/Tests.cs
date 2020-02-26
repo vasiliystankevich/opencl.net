@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using OpenCL.Core.Net.Types.Enums;
-using OpenCL.Core.Net.Types.Enums.Device;
-using Xunit;
+﻿using Xunit;
 
 namespace OpenCL.Core.Net.Tests
 {

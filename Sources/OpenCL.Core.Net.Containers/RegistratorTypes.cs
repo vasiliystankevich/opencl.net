@@ -37,7 +37,7 @@ namespace OpenCL.Core.Net.Containers
             RegisterKernel<IContextNativeExecutor, IContextKernel>((executor, validator) =>
                 new ContextKernel(executor, validator));
             //RegisterKernel<ICommandQueueKernel>(validator => new CommandQueueKernel(validator));
-            RegisterKernel<IFlushNativeExecutor, IFlushKernel>((executor, validator) => new FlushKernel());
+            //RegisterKernel<IFlushNativeExecutor, IFlushKernel>((executor, validator) => new FlushKernel());
         }
 
         void RegisterApi()
