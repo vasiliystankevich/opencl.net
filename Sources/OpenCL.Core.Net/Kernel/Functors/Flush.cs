@@ -10,25 +10,25 @@ namespace OpenCL.Core.Net.Kernel.Functors
 {
     public class FlushNativeFunctor: IFlushNativeFunctor
     {
-        public FlushNativeFunctor(IFlushNativeExecutor flushNative, INativeCallStateFactory stateFactory)
+        public FlushNativeFunctor(IFlushNativeExecutor flushNative, IWrapperFactory wrapperFactory)
         {
             FlushNative = flushNative;
-            StateFactory = stateFactory;
+            WrapperFactory = wrapperFactory;
         }
 
-        public Func<NativeCallError<Error>> Flush(CommandQueue commandQueue) => () =>
+        public Func<Wrapper<Error>> Flush(Wrapper<CommandQueue> commandQueue) => () =>
         {
-            var error = FlushNative.Flush(local);
-            return StateFactory.CreateError(error);
+            var error = FlushNative.Flush(commandQueue.Arg1);
+            return WrapperFactory.Create(error);
         };
 
-        public Func<NativeCallError<Error>> Finish(CommandQueue commandQueue) => () =>
+        public Func<Wrapper<Error>> Finish(Wrapper<CommandQueue> commandQueue) => () =>
         {
-            var error = FlushNative.Finish(local);
-            return StateFactory.CreateError(error);
+            var error = FlushNative.Finish(commandQueue.Arg1);
+            return WrapperFactory.Create(error);
         };
 
         IFlushNativeExecutor FlushNative { get; }
-        INativeCallStateFactory StateFactory { get; }
+        IWrapperFactory WrapperFactory { get; }
     }
 }

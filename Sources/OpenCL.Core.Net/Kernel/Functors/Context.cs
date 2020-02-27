@@ -18,31 +18,32 @@ namespace OpenCL.Core.Net.Kernel.Functors
             StateFactory = stateFactory;
         }
 
-        public Func<NativeCallState<Error, Context>> CreateContext(IntPtr[] properties, uint numDevices, DeviceId[] devices, Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData) => () =>
+        public Func<NativeCallState<Error, Context>> CreateContext(Wrapper<IntPtr[], uint, DeviceId[], Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
         {
             var error = Error.Success;
-            var context =
-                ContextNative.CreateContext(properties, numDevices, devices, pfnNotify, userData, ref error);
+            var context = ContextNative.CreateContext(arguments.Arg1, arguments.Arg2, arguments.Arg3, arguments.Arg4,
+                arguments.Arg5, ref error);
             return StateFactory.CreateState(error, context);
         };
 
-        public Func<NativeCallState<Error, Context>> CreateContextFromType(IntPtr[] properties, DeviceType deviceType, Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData) => () =>
+        //IntPtr[] properties, DeviceType deviceType, Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData
+        public Func<NativeCallState<Error, Context>> CreateContextFromType(Wrapper<IntPtr[], DeviceType, Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
         {
             var error = Error.Success;
-            var context =
-                ContextNative.CreateContextFromType(properties, deviceType, pfnNotify, userData, ref error);
+            var context = ContextNative.CreateContextFromType(arguments.Arg1, arguments.Arg2, arguments.Arg3,
+                arguments.Arg4, ref error);
             return StateFactory.CreateState(error, context);
         };
 
-        public Func<NativeCallError<Error>> RetainContext(Context context) => () =>
+        public Func<NativeCallError<Error>> RetainContext(Wrapper<Context> context) => () =>
         {
-            var error = ContextNative.RetainContext(context);
+            var error = ContextNative.RetainContext(context.Arg1);
             return StateFactory.CreateError(error);
         };
 
-        public Func<NativeCallError<Error>> ReleaseContext(Context context) => () =>
+        public Func<Wrapper<Error>> ReleaseContext(Wrapper<Context> context) => () =>
         {
-            var error = ContextNative.ReleaseContext(context);
+            var error = ContextNative.ReleaseContext(context.Arg1);
             return StateFactory.CreateError(error);
         };
 

@@ -7,7 +7,7 @@ namespace OpenCL.Core.Net.Interfaces.Kernel.Functors
 {
     public interface IFlushNativeFunctor
     {
-        Func<NativeCallError<Error>> Flush(CommandQueue commandQueue);
-        Func<NativeCallError<Error>> Finish(CommandQueue commandQueue);
+        Func<Wrapper<Error>> Flush(Wrapper<CommandQueue> commandQueue);
+        Func<Wrapper<Error>> Finish(Wrapper<CommandQueue> commandQueue);
     }
 }

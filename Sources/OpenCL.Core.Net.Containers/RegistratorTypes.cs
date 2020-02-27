@@ -35,12 +35,12 @@ namespace OpenCL.Core.Net.Containers
 
         void RegisterFunctors()
         {
-            Executor.RegisterSingletonFactory<INativeCallStateFactory>(executor => new NativeCallStateFactory());
+            Executor.RegisterSingletonFactory<IWrapperFactory>(executor => new WrapperFactory());
 
-            RegisterFunctor<IContextNativeExecutor, IContextNativeFunctor>((nativeExecutor, stateFactory) =>
-                new ContextNativeFunctor(nativeExecutor, stateFactory));
             RegisterFunctor<IFlushNativeExecutor, IFlushNativeFunctor>((nativeExecutor, stateFactory) =>
                 new FlushNativeFunctor(nativeExecutor, stateFactory));
+            RegisterFunctor<IContextNativeExecutor, IContextNativeFunctor>((nativeExecutor, stateFactory) =>
+                new ContextNativeFunctor(nativeExecutor, stateFactory));
         }
 
         void RegisterKernels()
@@ -79,13 +79,13 @@ namespace OpenCL.Core.Net.Containers
             });
         }
 
-        void RegisterFunctor<TNativeExecutor, T>(Func<TNativeExecutor, INativeCallStateFactory, T> functor)
+        void RegisterFunctor<TNativeExecutor, T>(Func<TNativeExecutor, IWrapperFactory, T> functor)
         {
             Executor.RegisterSingletonFactory<T>(executor =>
             {
                 var nativeExecutor = Executor.Resolve<TNativeExecutor>();
-                var stateFactory = Executor.Resolve<INativeCallStateFactory>();
-                return functor(nativeExecutor, stateFactory);
+                var wrapperFactory = Executor.Resolve<IWrapperFactory>();
+                return functor(nativeExecutor, wrapperFactory);
             });
         }
 
