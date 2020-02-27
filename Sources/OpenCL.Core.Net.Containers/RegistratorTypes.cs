@@ -47,8 +47,8 @@ namespace OpenCL.Core.Net.Containers
         {
             Executor.RegisterSingletonFactory<IErrorValidator>(executor => new ErrorValidator());
 
-            RegisterKernel<IContextNativeExecutor, IContextKernel>((executor, validator) =>
-                new ContextKernel(executor, validator));
+            RegisterKernel<IContextNativeFunctor, IContextKernel>((functor, wrapper, validator) =>
+                new ContextKernel(functor, wrapper, validator));
             //RegisterKernel<ICommandQueueKernel>(validator => new CommandQueueKernel(validator));
             //RegisterKernel<IFlushNativeExecutor, IFlushKernel>((executor, validator) => new FlushKernel());
         }
@@ -69,13 +69,14 @@ namespace OpenCL.Core.Net.Containers
             });
         }
 
-        void RegisterKernel<TNativeExecutor, T>(Func<TNativeExecutor, IErrorValidator, T> functor)
+        void RegisterKernel<TNativeFunctor, T>(Func<TNativeFunctor, IWrapperFactory, IErrorValidator, T> functor)
         {
             Executor.RegisterSingletonFactory<T>(executor =>
             {
-                var nativeExecutor = Executor.Resolve<TNativeExecutor>(); 
+                var nativeFunctor = Executor.Resolve<TNativeFunctor>();
+                var wrapperFactory = Executor.Resolve<IWrapperFactory>();
                 var errorValidator = Executor.Resolve<IErrorValidator>();
-                return functor(nativeExecutor, errorValidator);
+                return functor(nativeFunctor, wrapperFactory, errorValidator);
             });
         }
 
