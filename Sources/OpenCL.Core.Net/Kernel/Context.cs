@@ -1,8 +1,7 @@
 ﻿using System;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
-using OpenCL.Core.Net.Interfaces.Kernel.Executors;
-using OpenCL.Core.Net.Types.Enums;
+using OpenCL.Core.Net.Interfaces.Kernel.Functors;
 using OpenCL.Core.Net.Types.Enums.Context;
 using OpenCL.Core.Net.Types.Enums.Device;
 using OpenCL.Core.Net.Types.Primitives;
@@ -11,30 +10,52 @@ namespace OpenCL.Core.Net.Kernel
 {
     public class ContextKernel: IContextKernel
     {
-        public ContextKernel(IContextNativeExecutor contextNative, IErrorValidator errorValidator)
+        public ContextKernel(IContextNativeFunctor contextNative, IWrapperFactory wrapperFactory, IErrorValidator errorValidator)
         {
             ContextNative = contextNative;
+            WrapperFactory = wrapperFactory;
             ErrorValidator = errorValidator;
         }
 
         public Context CreateContext(IntPtr[] properties, uint numDevices, DeviceId[] devices,
-            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData) => ErrorValidator.Validate((ref Error error) =>
-            ContextNative.CreateContext(properties, numDevices, devices, pfnNotify, userData, ref error));
+            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData)
+        {
+            var arguments = WrapperFactory.Create(properties, numDevices, devices, pfnNotify, userData);
+            var functor = ContextNative.CreateContext(arguments);
+            return ErrorValidator.Validate(functor);
+        }
 
         public Context CreateContextFromType(IntPtr[] properties, DeviceType deviceType,
-            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData) => ErrorValidator.Validate((ref Error error) =>
-            ContextNative.CreateContextFromType(properties, deviceType, pfnNotify, userData, ref error));
+            Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData)
+        {
+            var arguments = WrapperFactory.Create(properties, deviceType, pfnNotify, userData);
+            var functor = ContextNative.CreateContextFromType(arguments);
+            return ErrorValidator.Validate(functor);
+        }
 
-        public void RetainContext(Context context) => ErrorValidator.Validate(() => ContextNative.RetainContext(context));
+        public void RetainContext(Context context)
+        {
+            var arguments = WrapperFactory.Create(context);
+            var functor = ContextNative.RetainContext(arguments);
+            ErrorValidator.Validate(functor);
+        }
 
-        public void ReleaseContext(Context context) => ErrorValidator.Validate(() => ContextNative.ReleaseContext(context));
+        public void ReleaseContext(Context context)
+        {
+            var arguments = WrapperFactory.Create(context);
+            var functor = ContextNative.ReleaseContext(arguments);
+            ErrorValidator.Validate(functor);
+        }
 
-        public void GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue,
-            ref SizeT paramValueSizeRet) => ErrorValidator.Validate(ref paramValueSizeRet,
-            (ref SizeT size) =>
-                ContextNative.GetContextInfo(context, paramName, paramValueSize, paramValue, ref size));
+        public SizeT GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue)
+        {
+            var arguments = WrapperFactory.Create(context, paramName, paramValueSize, paramValue);
+            var functor = ContextNative.GetContextInfo(arguments);
+            return ErrorValidator.Validate(functor);
+        }
 
-        IContextNativeExecutor ContextNative { get; }
+        IContextNativeFunctor ContextNative { get; }
+        IWrapperFactory WrapperFactory { get; }
         IErrorValidator ErrorValidator { get; }
     }
 }

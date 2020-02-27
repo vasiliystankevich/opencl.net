@@ -9,10 +9,10 @@ namespace OpenCL.Core.Net.Api
 {
     public class ErrorValidator : IErrorValidator
     {
-        public void Validate(Func<NativeCallError<Error>> functor)
+        public void Validate(Func<Wrapper<Error>> functor)
         {
             var result = functor();
-            if (result.Error != Error.Success) throw new Exception(result.Error);
+            if (result.Arg1 != Error.Success) throw new Exception(result.Arg1);
         }
 
         public void Validate(ref SizeT size, NativeFunc1Ref<SizeT, Error> functor)
@@ -29,10 +29,14 @@ namespace OpenCL.Core.Net.Api
 
         public TValue Validate<TValue>(NativeFunc1Ref<Error, TValue> functor)
         {
-            var error = Error.Success;
-            var result = functor(ref error);
-            if (error != Error.Success) throw new Exception(error);
-            return result;
+            throw new NotImplementedException();
+        }
+
+        public TValue Validate<TValue>(Func<Wrapper<Error, TValue>> functor)
+        {
+            var result = functor();
+            if (result.Arg1 != Error.Success) throw new Exception(result.Arg1);
+            return result.Arg2;
         }
 
         public TValue Validate<TArg1, TValue>(ref TArg1 arg1, NativeFunc2Ref<TArg1, Error, TValue> functor)

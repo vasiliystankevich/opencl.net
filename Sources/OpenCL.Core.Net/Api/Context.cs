@@ -35,9 +35,8 @@ namespace OpenCL.Core.Net.Api
 
         public object GetContextInfo(Context context, ContextInfo info)
         {
-            SizeT paramValueSizeRet = 0;
 
-            ContextKernel.GetContextInfo(context, info, 0, IntPtr.Zero, ref paramValueSizeRet);
+            var paramValueSizeRet = ContextKernel.GetContextInfo(context, info, 0, IntPtr.Zero);
 
             if (paramValueSizeRet < 1) return null;
 
@@ -45,7 +44,7 @@ namespace OpenCL.Core.Net.Api
 
             try
             {
-                ContextKernel.GetContextInfo(context, info, paramValueSizeRet, ptr, ref paramValueSizeRet);
+                paramValueSizeRet = ContextKernel.GetContextInfo(context, info, paramValueSizeRet, ptr);
 
                 switch (info)
                 {

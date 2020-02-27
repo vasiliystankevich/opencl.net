@@ -12,50 +12,49 @@ namespace OpenCL.Core.Net.Kernel.Functors
 {
     public class ContextNativeFunctor: IContextNativeFunctor
     {
-        public ContextNativeFunctor(IContextNativeExecutor contextNative, INativeCallStateFactory stateFactory)
+        public ContextNativeFunctor(IContextNativeExecutor contextNative, IWrapperFactory wrapperFactory)
         {
             ContextNative = contextNative;
-            StateFactory = stateFactory;
+            WrapperFactory = wrapperFactory;
         }
 
-        public Func<NativeCallState<Error, Context>> CreateContext(Wrapper<IntPtr[], uint, DeviceId[], Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
+        public Func<Wrapper<Error, Context>> CreateContext(Wrapper<IntPtr[], uint, DeviceId[], Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
         {
             var error = Error.Success;
             var context = ContextNative.CreateContext(arguments.Arg1, arguments.Arg2, arguments.Arg3, arguments.Arg4,
                 arguments.Arg5, ref error);
-            return StateFactory.CreateState(error, context);
+            return WrapperFactory.Create(error, context);
         };
 
-        //IntPtr[] properties, DeviceType deviceType, Action<IntPtr, IntPtr, SizeT, IntPtr> pfnNotify, IntPtr userData
-        public Func<NativeCallState<Error, Context>> CreateContextFromType(Wrapper<IntPtr[], DeviceType, Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
+        public Func<Wrapper<Error, Context>> CreateContextFromType(Wrapper<IntPtr[], DeviceType, Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
         {
             var error = Error.Success;
             var context = ContextNative.CreateContextFromType(arguments.Arg1, arguments.Arg2, arguments.Arg3,
                 arguments.Arg4, ref error);
-            return StateFactory.CreateState(error, context);
+            return WrapperFactory.Create(error, context);
         };
 
-        public Func<NativeCallError<Error>> RetainContext(Wrapper<Context> context) => () =>
+        public Func<Wrapper<Error>> RetainContext(Wrapper<Context> context) => () =>
         {
             var error = ContextNative.RetainContext(context.Arg1);
-            return StateFactory.CreateError(error);
+            return WrapperFactory.Create(error);
         };
 
         public Func<Wrapper<Error>> ReleaseContext(Wrapper<Context> context) => () =>
         {
             var error = ContextNative.ReleaseContext(context.Arg1);
-            return StateFactory.CreateError(error);
+            return WrapperFactory.Create(error);
         };
 
-        public Func<NativeCallState<Error, SizeT>> GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue) => () =>
+        public Func<Wrapper<Error, SizeT>> GetContextInfo(Wrapper<Context, ContextInfo, SizeT, IntPtr> arguments) => () =>
         {
             var paramValueSizeRet = new SizeT();
-            var error = ContextNative.GetContextInfo(context, paramName, paramValueSize, paramValue,
+            var error = ContextNative.GetContextInfo(arguments.Arg1, arguments.Arg2, arguments.Arg3, arguments.Arg4,
                 ref paramValueSizeRet);
-            return StateFactory.CreateState(error, paramValueSizeRet);
+            return WrapperFactory.Create(error, paramValueSizeRet);
         };
 
         IContextNativeExecutor ContextNative { get; }
-        INativeCallStateFactory StateFactory { get; }
+        IWrapperFactory WrapperFactory { get; }
     }
 }

@@ -17,7 +17,6 @@ namespace OpenCL.Core.Net.Interfaces.Kernel
 
         void ReleaseContext(Context context);
 
-        void GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue,
-            ref SizeT paramValueSizeRet);
+        SizeT GetContextInfo(Context context, ContextInfo paramName, SizeT paramValueSize, IntPtr paramValue);
     }
 }

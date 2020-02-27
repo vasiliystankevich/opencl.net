@@ -8,7 +8,8 @@ namespace OpenCL.Core.Net.Interfaces.Api
 {
     public interface IErrorValidator
     {
-        void Validate(Func<NativeCallError<Error>> functor);
+        void Validate(Func<Wrapper<Error>> functor);
+        TValue Validate<TValue>(Func<Wrapper<Error, TValue>> functor);
         void Validate(ref SizeT size, NativeFunc1Ref<SizeT, Error> functor);
         void Validate(ref CommandQueueProperties properties, NativeFunc1Ref<CommandQueueProperties, Error> functor);
         TValue Validate<TValue>(NativeFunc1Ref<Error, TValue> functor);

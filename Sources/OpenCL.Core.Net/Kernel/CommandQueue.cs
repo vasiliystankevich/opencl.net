@@ -10,8 +10,9 @@ namespace OpenCL.Core.Net.Kernel
 {
     public class CommandQueueKernel: ICommandQueueKernel
     {
-        public CommandQueueKernel(IErrorValidator errorValidator)
+        public CommandQueueKernel(IWrapperFactory wrapperFactory, IErrorValidator errorValidator)
         {
+            WrapperFactory = wrapperFactory;
             ErrorValidator = errorValidator;
         }
 
@@ -32,7 +33,7 @@ namespace OpenCL.Core.Net.Kernel
             ErrorValidator.Validate(() =>
             {
                 var error = CommandQueueNative.clRetainCommandQueue(commandQueue);
-                return NativeCallStateFactory.CreateError(error);
+                return WrapperFactory.Create(error);
             });
         }
 
@@ -40,7 +41,7 @@ namespace OpenCL.Core.Net.Kernel
             ErrorValidator.Validate(() =>
             {
                 var error = CommandQueueNative.clReleaseCommandQueue(commandQueue);
-                return NativeCallStateFactory.CreateError(error);
+                return WrapperFactory.Create(error);
             });
 
         public void GetCommandQueueInfo(CommandQueue commandQueue, CommandQueueInfo paramName, SizeT paramValueSize,
@@ -56,7 +57,7 @@ namespace OpenCL.Core.Net.Kernel
                     CommandQueueNative.clSetCommandQueueProperty(commandQueue, properties, enable,
                         ref queueProperties));
 
-        INativeCallStateFactory NativeCallStateFactory { get; }
+        IWrapperFactory WrapperFactory { get; }
         IErrorValidator ErrorValidator { get; }
     }
 }
