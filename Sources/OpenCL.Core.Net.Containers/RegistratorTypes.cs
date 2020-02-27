@@ -4,9 +4,11 @@ using OpenCL.Core.Net.Interfaces;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
 using OpenCL.Core.Net.Interfaces.Kernel.Executors;
+using OpenCL.Core.Net.Interfaces.Kernel.Functors;
 using OpenCL.Core.Net.Interfaces.Unity;
 using OpenCL.Core.Net.Kernel;
 using OpenCL.Core.Net.Kernel.Executors;
+using OpenCL.Core.Net.Kernel.Functors;
 
 namespace OpenCL.Core.Net.Containers
 {
@@ -20,14 +22,25 @@ namespace OpenCL.Core.Net.Containers
         public void RegisterAll()
         {
             RegisterExecutors();
+            RegisterFunctors();
             RegisterKernels();
             RegisterApi();
         }
 
         void RegisterExecutors()
         {
-            Executor.RegisterSingletonFactory<IContextNativeExecutor>(executor => new ContextNativeExecutor());
             Executor.RegisterSingletonFactory<IFlushNativeExecutor>(executor => new FlushNativeExecutor());
+            Executor.RegisterSingletonFactory<IContextNativeExecutor>(executor => new ContextNativeExecutor());
+        }
+
+        void RegisterFunctors()
+        {
+            Executor.RegisterSingletonFactory<INativeCallStateFactory>(executor => new NativeCallStateFactory());
+
+            RegisterFunctor<IContextNativeExecutor, IContextNativeFunctor>((nativeExecutor, stateFactory) =>
+                new ContextNativeFunctor(nativeExecutor, stateFactory));
+            RegisterFunctor<IFlushNativeExecutor, IFlushNativeFunctor>((nativeExecutor, stateFactory) =>
+                new FlushNativeFunctor(nativeExecutor, stateFactory));
         }
 
         void RegisterKernels()
@@ -63,6 +76,16 @@ namespace OpenCL.Core.Net.Containers
                 var nativeExecutor = Executor.Resolve<TNativeExecutor>(); 
                 var errorValidator = Executor.Resolve<IErrorValidator>();
                 return functor(nativeExecutor, errorValidator);
+            });
+        }
+
+        void RegisterFunctor<TNativeExecutor, T>(Func<TNativeExecutor, INativeCallStateFactory, T> functor)
+        {
+            Executor.RegisterSingletonFactory<T>(executor =>
+            {
+                var nativeExecutor = Executor.Resolve<TNativeExecutor>();
+                var stateFactory = Executor.Resolve<INativeCallStateFactory>();
+                return functor(nativeExecutor, stateFactory);
             });
         }
 

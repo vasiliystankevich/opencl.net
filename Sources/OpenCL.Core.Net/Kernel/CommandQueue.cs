@@ -27,11 +27,21 @@ namespace OpenCL.Core.Net.Kernel
         public CommandQueue CreateCommandQueueWithPropertiesIntPtr(Context context, DeviceId device, IntPtr[] properties) => ErrorValidator.Validate(error =>
             CommandQueueNative.clCreateCommandQueueWithProperties(context, device, properties, error));
 
-        public void RetainCommandQueue(CommandQueue commandQueue) =>
-            ErrorValidator.Validate(() => CommandQueueNative.clRetainCommandQueue(commandQueue));
+        public void RetainCommandQueue(CommandQueue commandQueue)
+        {
+            ErrorValidator.Validate(() =>
+            {
+                var error = CommandQueueNative.clRetainCommandQueue(commandQueue);
+                return NativeCallStateFactory.CreateError(error);
+            });
+        }
 
         public void ReleaseCommandQueue(CommandQueue commandQueue) =>
-            ErrorValidator.Validate(() => CommandQueueNative.clReleaseCommandQueue(commandQueue));
+            ErrorValidator.Validate(() =>
+            {
+                var error = CommandQueueNative.clReleaseCommandQueue(commandQueue);
+                return NativeCallStateFactory.CreateError(error);
+            });
 
         public void GetCommandQueueInfo(CommandQueue commandQueue, CommandQueueInfo paramName, SizeT paramValueSize,
             IntPtr paramValue, ref SizeT paramValueSizeRet) => ErrorValidator.Validate(ref paramValueSizeRet,
@@ -46,6 +56,7 @@ namespace OpenCL.Core.Net.Kernel
                     CommandQueueNative.clSetCommandQueueProperty(commandQueue, properties, enable,
                         ref queueProperties));
 
+        INativeCallStateFactory NativeCallStateFactory { get; }
         IErrorValidator ErrorValidator { get; }
     }
 }
