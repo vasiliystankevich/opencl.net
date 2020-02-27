@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoFixture.Kernel;
-using OpenCL.Core.Net.Api;
+﻿using System.Linq;
 using OpenCL.Core.Net.Containers;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Types.Enums.Context;
 using Project.Kernel;
 using Unity;
+using Unity.Interception.Utilities;
 using Xunit;
 
 namespace OpenCL.Core.Net.Tests.Api
@@ -24,10 +19,16 @@ namespace OpenCL.Core.Net.Tests.Api
             BaseTypeFabric.RegisterTypes<TypeFabric>(container);
 
             //act
-            
-            var info = new ContextInfo();
-            var sut = container.Resolve<IContextApi>();
-            sut.GetContextInfo(info);
+            var factory = container.Resolve<IContextApiFactory>();
+
+            var contexts = OldKernel.GetPlatforms().Select(platform =>
+            {
+                var devices = OldKernel.GetDevices(platform);
+                return factory.Create(platform, devices);
+            });
+
+            //var info = new ContextInfo();
+            //sut.GetContextInfo(info);
         }
     }
 }
