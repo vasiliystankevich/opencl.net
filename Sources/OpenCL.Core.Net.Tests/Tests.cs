@@ -7,7 +7,8 @@ namespace OpenCL.Core.Net.Tests
         [Fact]
         public void VerifyOpenClDevices()
         {
-            //var platforms = Kernel.GetPlatforms();
+            
+            var platforms = OldCode.Kernel.GetPlatforms();
             //var infoOfPlatforms = platforms.Select(platform =>
             //{
             //    var platformName = Kernel.GetPlatformInfo(platform, PlatformInfo.Name);

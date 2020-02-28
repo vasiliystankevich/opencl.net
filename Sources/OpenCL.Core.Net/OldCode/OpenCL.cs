@@ -40,7 +40,7 @@ namespace OpenCL.Core.Net.OldCode
     /// 
     /// Throughout the lifetime of an instance, a single context can be created.
     /// </summary>
-    public class OpenCL : IDisposable
+    public class Kernel : IDisposable
     {
         #region Constructors
         /// <summary>
@@ -49,7 +49,7 @@ namespace OpenCL.Core.Net.OldCode
         /// </summary>
         /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
         /// <param name="device">Device to include in OpenCL(TM) context.</param>
-        public OpenCL(CLPlatformID platform, CLDeviceID device) : 
+        public Kernel(CLPlatformID platform, CLDeviceID device) : 
             this(platform, new CLDeviceID[] { device })
         { }
 
@@ -59,7 +59,7 @@ namespace OpenCL.Core.Net.OldCode
         /// </summary>
         /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
         /// <param name="devices">Devices to include in OpenCL(TM) context.</param>
-        public OpenCL(CLPlatformID platform, CLDeviceID[] devices)
+        public Kernel(CLPlatformID platform, CLDeviceID[] devices)
         {
             IntPtr[] ctxProperties = new IntPtr[3];
             ctxProperties[0] = new IntPtr((int)CLContextProperties.Platform);
@@ -80,7 +80,7 @@ namespace OpenCL.Core.Net.OldCode
         /// Perform a retain of the context.
         /// </summary>
         /// <param name="ctx">OpenCL(TM) context to use.</param>
-        public OpenCL(CLContext ctx)
+        public Kernel(CLContext ctx)
         {
             clError = OpenCLDriver.clRetainContext(ctx);
             ThrowCLException(clError);
@@ -109,7 +109,7 @@ namespace OpenCL.Core.Net.OldCode
         /// <summary>
         /// Destructor.
         /// </summary>
-        ~OpenCL()
+        ~Kernel()
         {
             Dispose();
         }
