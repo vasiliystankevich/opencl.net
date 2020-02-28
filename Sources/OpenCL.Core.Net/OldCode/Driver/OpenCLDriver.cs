@@ -23,9 +23,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-using CASS.Types;
-
-namespace CASS.OpenCL
+namespace OpenCL.Core.Net.OldCode.Driver
 {
     /// <summary>
     /// This class provides the driver interface to OpenCL functions.

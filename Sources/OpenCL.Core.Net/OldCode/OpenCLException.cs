@@ -20,14 +20,14 @@
  * IN THE SOFTWARE.
  */
 
-using System;
+using OpenCL.Core.Net.OldCode.Driver;
 
-namespace CASS.OpenCL
+namespace OpenCL.Core.Net.OldCode
 {
     /// <summary>
     /// Represents an OpenCL(TM) exception that occured in one of the API functions.
     /// </summary>
-    public class OpenCLException : Exception
+    public class OpenCLException : System.Exception
     {
         /// <summary>
         /// Creates a new exception instance with given error code.

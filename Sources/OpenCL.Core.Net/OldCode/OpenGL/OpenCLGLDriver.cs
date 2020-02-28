@@ -22,10 +22,9 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenCL.Core.Net.OldCode.Driver;
 
-using CASS.Types;
-
-namespace CASS.OpenCL.OpenGL
+namespace OpenCL.Core.Net.OldCode.OpenGL
 {
     /// <summary>
     /// This class provides the driver interface for OpenGL interoperability

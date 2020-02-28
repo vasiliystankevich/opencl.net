@@ -22,7 +22,7 @@
 
 using System;
 
-namespace CASS.Types
+namespace OpenCL.Core.Net.OldCode
 {
     /// <summary>
     /// Used to represent a platform dependent sized variable.

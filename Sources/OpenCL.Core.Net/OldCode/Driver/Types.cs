@@ -22,9 +22,7 @@
 
 using System;
 
-using CASS.Types;
-
-namespace CASS.OpenCL
+namespace OpenCL.Core.Net.OldCode.Driver
 {
     #region Driver Types
     public struct CLPlatformID

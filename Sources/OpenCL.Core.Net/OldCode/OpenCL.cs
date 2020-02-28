@@ -22,10 +22,9 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenCL.Core.Net.OldCode.Driver;
 
-using CASS.Types;
-
-namespace CASS.OpenCL
+namespace OpenCL.Core.Net.OldCode
 {
     /// <summary>
     /// This class provides object oriented access to OpenCL(TM) driver API 

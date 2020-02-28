@@ -20,7 +20,7 @@
  * IN THE SOFTWARE.
  */
 
-namespace CASS.OpenCL.OpenGL
+namespace OpenCL.Core.Net.OldCode.OpenGL
 {
     #region Enums
     public enum CLGLObjectType
