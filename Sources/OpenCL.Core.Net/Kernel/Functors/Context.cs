@@ -20,9 +20,14 @@ namespace OpenCL.Core.Net.Kernel.Functors
 
         public Func<Wrapper<Error, Context>> CreateContext(Wrapper<IntPtr[], uint, DeviceId[], Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
         {
+            var properties = arguments.Arg1;
+            var numDevices = arguments.Arg2;
+            var devices = arguments.Arg3;
+            var pfnNotify = arguments.Arg4;
+            var userData = arguments.Arg5;
             var error = Error.Success;
-            var context = ContextNative.CreateContext(arguments.Arg1, arguments.Arg2, arguments.Arg3, arguments.Arg4,
-                arguments.Arg5, ref error);
+
+            var context = ContextNative.CreateContext(properties, numDevices, devices, pfnNotify, userData, ref error);
             return WrapperFactory.Create(error, context);
         };
 

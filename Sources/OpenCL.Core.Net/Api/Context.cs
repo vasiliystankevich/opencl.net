@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
+using OpenCL.Core.Net.Native;
+using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Enums.Context;
 using OpenCL.Core.Net.Types.Primitives;
 
@@ -16,7 +18,9 @@ namespace OpenCL.Core.Net.Api
 
         public ContextApi(IContextKernel contextKernel, PlatformId platform, DeviceId[] devices) : this(contextKernel)
         {
+            var error = Error.Success;
             var properties = new[] {new IntPtr((int) ContextProperties.Platform), platform.Value, IntPtr.Zero};
+            ContextNative.clCreateContext(properties, 1, devices, null, IntPtr.Zero, ref error);
             Context = contextKernel.CreateContext(properties, (uint) devices.Length, devices, null, IntPtr.Zero);
         }
 
