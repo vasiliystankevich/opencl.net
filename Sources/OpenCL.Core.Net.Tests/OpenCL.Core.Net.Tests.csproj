@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ErrorValidator.cs" />
+    <Compile Include="Kernel\Decoders\PlatformInfo.cs" />
     <Compile Include="Models\ResolveClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests.cs" />

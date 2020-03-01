@@ -19,7 +19,7 @@ namespace OpenCL.Core.Net.Api
         public ContextApi(IContextKernel contextKernel, PlatformId platform, DeviceId[] devices) : this(contextKernel)
         {
             var error = Error.Success;
-            var properties = new[] {new IntPtr((int) ContextProperties.Platform), platform.Value, IntPtr.Zero};
+            var properties = new[] {new IntPtr((int) ContextProperties.Platform), (IntPtr)platform, IntPtr.Zero};
             ContextNative.clCreateContext(properties, 1, devices, null, IntPtr.Zero, ref error);
             Context = contextKernel.CreateContext(properties, (uint) devices.Length, devices, null, IntPtr.Zero);
         }

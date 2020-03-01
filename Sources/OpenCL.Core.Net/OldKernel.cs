@@ -71,7 +71,7 @@ namespace OpenCL.Core.Net
         {
             IntPtr[] ctxProperties = new IntPtr[3];
             ctxProperties[0] = new IntPtr((int)ContextProperties.Platform);
-            ctxProperties[1] = platform.Value;
+            ctxProperties[1] = platform;
             ctxProperties[2] = IntPtr.Zero;
 
             // Create OpenCL context from given platform and device.
