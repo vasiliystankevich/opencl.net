@@ -3,13 +3,14 @@ using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Types;
 using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Enums.Command;
+using OpenCL.Core.Net.Types.Interfaces;
 using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Api
 {
     public class ErrorValidator : IErrorValidator
     {
-        public void Validate(Func<Wrapper<Error>> functor)
+        public void Validate(Func<IWrapper<Error>> functor)
         {
             var result = functor();
             if (result.Arg1 != Error.Success) throw new Exception(result.Arg1);
@@ -32,7 +33,7 @@ namespace OpenCL.Core.Net.Api
             throw new NotImplementedException();
         }
 
-        public TValue Validate<TValue>(Func<Wrapper<Error, TValue>> functor)
+        public TValue Validate<TValue>(Func<IWrapper<Error, TValue>> functor)
         {
             var result = functor();
             if (result.Arg1 != Error.Success) throw new Exception(result.Arg1);

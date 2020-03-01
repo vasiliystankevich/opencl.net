@@ -2,10 +2,10 @@
 using OpenCL.Core.Net.Interfaces.Kernel;
 using OpenCL.Core.Net.Interfaces.Kernel.Executors;
 using OpenCL.Core.Net.Interfaces.Kernel.Functors;
-using OpenCL.Core.Net.Types;
 using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Enums.Context;
 using OpenCL.Core.Net.Types.Enums.Device;
+using OpenCL.Core.Net.Types.Interfaces;
 using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Kernel.Functors
@@ -18,7 +18,7 @@ namespace OpenCL.Core.Net.Kernel.Functors
             WrapperFactory = wrapperFactory;
         }
 
-        public Func<Wrapper<Error, Context>> CreateContext(Wrapper<IntPtr[], uint, DeviceId[], Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
+        public Func<IWrapper<Error, Context>> CreateContext(IWrapper<IntPtr[], uint, DeviceId[], Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
         {
             var properties = arguments.Arg1;
             var numDevices = arguments.Arg2;
@@ -31,7 +31,7 @@ namespace OpenCL.Core.Net.Kernel.Functors
             return WrapperFactory.Create(error, context);
         };
 
-        public Func<Wrapper<Error, Context>> CreateContextFromType(Wrapper<IntPtr[], DeviceType, Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
+        public Func<IWrapper<Error, Context>> CreateContextFromType(IWrapper<IntPtr[], DeviceType, Action<IntPtr, IntPtr, SizeT, IntPtr>, IntPtr> arguments) => () =>
         {
             var error = Error.Success;
             var context = ContextNative.CreateContextFromType(arguments.Arg1, arguments.Arg2, arguments.Arg3,
@@ -39,19 +39,19 @@ namespace OpenCL.Core.Net.Kernel.Functors
             return WrapperFactory.Create(error, context);
         };
 
-        public Func<Wrapper<Error>> RetainContext(Wrapper<Context> context) => () =>
+        public Func<IWrapper<Error>> RetainContext(IWrapper<Context> context) => () =>
         {
             var error = ContextNative.RetainContext(context.Arg1);
             return WrapperFactory.Create(error);
         };
 
-        public Func<Wrapper<Error>> ReleaseContext(Wrapper<Context> context) => () =>
+        public Func<IWrapper<Error>> ReleaseContext(IWrapper<Context> context) => () =>
         {
             var error = ContextNative.ReleaseContext(context.Arg1);
             return WrapperFactory.Create(error);
         };
 
-        public Func<Wrapper<Error, SizeT>> GetContextInfo(Wrapper<Context, ContextInfo, SizeT, IntPtr> arguments) => () =>
+        public Func<IWrapper<Error, SizeT>> GetContextInfo(IWrapper<Context, ContextInfo, SizeT, IntPtr> arguments) => () =>
         {
             var paramValueSizeRet = new SizeT();
             var error = ContextNative.GetContextInfo(arguments.Arg1, arguments.Arg2, arguments.Arg3, arguments.Arg4,

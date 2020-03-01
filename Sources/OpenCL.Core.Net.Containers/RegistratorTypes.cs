@@ -29,6 +29,7 @@ namespace OpenCL.Core.Net.Containers
 
         void RegisterExecutors()
         {
+            Executor.RegisterSingletonFactory<IPlatformNativeExecutor>(executor => new PlatformNativeExecutor());
             Executor.RegisterSingletonFactory<IFlushNativeExecutor>(executor => new FlushNativeExecutor());
             Executor.RegisterSingletonFactory<IContextNativeExecutor>(executor => new ContextNativeExecutor());
         }
@@ -41,11 +42,17 @@ namespace OpenCL.Core.Net.Containers
                 new FlushNativeFunctor(nativeExecutor, stateFactory));
             RegisterFunctor<IContextNativeExecutor, IContextNativeFunctor>((nativeExecutor, stateFactory) =>
                 new ContextNativeFunctor(nativeExecutor, stateFactory));
+
+            RegisterFunctor<IPlatformNativeExecutor, IPlatformNativeFunctor>((nativeExecutor, stateFactory) =>
+                new PlatgformNativeFunctor(nativeExecutor, stateFactory));
         }
 
         void RegisterKernels()
         {
             Executor.RegisterSingletonFactory<IErrorValidator>(executor => new ErrorValidator());
+
+            RegisterKernel<IPlatformNativeFunctor, IPlatformKernel>((functor, wrapper, validator) =>
+                new PlatformKernel(functor, wrapper, validator));
 
             RegisterKernel<IContextNativeFunctor, IContextKernel>((functor, wrapper, validator) =>
                 new ContextKernel(functor, wrapper, validator));
@@ -55,6 +62,8 @@ namespace OpenCL.Core.Net.Containers
 
         void RegisterApi()
         {
+
+
             Executor.RegisterSingletonFactory<IContextApiFactory>(executor =>
             {
                 var kernel = Executor.Resolve<IContextKernel>();

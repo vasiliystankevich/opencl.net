@@ -2,8 +2,8 @@
 using OpenCL.Core.Net.Interfaces.Kernel;
 using OpenCL.Core.Net.Interfaces.Kernel.Executors;
 using OpenCL.Core.Net.Interfaces.Kernel.Functors;
-using OpenCL.Core.Net.Types;
 using OpenCL.Core.Net.Types.Enums;
+using OpenCL.Core.Net.Types.Interfaces;
 using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Kernel.Functors
@@ -16,13 +16,13 @@ namespace OpenCL.Core.Net.Kernel.Functors
             WrapperFactory = wrapperFactory;
         }
 
-        public Func<Wrapper<Error>> Flush(Wrapper<CommandQueue> commandQueue) => () =>
+        public Func<IWrapper<Error>> Flush(IWrapper<CommandQueue> commandQueue) => () =>
         {
             var error = FlushNative.Flush(commandQueue.Arg1);
             return WrapperFactory.Create(error);
         };
 
-        public Func<Wrapper<Error>> Finish(Wrapper<CommandQueue> commandQueue) => () =>
+        public Func<IWrapper<Error>> Finish(IWrapper<CommandQueue> commandQueue) => () =>
         {
             var error = FlushNative.Finish(commandQueue.Arg1);
             return WrapperFactory.Create(error);

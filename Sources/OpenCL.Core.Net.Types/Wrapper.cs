@@ -1,8 +1,9 @@
 ﻿using System;
+using OpenCL.Core.Net.Types.Interfaces;
 
 namespace OpenCL.Core.Net.Types
 {
-    public class Wrapper<TArg1>:IDisposable
+    public class Wrapper<TArg1>: IWrapper<TArg1>
     {
         public Wrapper(TArg1 arg1)
         {
@@ -21,7 +22,8 @@ namespace OpenCL.Core.Net.Types
 
         public TArg1 Arg1 { get; }
     }
-    public class Wrapper<TArg1, TArg2>:Wrapper<TArg1>
+
+    public class Wrapper<TArg1, TArg2>:Wrapper<TArg1>, IWrapper<TArg1, TArg2>
     {
         public Wrapper(TArg1 arg1, TArg2 arg2) : base(arg1)
         {
@@ -37,7 +39,7 @@ namespace OpenCL.Core.Net.Types
         public TArg2 Arg2 { get; }
     }
 
-    public class Wrapper<TArg1, TArg2, TArg3> : Wrapper<TArg1, TArg2>
+    public class Wrapper<TArg1, TArg2, TArg3> : Wrapper<TArg1, TArg2>, IWrapper<TArg1, TArg2, TArg3>
     {
         public Wrapper(TArg1 arg1, TArg2 arg2, TArg3 arg3) : base(arg1, arg2)
         {
@@ -53,7 +55,7 @@ namespace OpenCL.Core.Net.Types
         public TArg3 Arg3 { get; }
     }
 
-    public class Wrapper<TArg1, TArg2, TArg3, TArg4> : Wrapper<TArg1, TArg2, TArg3>
+    public class Wrapper<TArg1, TArg2, TArg3, TArg4> : Wrapper<TArg1, TArg2, TArg3>, IWrapper<TArg1, TArg2, TArg3, TArg4>
     {
         public Wrapper(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) : base(arg1, arg2, arg3)
         {
@@ -69,7 +71,7 @@ namespace OpenCL.Core.Net.Types
         public TArg4 Arg4 { get; }
     }
 
-    public class Wrapper<TArg1, TArg2, TArg3, TArg4, TArg5> : Wrapper<TArg1, TArg2, TArg3, TArg4>
+    public class Wrapper<TArg1, TArg2, TArg3, TArg4, TArg5> : Wrapper<TArg1, TArg2, TArg3, TArg4>, IWrapper<TArg1, TArg2, TArg3, TArg4, TArg5>
     {
         public Wrapper(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5) : base(arg1, arg2, arg3, arg4)
         {

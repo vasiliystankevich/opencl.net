@@ -1,4 +1,14 @@
-﻿using Xunit;
+﻿using System;
+using OpenCL.Core.Net.Containers;
+using OpenCL.Core.Net.Interfaces.Kernel;
+using OpenCL.Core.Net.Interfaces.Kernel.Functors;
+using OpenCL.Core.Net.OldCode;
+using OpenCL.Core.Net.OldCode.Driver;
+//using OpenCL.Core.Net.OldCode;
+//using OpenCL.Core.Net.OldCode.Driver;
+using Project.Kernel;
+using Unity;
+using Xunit;
 
 namespace OpenCL.Core.Net.Tests
 {
@@ -7,8 +17,13 @@ namespace OpenCL.Core.Net.Tests
         [Fact]
         public void VerifyOpenClDevices()
         {
-            
-            var platforms = OldCode.Kernel.GetPlatforms();
+            var container = UnityConfig.GetConfiguredContainer();
+            BaseTypeFabric.RegisterTypes<TypeFabric>(container);
+            var kernel = container.Resolve<IPlatformKernel>();
+            GetPlatforms(kernel);
+
+
+            //var platforms = OldCode.Kernel.GetPlatforms();
             //var infoOfPlatforms = platforms.Select(platform =>
             //{
             //    var platformName = Kernel.GetPlatformInfo(platform, PlatformInfo.Name);
@@ -51,6 +66,26 @@ namespace OpenCL.Core.Net.Tests
             //    };
             //}).ToList();
             //int i = 0;
+        }
+
+
+        public CLPlatformID[] GetPlatforms(IPlatformKernel platform)
+        {
+            // Check how many platforms are available.
+            var num_platforms = platform.GetPlatformIDs(0, IntPtr.Zero);
+
+            if (num_platforms < 1)
+            {
+                return new CLPlatformID[0];
+            }
+
+            // Get the actual platforms once we know their amount.
+            //CLPlatformID[] platforms = new CLPlatformID[num_platforms];
+            //err = OpenCLDriver.clGetPlatformIDs(num_platforms, platforms, ref num_platforms);
+
+            //return platforms;
+            var platforms = platform.GetPlatformIDs(num_platforms);
+            return null;
         }
     }
 }
