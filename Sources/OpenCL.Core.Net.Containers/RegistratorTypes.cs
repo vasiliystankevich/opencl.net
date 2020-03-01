@@ -67,6 +67,12 @@ namespace OpenCL.Core.Net.Containers
                 var kernel = Executor.Resolve<IContextKernel>();
                 return new ContextApiFactory(kernel);
             });
+
+            Executor.RegisterSingletonFactory<IPlatformUtilities>(executor =>
+            {
+                var kernel = Executor.Resolve<IPlatformKernel>();
+                return new PlatformUtilities(kernel);
+            });
         }
 
         void RegisterKernel<TNativeFunctor, T>(Func<TNativeFunctor, IWrapperFactory, IErrorValidator, T> functor)

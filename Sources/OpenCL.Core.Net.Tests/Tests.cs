@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 using OpenCL.Core.Net.Containers;
+using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
 using OpenCL.Core.Net.Interfaces.Kernel.Functors;
 using OpenCL.Core.Net.OldCode;
 using OpenCL.Core.Net.OldCode.Driver;
+using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Primitives;
 //using OpenCL.Core.Net.OldCode;
 //using OpenCL.Core.Net.OldCode.Driver;
@@ -20,11 +23,29 @@ namespace OpenCL.Core.Net.Tests
         {
             var container = UnityConfig.GetConfiguredContainer();
             BaseTypeFabric.RegisterTypes<TypeFabric>(container);
-            var kernel = container.Resolve<IPlatformKernel>();
-            var platforms1 = GetPlatforms(kernel);
+            var platformUtilities = container.Resolve<IPlatformUtilities>();
+            var platforms = platformUtilities.GetPlatforms();
+            var info = platforms.Select(platform =>
+            {
+                var platformName = platformUtilities.GetPlatformInfo(platform, PlatformInfo.Name);
+                var platformVendor = platformUtilities.GetPlatformInfo(platform, PlatformInfo.Vendor);
+                var platformVersion = platformUtilities.GetPlatformInfo(platform, PlatformInfo.Version);
+                var platformProfile = platformUtilities.GetPlatformInfo(platform, PlatformInfo.Profile);
+                var platformExtensions = platformUtilities.GetPlatformInfo(platform, PlatformInfo.Extensions);
+                return new
+                {
+                    Name = platformName,
+                    Vendor = platformVendor,
+                    Version = platformVersion,
+                    Profile = platformProfile,
+                    Extensions = platformExtensions
+                };
+            }).ToList();
 
 
-            var platforms2 = OldCode.Kernel.GetPlatforms();
+            //var platforms2 = OldCode.Kernel.GetPlatforms();
+                //var platformName = OldCode.Kernel.GetPlatformInfo(platforms[1], PlatformInfo.Name);
+
             //var infoOfPlatforms = platforms.Select(platform =>
             //{
             //    var platformName = Kernel.GetPlatformInfo(platform, PlatformInfo.Name);
@@ -67,26 +88,6 @@ namespace OpenCL.Core.Net.Tests
             //    };
             //}).ToList();
             //int i = 0;
-        }
-
-
-        public PlatformId[] GetPlatforms(IPlatformKernel platform)
-        {
-            // Check how many platforms are available.
-            var numPlatforms = platform.GetPlatformIDs(0, IntPtr.Zero);
-
-            if (numPlatforms < 1)
-            {
-                return new PlatformId[0];
-            }
-
-            // Get the actual platforms once we know their amount.
-            //CLPlatformID[] platforms = new CLPlatformID[num_platforms];
-            //err = OpenCLDriver.clGetPlatformIDs(num_platforms, platforms, ref num_platforms);
-
-            //return platforms;
-            var platforms = platform.GetPlatformIDs(numPlatforms);
-            return platforms.Arg2;
         }
     }
 }
