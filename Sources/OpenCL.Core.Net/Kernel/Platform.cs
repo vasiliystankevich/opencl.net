@@ -22,7 +22,8 @@ namespace OpenCL.Core.Net.Kernel
         {
             var arguments = WrapperFactory.Create(numEntries, platforms);
             var functor = PlatformNative.GetPlatformIDs(arguments);
-            return ErrorValidator.Validate(functor);
+            var result = ErrorValidator.Validate(functor);
+            return result.Arg2;
         }
 
         public IWrapper<uint, PlatformId[]> GetPlatformIDs(uint numEntries)
@@ -37,7 +38,8 @@ namespace OpenCL.Core.Net.Kernel
         {
             var arguments = WrapperFactory.Create(platform, paramName, paramValueSize, paramValue);
             var functor = PlatformNative.GetPlatformInfo(arguments);
-            return ErrorValidator.Validate(functor);
+            var result = ErrorValidator.Validate(functor);
+            return result.Arg2;
         }
 
         IPlatformNativeFunctor PlatformNative { get; }

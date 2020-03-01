@@ -22,7 +22,8 @@ namespace OpenCL.Core.Net.Kernel
         {
             var arguments = WrapperFactory.Create(properties, numDevices, devices, pfnNotify, userData);
             var functor = ContextNative.CreateContext(arguments);
-            return ErrorValidator.Validate(functor);
+            var result = ErrorValidator.Validate(functor);
+            return result.Arg2;
         }
 
         public Context CreateContextFromType(IntPtr[] properties, DeviceType deviceType,
@@ -30,7 +31,8 @@ namespace OpenCL.Core.Net.Kernel
         {
             var arguments = WrapperFactory.Create(properties, deviceType, pfnNotify, userData);
             var functor = ContextNative.CreateContextFromType(arguments);
-            return ErrorValidator.Validate(functor);
+            var result = ErrorValidator.Validate(functor);
+            return result.Arg2;
         }
 
         public void RetainContext(Context context)
@@ -51,7 +53,8 @@ namespace OpenCL.Core.Net.Kernel
         {
             var arguments = WrapperFactory.Create(context, paramName, paramValueSize, paramValue);
             var functor = ContextNative.GetContextInfo(arguments);
-            return ErrorValidator.Validate(functor);
+            var result = ErrorValidator.Validate(functor);
+            return result.Arg2;
         }
 
         IContextNativeFunctor ContextNative { get; }
