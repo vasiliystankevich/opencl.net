@@ -19,7 +19,7 @@ namespace OpenCL.Core.Net.Tests.Kernel.Decoders
         [MoqInlineAutoData(PlatformInfo.Name)]
         [MoqInlineAutoData(PlatformInfo.Vendor)]
         [MoqInlineAutoData(PlatformInfo.Extensions)]
-        public void DecodeTest(PlatformInfo info, PlatformId platformIdValue, SizeT paramValueSize, SizeT resultSize,
+        public void DecodeTest(PlatformInfo info, PlatformId platform, SizeT paramValueSize, SizeT resultSize,
             int ptrValue, string actual, [Frozen] Mock<IPlatformKernel> kernel, [Frozen] Mock<IMarshalExecutor> marshal,
             PlatformInfoDecoder sut)
         {
@@ -32,7 +32,7 @@ namespace OpenCL.Core.Net.Tests.Kernel.Decoders
                 .Returns(resultSize);
 
             //act
-            var expected = sut.Decode(platformIdValue, info, paramValueSize);
+            var expected = sut.Decode(platform, info, paramValueSize);
 
             //assert
             marshal.Verify(service => service.AllocHGlobal(paramValueSize), Times.AtLeastOnce);
