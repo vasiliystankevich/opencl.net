@@ -19,22 +19,28 @@ namespace OpenCL.Core.Net.Tests.Kernel.Decoders
         [MoqInlineAutoData(PlatformInfo.Name)]
         [MoqInlineAutoData(PlatformInfo.Vendor)]
         [MoqInlineAutoData(PlatformInfo.Extensions)]
-        public void DecodeTest(PlatformInfo info, PlatformId platform, SizeT paramValueSize, SizeT resultSize, int ptrValue, string actual, [Frozen]Mock<IPlatformKernel> kernel, [Frozen]Mock<IMarshalExecutor> marshal, PlatformInfoDecoder sut)
+        public void DecodeTest(PlatformInfo info, PlatformId platformIdValue, SizeT paramValueSize, SizeT resultSize,
+            int ptrValue, string actual, [Frozen] Mock<IPlatformKernel> kernel, [Frozen] Mock<IMarshalExecutor> marshal,
+            PlatformInfoDecoder sut)
         {
             //arrange
             var ptr = new IntPtr(ptrValue);
             marshal.Setup(service => service.AllocHGlobal(paramValueSize)).Returns(ptr);
-            kernel.Setup(service => service.GetPlatformInfo(platform, info, paramValueSize, ptr)).Returns(resultSize);
             marshal.Setup(service => service.PtrToStringAnsi(ptr, resultSize)).Returns(actual);
+            kernel.Setup(service =>
+                    service.GetPlatformInfo(It.IsAny<PlatformId>(), info, It.IsAny<SizeT>(), It.IsAny<IntPtr>()))
+                .Returns(resultSize);
 
             //act
-            var expected = sut.Decode(platform, info, paramValueSize);
+            var expected = sut.Decode(platformIdValue, info, paramValueSize);
 
             //assert
             marshal.Verify(service => service.AllocHGlobal(paramValueSize), Times.AtLeastOnce);
-            kernel.Verify(service => service.GetPlatformInfo(platform, info, paramValueSize, ptr), Times.AtLeastOnce);
+            kernel.Verify(
+                service => service.GetPlatformInfo(It.IsAny<PlatformId>(), info, It.IsAny<SizeT>(), It.IsAny<IntPtr>()),
+                Times.AtLeastOnce);
             marshal.Verify(service => service.PtrToStringAnsi(ptr, resultSize), Times.AtLeastOnce);
-            marshal.Verify(service=>service.FreeHGlobal(ptr), Times.AtLeastOnce);
+            marshal.Verify(service => service.FreeHGlobal(ptr), Times.AtLeastOnce);
             Assert.Equal(expected, actual);
         }
     }

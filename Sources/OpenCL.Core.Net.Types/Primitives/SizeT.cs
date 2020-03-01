@@ -36,7 +36,7 @@ namespace OpenCL.Core.Net.Types.Primitives
 
         public override string ToString() => Value.ToString();
 
-        public override int GetHashCode() => Value.GetHashCode();
+        public override int GetHashCode() => GetType().FullName.GetHashCode();
 
         IntPtr Value;
     }
