@@ -40,6 +40,13 @@ namespace OpenCL.Core.Net.Api
             return result.Arg2;
         }
 
+        public IWrapper<Error, TValue1, TValue2> Validate<TValue1, TValue2>(Func<IWrapper<Error, TValue1, TValue2>> functor)
+        {
+            var result = functor();
+            if (result.Arg1 != Error.Success) throw new Exception(result.Arg1);
+            return result;
+        }
+
         public TValue Validate<TArg1, TValue>(ref TArg1 arg1, NativeFunc2Ref<TArg1, Error, TValue> functor)
         {
             var error = Error.Success;

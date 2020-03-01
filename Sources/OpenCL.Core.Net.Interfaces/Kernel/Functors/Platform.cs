@@ -9,7 +9,7 @@ namespace OpenCL.Core.Net.Interfaces.Kernel.Functors
     {
         Func<IWrapper<Error, uint>> GetPlatformIDs(IWrapper<uint, IntPtr> numEntries);
 
-        Func<IWrapper<Error, PlatformId[], uint>> GetPlatformIDs(IWrapper<uint> numEntries);
+        Func<IWrapper<Error, uint, PlatformId[]>> GetPlatformIDs(IWrapper<uint> numEntries);
 
         Func<IWrapper<Error, SizeT>> GetPlatformInfo(IWrapper<PlatformId, PlatformInfo, SizeT, IntPtr> arguments);
     }

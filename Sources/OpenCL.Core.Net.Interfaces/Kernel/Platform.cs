@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using OpenCL.Core.Net.Types.Enums;
+using OpenCL.Core.Net.Types.Interfaces;
 using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Interfaces.Kernel
@@ -9,7 +10,7 @@ namespace OpenCL.Core.Net.Interfaces.Kernel
     {
         uint GetPlatformIDs(uint numEntries, IntPtr platforms);
 
-        PlatformId[] GetPlatformIDs(uint numEntries);
+        IWrapper<uint, PlatformId[]> GetPlatformIDs(uint numEntries);
 
         SizeT GetPlatformInfo(PlatformId platform, PlatformInfo paramName, SizeT paramValueSize, IntPtr paramValue);
     }

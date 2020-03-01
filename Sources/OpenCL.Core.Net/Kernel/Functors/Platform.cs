@@ -23,12 +23,12 @@ namespace OpenCL.Core.Net.Kernel.Functors
             return WrapperFactory.Create(error, numPlatforms);
         };
 
-        public Func<IWrapper<Error, PlatformId[], uint>> GetPlatformIDs(IWrapper<uint> numEntries) => () =>
+        public Func<IWrapper<Error, uint, PlatformId[]>> GetPlatformIDs(IWrapper<uint> numEntries) => () =>
         {
             uint numPlatforms = 0;
             var platforms = new PlatformId[numEntries.Arg1];
             var error = PlatformNative.GetPlatformIDs(numEntries.Arg1, platforms, ref numPlatforms);
-            return WrapperFactory.Create(error, platforms, numPlatforms);
+            return WrapperFactory.Create(error, numPlatforms, platforms);
         };
 
         public Func<IWrapper<Error, SizeT>> GetPlatformInfo(IWrapper<PlatformId, PlatformInfo, SizeT, IntPtr> arguments) => () =>

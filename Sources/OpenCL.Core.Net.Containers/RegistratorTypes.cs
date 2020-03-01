@@ -62,19 +62,10 @@ namespace OpenCL.Core.Net.Containers
 
         void RegisterApi()
         {
-
-
             Executor.RegisterSingletonFactory<IContextApiFactory>(executor =>
             {
                 var kernel = Executor.Resolve<IContextKernel>();
                 return new ContextApiFactory(kernel);
-            });
-
-            Executor.RegisterSingletonFactory<IQueueApi>(executor =>
-            {
-                var commandQueue = Executor.Resolve<ICommandQueueKernel>();
-                var flush = Executor.Resolve<IFlushKernel>();
-                return new QueueApi(commandQueue, flush);
             });
         }
 
