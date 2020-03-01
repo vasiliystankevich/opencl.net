@@ -1,15 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using OpenCL.Core.Net.Containers;
 using OpenCL.Core.Net.Interfaces.Api;
-using OpenCL.Core.Net.Interfaces.Kernel;
-using OpenCL.Core.Net.Interfaces.Kernel.Functors;
-using OpenCL.Core.Net.OldCode;
-using OpenCL.Core.Net.OldCode.Driver;
 using OpenCL.Core.Net.Types.Enums;
-using OpenCL.Core.Net.Types.Primitives;
-//using OpenCL.Core.Net.OldCode;
-//using OpenCL.Core.Net.OldCode.Driver;
 using Project.Kernel;
 using Unity;
 using Xunit;

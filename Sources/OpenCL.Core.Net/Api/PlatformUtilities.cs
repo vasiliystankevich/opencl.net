@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
+using OpenCL.Core.Net.Interfaces.Kernel.Decoders;
 using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Primitives;
 
@@ -9,9 +9,10 @@ namespace OpenCL.Core.Net.Api
 {
     public class PlatformUtilities: IPlatformUtilities
     {
-        public PlatformUtilities(IPlatformKernel kernel)
+        public PlatformUtilities(IPlatformKernel kernel, IPlatformInfoDecoder decoder)
         {
             Kernel = kernel;
+            Decoder = decoder;
         }
 
         public PlatformId[] GetPlatforms()
@@ -28,51 +29,11 @@ namespace OpenCL.Core.Net.Api
 
         public string GetPlatformInfo(PlatformId platform, PlatformInfo info)
         {
-            string result = string.Empty;
-
-            // Get initial size of buffer to allocate.
             var paramValueSize = Kernel.GetPlatformInfo(platform, info, 0, IntPtr.Zero);
-
-            if (paramValueSize < 1) return string.Empty;
-
-            // Allocate native memory to store value.
-            var ptr = Marshal.AllocHGlobal(paramValueSize);
-
-            // Protect following statements with try-finally in case something 
-            // goes wrong.
-            try
-            {
-                // Get actual value.
-                var resultSize = Kernel.GetPlatformInfo(platform, info, paramValueSize, ptr);
-
-                switch (info)
-                {
-                    case PlatformInfo.Profile:
-                        result = Marshal.PtrToStringAnsi(ptr, resultSize);
-                        break;
-                    case PlatformInfo.Version:
-                        result = Marshal.PtrToStringAnsi(ptr, resultSize);
-                        break;
-                    case PlatformInfo.Name:
-                        result = Marshal.PtrToStringAnsi(ptr, resultSize);
-                        break;
-                    case PlatformInfo.Vendor:
-                        result = Marshal.PtrToStringAnsi(ptr, resultSize);
-                        break;
-                    case PlatformInfo.Extensions:
-                        result = Marshal.PtrToStringAnsi(ptr, resultSize);
-                        break;
-                }
-            }
-            finally
-            {
-                // Free native buffer.
-                Marshal.FreeHGlobal(ptr);
-            }
-
-            return result;
+            return paramValueSize < 1 ? string.Empty : Decoder.Decode(platform, info, paramValueSize);
         }
 
         IPlatformKernel Kernel { get; }
+        IPlatformInfoDecoder Decoder { get; }
     }
 }

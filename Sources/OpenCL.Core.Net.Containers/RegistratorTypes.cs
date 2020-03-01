@@ -3,10 +3,12 @@ using OpenCL.Core.Net.Api;
 using OpenCL.Core.Net.Interfaces;
 using OpenCL.Core.Net.Interfaces.Api;
 using OpenCL.Core.Net.Interfaces.Kernel;
+using OpenCL.Core.Net.Interfaces.Kernel.Decoders;
 using OpenCL.Core.Net.Interfaces.Kernel.Executors;
 using OpenCL.Core.Net.Interfaces.Kernel.Functors;
 using OpenCL.Core.Net.Interfaces.Unity;
 using OpenCL.Core.Net.Kernel;
+using OpenCL.Core.Net.Kernel.Decoders;
 using OpenCL.Core.Net.Kernel.Executors;
 using OpenCL.Core.Net.Kernel.Functors;
 
@@ -24,11 +26,13 @@ namespace OpenCL.Core.Net.Containers
             RegisterExecutors();
             RegisterFunctors();
             RegisterKernels();
+            RegisterDecoders();
             RegisterApi();
         }
 
         void RegisterExecutors()
         {
+            Executor.RegisterSingletonFactory<IMarshalExecutor>(executor => new MarshalExecutor());
             Executor.RegisterSingletonFactory<IPlatformNativeExecutor>(executor => new PlatformNativeExecutor());
             Executor.RegisterSingletonFactory<IFlushNativeExecutor>(executor => new FlushNativeExecutor());
             Executor.RegisterSingletonFactory<IContextNativeExecutor>(executor => new ContextNativeExecutor());
@@ -60,6 +64,16 @@ namespace OpenCL.Core.Net.Containers
             //RegisterKernel<IFlushNativeExecutor, IFlushKernel>((executor, validator) => new FlushKernel());
         }
 
+        void RegisterDecoders()
+        {
+            Executor.RegisterSingletonFactory<IPlatformInfoDecoder>(executor =>
+            {
+                var marshal = Executor.Resolve<IMarshalExecutor>();
+                var kernel = Executor.Resolve<IPlatformKernel>();
+                return new PlatformInfoDecoder(marshal, kernel);
+            });
+        }
+
         void RegisterApi()
         {
             Executor.RegisterSingletonFactory<IContextApiFactory>(executor =>
@@ -71,7 +85,8 @@ namespace OpenCL.Core.Net.Containers
             Executor.RegisterSingletonFactory<IPlatformUtilities>(executor =>
             {
                 var kernel = Executor.Resolve<IPlatformKernel>();
-                return new PlatformUtilities(kernel);
+                var decoder = Executor.Resolve<IPlatformInfoDecoder>();
+                return new PlatformUtilities(kernel, decoder);
             });
         }
 
