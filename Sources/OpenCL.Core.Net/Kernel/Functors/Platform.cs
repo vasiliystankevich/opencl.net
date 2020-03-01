@@ -8,9 +8,9 @@ using OpenCL.Core.Net.Types.Primitives;
 
 namespace OpenCL.Core.Net.Kernel.Functors
 {
-    public class PlatgformNativeFunctor: IPlatformNativeFunctor
+    public class PlatformNativeFunctor: IPlatformNativeFunctor
     {
-        public PlatgformNativeFunctor(IPlatformNativeExecutor platformNative, IWrapperFactory wrapperFactory)
+        public PlatformNativeFunctor(IPlatformNativeExecutor platformNative, IWrapperFactory wrapperFactory)
         {
             PlatformNative = platformNative;
             WrapperFactory = wrapperFactory;

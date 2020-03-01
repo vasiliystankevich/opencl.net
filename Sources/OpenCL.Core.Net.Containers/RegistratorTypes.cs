@@ -48,7 +48,7 @@ namespace OpenCL.Core.Net.Containers
                 new ContextNativeFunctor(nativeExecutor, stateFactory));
 
             RegisterFunctor<IPlatformNativeExecutor, IPlatformNativeFunctor>((nativeExecutor, stateFactory) =>
-                new PlatgformNativeFunctor(nativeExecutor, stateFactory));
+                new PlatformNativeFunctor(nativeExecutor, stateFactory));
         }
 
         void RegisterKernels()
