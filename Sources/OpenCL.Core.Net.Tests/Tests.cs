@@ -4,6 +4,7 @@ using OpenCL.Core.Net.Interfaces.Kernel;
 using OpenCL.Core.Net.Interfaces.Kernel.Functors;
 using OpenCL.Core.Net.OldCode;
 using OpenCL.Core.Net.OldCode.Driver;
+using OpenCL.Core.Net.Types.Primitives;
 //using OpenCL.Core.Net.OldCode;
 //using OpenCL.Core.Net.OldCode.Driver;
 using Project.Kernel;
@@ -20,10 +21,10 @@ namespace OpenCL.Core.Net.Tests
             var container = UnityConfig.GetConfiguredContainer();
             BaseTypeFabric.RegisterTypes<TypeFabric>(container);
             var kernel = container.Resolve<IPlatformKernel>();
-            GetPlatforms(kernel);
+            var platforms1 = GetPlatforms(kernel);
 
 
-            //var platforms = OldCode.Kernel.GetPlatforms();
+            var platforms2 = OldCode.Kernel.GetPlatforms();
             //var infoOfPlatforms = platforms.Select(platform =>
             //{
             //    var platformName = Kernel.GetPlatformInfo(platform, PlatformInfo.Name);
@@ -69,14 +70,14 @@ namespace OpenCL.Core.Net.Tests
         }
 
 
-        public CLPlatformID[] GetPlatforms(IPlatformKernel platform)
+        public PlatformId[] GetPlatforms(IPlatformKernel platform)
         {
             // Check how many platforms are available.
-            var num_platforms = platform.GetPlatformIDs(0, IntPtr.Zero);
+            var numPlatforms = platform.GetPlatformIDs(0, IntPtr.Zero);
 
-            if (num_platforms < 1)
+            if (numPlatforms < 1)
             {
-                return new CLPlatformID[0];
+                return new PlatformId[0];
             }
 
             // Get the actual platforms once we know their amount.
@@ -84,8 +85,8 @@ namespace OpenCL.Core.Net.Tests
             //err = OpenCLDriver.clGetPlatformIDs(num_platforms, platforms, ref num_platforms);
 
             //return platforms;
-            var platforms = platform.GetPlatformIDs(num_platforms);
-            return null;
+            var platforms = platform.GetPlatformIDs(numPlatforms);
+            return platforms.Arg2;
         }
     }
 }
