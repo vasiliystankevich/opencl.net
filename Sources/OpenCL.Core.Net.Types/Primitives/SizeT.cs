@@ -36,8 +36,10 @@ namespace OpenCL.Core.Net.Types.Primitives
 
         public override string ToString() => Value.ToString();
 
-        public override int GetHashCode() => Convert.ToInt32(0xE67B7141);
+        public override int GetHashCode() => Convert.ToInt32(HashCode);
+
+		static readonly uint HashCode = 0xefd3c107;
 
         IntPtr Value;
     }
-}
+} 	

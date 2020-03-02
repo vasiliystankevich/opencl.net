@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
+using System;
 
 namespace OpenCL.Core.Net.Types.Primitives
 {
@@ -37,8 +36,10 @@ namespace OpenCL.Core.Net.Types.Primitives
 
         public override string ToString() => Value.ToString();
 
-        public override int GetHashCode() => Convert.ToInt32(0x139EEF5A);
+        public override int GetHashCode() => Convert.ToInt32(HashCode);
+
+		static readonly uint HashCode = 0x81700e9a;
 
         IntPtr Value;
     }
-}
+} 	

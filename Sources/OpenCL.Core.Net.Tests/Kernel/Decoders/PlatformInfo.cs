@@ -23,6 +23,7 @@ namespace OpenCL.Core.Net.Tests.Kernel.Decoders
             int ptrValue, string actual, [Frozen] Mock<IPlatformKernel> kernel, [Frozen] Mock<IMarshalExecutor> marshal,
             PlatformInfoDecoder sut)
         {
+            
             //arrange
             var ptr = new IntPtr(ptrValue);
             marshal.Setup(service => service.AllocHGlobal(paramValueSize)).Returns(ptr);

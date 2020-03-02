@@ -1225,7 +1225,8 @@ namespace OpenCL.Core.Net
                             DeviceId[] devices = new DeviceId[numDevices];
                             for (int i = 0; i < numDevices; i++)
                             {
-                                devices[i] = new DeviceId { Value = Marshal.ReadIntPtr(ptr, i * IntPtr.Size) };
+                                var res = Marshal.ReadIntPtr(ptr, i * IntPtr.Size);
+                                devices[i] = new DeviceId(res.ToInt32());
                             }
 
                             result = devices;

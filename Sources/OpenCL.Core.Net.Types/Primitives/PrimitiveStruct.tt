@@ -1,0 +1,70 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+   string templatePath = Path.GetDirectoryName(Host.TemplateFile);
+   Random rndGenerator = new Random(DateTime.Now.Millisecond);
+   string[] names = new string[10]{"CommandQueue", "Context", "DeviceId", "Event", "Kernel", "Mem", "PlatformId", "Program", "Sampler", "SizeT"};
+   for(int i = 0; i < names.Length; i++)
+   {
+	   string hashCode = rndGenerator.Next(int.MinValue, int.MaxValue).ToString("x8");
+	   WriteSquareLine(names[i], hashCode); 
+	   File.WriteAllText(templatePath + "\\" + names[i] + ".cs", this.GenerationEnvironment.ToString());
+	   this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+   }
+#>
+<#+   // Class feature block
+private void WriteSquareLine(string typeName, string hashCode)
+{
+#>
+using System;
+
+namespace OpenCL.Core.Net.Types.Primitives
+{
+    public struct <#= typeName #>
+    {
+        public <#= typeName #>(int value) => Value = new IntPtr(value);
+
+        public <#= typeName #>(uint value) => Value = new IntPtr((int)value);
+
+        public <#= typeName #>(long value) => Value = new IntPtr(value);
+
+        public <#= typeName #>(ulong value) => Value = new IntPtr((long)value);
+
+        public static implicit operator int(<#= typeName #> data) => data.Value.ToInt32();
+
+        public static implicit operator uint(<#= typeName #> data) => (uint)data.Value;
+
+        public static implicit operator long(<#= typeName #> data) => data.Value.ToInt64();
+
+        public static implicit operator ulong(<#= typeName #> data) => (ulong)data.Value;
+
+        public static implicit operator <#= typeName #>(int value) => new <#= typeName #>(value);
+
+        public static implicit operator <#= typeName #>(uint value) => new <#= typeName #>(value);
+
+        public static implicit operator <#= typeName #>(long value) => new <#= typeName #>(value);
+
+        public static implicit operator <#= typeName #>(ulong value) => new <#= typeName #>(value);
+
+        public static bool operator !=(<#= typeName #> val1, <#= typeName #> val2) => val1.Value != val2.Value;
+
+        public static bool operator ==(<#= typeName #> val1, <#= typeName #> val2) => val1.Value == val2.Value;
+
+        public override bool Equals(object obj) => obj is <#= typeName #> data && Value.Equals(data.Value);
+
+        public override string ToString() => Value.ToString();
+
+        public override int GetHashCode() => Convert.ToInt32(HashCode);
+
+		static readonly uint HashCode = 0x<#= hashCode #>;
+
+        IntPtr Value;
+    }
+} 	
+<#+
+}
+#>
