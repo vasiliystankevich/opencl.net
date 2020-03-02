@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace OpenCL.Core.Net.Types.Primitives
+namespace OpenCL.Core.Net.Types.Primitives.New
 {
     public struct SizeT
     {
@@ -36,8 +36,10 @@ namespace OpenCL.Core.Net.Types.Primitives
 
         public override string ToString() => Value.ToString();
 
-        public override int GetHashCode() => Convert.ToInt32(0xE67B7141);
+        public override int GetHashCode() => Convert.ToInt32(HashCode);
 
-        IntPtr Value;
+		private static readonly uint HashCode = 0xE67B7141;
+        
+		IntPtr Value;
     }
 }
