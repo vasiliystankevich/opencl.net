@@ -32,11 +32,11 @@ namespace OpenCL.Core.Net.Types.Primitives
 
         public static bool operator ==(SizeT val1, SizeT val2) => val1.Value == val2.Value;
 
-        public override bool Equals(object obj) => Value.Equals(obj);
+        public override bool Equals(object obj) => obj is SizeT element && Value.Equals(element.Value);
 
         public override string ToString() => Value.ToString();
 
-        public override int GetHashCode() => GetType().FullName.GetHashCode();
+        public override int GetHashCode() => Convert.ToInt32(0xE67B7141);
 
         IntPtr Value;
     }

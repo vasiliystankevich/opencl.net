@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace OpenCL.Core.Net.Types.Primitives
 {
@@ -32,11 +33,11 @@ namespace OpenCL.Core.Net.Types.Primitives
 
         public static bool operator ==(PlatformId val1, PlatformId val2) => val1.Value == val2.Value;
 
-        public override bool Equals(object obj) => Value.Equals(obj);
+        public override bool Equals(object obj) => obj is PlatformId element && Value.Equals(element.Value);
 
         public override string ToString() => Value.ToString();
 
-        public override int GetHashCode() => GetType().FullName.GetHashCode();
+        public override int GetHashCode() => Convert.ToInt32(0x139EEF5A);
 
         IntPtr Value;
     }

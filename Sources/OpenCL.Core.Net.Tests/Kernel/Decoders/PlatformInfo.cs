@@ -27,18 +27,14 @@ namespace OpenCL.Core.Net.Tests.Kernel.Decoders
             var ptr = new IntPtr(ptrValue);
             marshal.Setup(service => service.AllocHGlobal(paramValueSize)).Returns(ptr);
             marshal.Setup(service => service.PtrToStringAnsi(ptr, resultSize)).Returns(actual);
-            kernel.Setup(service =>
-                    service.GetPlatformInfo(It.IsAny<PlatformId>(), info, It.IsAny<SizeT>(), It.IsAny<IntPtr>()))
-                .Returns(resultSize);
+            kernel.Setup(service => service.GetPlatformInfo(platform, info, paramValueSize, ptr)).Returns(resultSize);
 
             //act
             var expected = sut.Decode(platform, info, paramValueSize);
 
             //assert
             marshal.Verify(service => service.AllocHGlobal(paramValueSize), Times.AtLeastOnce);
-            kernel.Verify(
-                service => service.GetPlatformInfo(It.IsAny<PlatformId>(), info, It.IsAny<SizeT>(), It.IsAny<IntPtr>()),
-                Times.AtLeastOnce);
+            kernel.Verify(service => service.GetPlatformInfo(platform, info, paramValueSize, ptr), Times.AtLeastOnce);
             marshal.Verify(service => service.PtrToStringAnsi(ptr, resultSize), Times.AtLeastOnce);
             marshal.Verify(service => service.FreeHGlobal(ptr), Times.AtLeastOnce);
             Assert.Equal(expected, actual);
