@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using OpenCL.Core.Net.Types.Enums;
 using OpenCL.Core.Net.Types.Interfaces;
 using OpenCL.Core.Net.Types.Primitives;
